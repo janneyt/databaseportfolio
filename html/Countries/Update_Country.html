@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <h1>Add Character Page</h1>
+    <form > <!-- TODO: Add an action attribute --> 
+        <label for="countryname">Name your country: ${countryName}</label><br>
+        <input type="text" id="countryname" name="countryname"><br>
+        <label for="sizeInKM">How large is your country?</label><br>
+        <input type="text" id="sizeInKM" name="sizeInKM" value="${sizeInKm}"><br>
+        <label for="populat">What is the population of your country?</label>
+        <input type="number" min="1" max="2147483647" value="${population}"><br><br>
+        <input type="submit" value="Submit">
+        <button><a href="Display_Country.html">Cancel</a></button>
+    </form> 
+
+</body>
+
+</html>
