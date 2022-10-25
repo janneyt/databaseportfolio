@@ -3,9 +3,10 @@
 
 <body>
 
-    <h1>Add item Page</h1>
+    <h1>Edit Item Page</h1>
     <form > <!-- TODO: Add an action attribute --> 
-        <label for="itemname">Name your item:</label><br>
+        <!-- The id will be hidden, which is what makes this an edit and not a create feature -->
+        <label for="itemname">Name your item: ${itemName}</label><br>
         <input type="text" id="itemname" name="itemname"><br>
         <label for="itemdescription">Describe Your Item</label><br>
         <input type="text" id="itemdescription" name="itemdescription"><br>
