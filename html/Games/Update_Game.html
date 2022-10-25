@@ -3,9 +3,10 @@
 
 <body>
 
-    <h1>Add Game Page</h1>
+    <h1>Edit Game Page</h1>
     <form > <!-- TODO: Add an action attribute --> 
-        <label for="gamename">Name your Game:</label><br>
+        <!-- The id will be hidden, which is what makes this an edit and not a create feature -->
+        <label for="gamename">Name your game: ${gameName}</label><br>
         <input type="text" id="gamename" name="gamename"><br>
         <input type="submit" value="Submit">
         <button><a href="Display_game.html">Cancel</a></button>
