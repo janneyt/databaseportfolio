@@ -7,14 +7,26 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema cs340_dempsjam
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `cs340_dempsjam` ;
-
+SET @dropschema := 'cs340_janneyt';
+SET @sql := CONCAT('DROP SCHEMA IF EXISTS ', @dropschema);
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
 -- -----------------------------------------------------
 -- Schema cs340_dempsjam
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `cs340_dempsjam` ;
-SHOW WARNINGS;
-USE `cs340_dempsjam` ;
+SET @createschema := 'cs340_janneyt';
+set @createsql := CONCAT('CREATE SCHEMA IF NOT EXISTS ', @createschema);
+PREPARE stmt2 from @createsql;
+execute stmt2;
+DEALLOCATE PREPARE stmt2;
+
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+
 
 -- -----------------------------------------------------
 -- Table `Games`
@@ -345,7 +357,10 @@ SHOW WARNINGS;
 -- Data for table `Games`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Games` (`idGame`, `gameName`) VALUES (1, 'First Game');
 INSERT INTO `Games` (`idGame`, `gameName`) VALUES (2, 'Second Game');
 INSERT INTO `Games` (`idGame`, `gameName`) VALUES (3, 'Third Game');
@@ -358,7 +373,10 @@ COMMIT;
 -- Data for table `Countries`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Countries` (`idCountry`, `countryName`, `sizeInKm`, `population`, `idGame`) VALUES (1, 'USA', 96000000, 330000000, 1);
 INSERT INTO `Countries` (`idCountry`, `countryName`, `sizeInKm`, `population`, `idGame`) VALUES (2, 'China', 94000000, 1400000000, 1);
 INSERT INTO `Countries` (`idCountry`, `countryName`, `sizeInKm`, `population`, `idGame`) VALUES (3, 'England', 70000000, 70000000, 2);
@@ -372,7 +390,10 @@ COMMIT;
 -- Data for table `Items`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Items` (`idItem`, `itemName`, `itemDescription`, `idGame`, `idCountry`) VALUES (1, 'sword', 'A bladed weapon', 1, 1);
 INSERT INTO `Items` (`idItem`, `itemName`, `itemDescription`, `idGame`, `idCountry`) VALUES (2, 'knife', 'A short bladed weapon', 1, 1);
 INSERT INTO `Items` (`idItem`, `itemName`, `itemDescription`, `idGame`, `idCountry`) VALUES (3, 'sword', 'A dull bladed weapon', 2, 3);
@@ -386,7 +407,10 @@ COMMIT;
 -- Data for table `Players`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 
 INSERT INTO `Players` (`idPlayer`, `playerName`, `idGame`) VALUES (1, 'Donald Duck', 1);
 INSERT INTO `Players` (`idPlayer`, `playerName`, `idGame`) VALUES (2, 'Mickey Mouse', 1);
@@ -401,7 +425,10 @@ COMMIT;
 -- Data for table `Characters`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Characters` (`idCharacter`, `characterName`, `characterDescription`, `idPlayer`, `idGame`, `idCountry`) VALUES (1, 'Bilbo Baggins', 'Ringbearer', 1, 1, 1);
 INSERT INTO `Characters` (`idCharacter`, `characterName`, `characterDescription`, `idPlayer`, `idGame`, `idCountry`) VALUES (2, 'Frodo Baggins', 'Hereditary Ringbearer', 2, 2, 3);
 INSERT INTO `Characters` (`idCharacter`, `characterName`, `characterDescription`, `idPlayer`, `idGame`, `idCountry`) VALUES (3, 'Meriadoc Brandybuck', 'Buff hobbit', 1, 3, 2);
@@ -416,7 +443,10 @@ COMMIT;
 -- Data for table `Languages`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (1, 'English', 'Language of the teamakers', 1);
 INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (2, 'English', 'Language of the fisher people', 2);
 INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (3, 'English', 'Language of the unified Han', 1);
@@ -429,7 +459,10 @@ COMMIT;
 -- Data for table `TranslationOutputs`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `TranslationOutputs` (`idTranslationOutput`, `OutputContents`) VALUES (1, 'eno');
 INSERT INTO `TranslationOutputs` (`idTranslationOutput`, `OutputContents`) VALUES (2, 'tewo');
 INSERT INTO `TranslationOutputs` (`idTranslationOutput`, `OutputContents`) VALUES (3, 'thrd');
@@ -440,7 +473,10 @@ COMMIT;
 -- Data for table `TranslationInputs`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `TranslationInputs` (`idTranslationInput`, `inputContents`) VALUES (1, 'one');
 INSERT INTO `TranslationInputs` (`idTranslationInput`, `inputContents`) VALUES (2, 'two');
 INSERT INTO `TranslationInputs` (`idTranslationInput`, `inputContents`) VALUES (3, 'three');
@@ -450,7 +486,10 @@ INSERT INTO `TranslationInputs` (`idTranslationInput`, `inputContents`) VALUES (
 -- Data for table `LanguageRules`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `LanguageRules` (`idLanguageRule`, `ruleName`, `definition`, `variableList`) VALUES (1, 'reverse word', 'reverse sorts the text input', '');
 INSERT INTO `LanguageRules` (`idLanguageRule`, `ruleName`, `definition`, `variableList`) VALUES (2, 'Random Vowel', 'Insert random English vowel into $1', '2');
 INSERT INTO `LanguageRules` (`idLanguageRule`, `ruleName`, `definition`, `variableList`) VALUES (3, 'delete last 2 and add e','delete last $1 if length of word > $2 add $3 at the end', '2,3,d');
@@ -464,7 +503,10 @@ COMMIT;
 -- Data for table `Countries_has_Languages`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Countries_has_Languages` (`idCountry`, `idLanguage`) VALUES (1, 1);
 INSERT INTO `Countries_has_Languages` (`idCountry`, `idLanguage`) VALUES (2, 3);
 INSERT INTO `Countries_has_Languages` (`idCountry`, `idLanguage`) VALUES (3, 2);
@@ -478,7 +520,10 @@ COMMIT;
 -- Data for table `Languages_has_TranslationOutputs`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Languages_has_TranslationOutputs` (`idLanguage`, `idTranslationOutput`, `idTranslationInput`) VALUES (1, 1, 1);
 INSERT INTO `Languages_has_TranslationOutputs` (`idLanguage`, `idTranslationOutput`, `idTranslationInput`) VALUES (2, 2, 2);
 INSERT INTO `Languages_has_TranslationOutputs` (`idLanguage`, `idTranslationOutput`, `idTranslationInput`) VALUES (3, 3, 3);
@@ -491,7 +536,10 @@ COMMIT;
 -- Data for table `Characters_has_Languages`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Characters_has_Languages` (`idCharacter`, `idLanguage`) VALUES (1, 1);
 INSERT INTO `Characters_has_Languages` (`idCharacter`, `idLanguage`) VALUES (2, 2);
 INSERT INTO `Characters_has_Languages` (`idCharacter`, `idLanguage`) VALUES (3, 3);
@@ -505,7 +553,10 @@ COMMIT;
 -- Data for table `Languages_has_LanguageRules`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Languages_has_LanguageRules` (`idLanguage`, `idLanguageRule`) VALUES (1, 1);
 INSERT INTO `Languages_has_LanguageRules` (`idLanguage`, `idLanguageRule`) VALUES (2, 2);
 INSERT INTO `Languages_has_LanguageRules` (`idLanguage`, `idLanguageRule`) VALUES (3, 3);
@@ -517,7 +568,10 @@ COMMIT;
 -- Data for table `Characters_has_Items`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `cs340_dempsjam`;
+set @setdatabase := CONCAT('USE ', @createschema);
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
 INSERT INTO `Characters_has_Items` (`idCharacter`, `idItem`) VALUES (1,2);
 INSERT INTO `Characters_has_Items` (`idCharacter`, `idItem`) VALUES (2,4);
 INSERT INTO `Characters_has_Items` (`idCharacter`, `idItem`) VALUES (3,5);
