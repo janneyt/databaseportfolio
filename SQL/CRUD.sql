@@ -200,6 +200,70 @@ DEALLOCATE PREPARE stmt3;;
 DELETE from game where idGame = `${id passed from html page}`
 COMMIT;
 
+-- Items SQLs --
+
+-- Display all items
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+SELECT idItem, itemName, itemDescription from Items;
+
+COMMIT;
+
+-- Retrieve one specific item by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+SELECT idItem, itemName from Games
+WHERE idItem = `${HTML page will send over id to be retrieved}`;
+
+COMMIT;
+
+-- Retrieve one specific item by name
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+SELECT idItem, itemName from Games 
+WHERE itemName = `${game Name passed from html page}`;
+
+COMMIT;
+
+-- Create item sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+INSERT INTO 'Items' (itemName, itemDescription) VALUES (`${This will be a name}`,`${This will be description}`)
+
+COMMIT;
+
+-- Update item sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+UPDATE `Items`
+SET itemName = `${new name}`
+WHERE idItem = `${id from html page}`
+COMMIT;
+
+-- Delete Item by id SQL
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+DELETE from Items where idItem = `${id passed from html page}`
+COMMIT;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
