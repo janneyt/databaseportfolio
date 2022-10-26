@@ -14,7 +14,7 @@ DEALLOCATE PREPARE stmt3;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idCharacter, characterName, characterDescription from Characters;
 
@@ -24,7 +24,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idCharacter, CharacterName, characterDescription from Characters
 WHERE idCharacter = `${HTML page will send over id to be retrieved}`;
@@ -35,7 +35,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idCharacter, characterName, characterDescription from Characters 
 WHERE characterName = `${characterName passed from html page}`;
@@ -46,7 +46,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 INSERT INTO 'Characters' (characterName, characterDescription) VALUES (`${This will be a name}`,`${This will be a description}`)
 
@@ -56,7 +56,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 UPDATE `Characters`
 SET characterName = `${new name}`, characterDescription = `${new description}`
@@ -69,7 +69,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 DELETE from Characters where idCharacter = `${id passed from html page}`
 COMMIT;
@@ -78,7 +78,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idCountry, countryName, sizeInKm, population from Characters;
 
@@ -88,7 +88,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idCountry, countryName, sizeInKm, population from Characters
 WHERE idCountry = `${HTML page will send over id to be retrieved}`;
@@ -99,7 +99,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idCountry, countryName, sizeInKm, population from Characters 
 WHERE countryName = `${countryName passed from html page}`;
@@ -110,7 +110,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 INSERT INTO 'Countries' (countryName, sizeInKm, population) VALUES (`${This will be a name}`,`${This will be a size in integers}`, `${This will be a population in integers}`)
 
@@ -120,7 +120,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 UPDATE `Countries`
 SET countryName = `${new name}`, sizeInKm = `${new size}`, population = `${population}`
@@ -131,7 +131,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 DELETE from country where idCountry = `${id passed from html page}`
 COMMIT;
@@ -142,7 +142,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idGame, gameName from Games;
 
@@ -152,7 +152,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idGame, gameName from Games
 WHERE idGame = `${HTML page will send over id to be retrieved}`;
@@ -163,7 +163,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idGame, gameName from Games 
 WHERE gameName = `${game Name passed from html page}`;
@@ -174,7 +174,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 INSERT INTO 'Games' (gameName, sizeInKm, population) VALUES (`${This will be a name}`,`${This will be a size in integers}`, `${This will be a population in integers}`)
 
@@ -184,7 +184,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 UPDATE `Games`
 SET gameName = `${new name}`
@@ -195,7 +195,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 DELETE from game where idGame = `${id passed from html page}`
 COMMIT;
@@ -206,7 +206,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idItem, itemName, itemDescription from Items;
 
@@ -216,7 +216,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idItem, itemName from Items
 WHERE idItem = `${HTML page will send over id to be retrieved}`;
@@ -227,7 +227,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idItem, itemName from Items 
 WHERE itemName = `${game Name passed from html page}`;
@@ -238,7 +238,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 INSERT INTO 'Items' (itemName, itemDescription) VALUES (`${This will be a name}`,`${This will be description}`)
 
@@ -248,7 +248,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 UPDATE `Items`
 SET itemName = `${new name}`
@@ -259,7 +259,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 DELETE from Items where idItem = `${id passed from html page}`
 COMMIT;
@@ -270,7 +270,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idPlayers, playerName from Players;
 
@@ -280,7 +280,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idPlayer, playerName from Players
 WHERE idItem = `${HTML page will send over id to be retrieved}`;
@@ -291,7 +291,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 SELECT idPlayer, playerName from Players 
 WHERE playerName = `${game Name passed from html page}`;
@@ -302,7 +302,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 INSERT INTO 'Players' (playerName, playerDescription) VALUES (`${This will be a name}`)
 
@@ -312,7 +312,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 UPDATE `Players`
 SET playerName = `${new name}`
@@ -323,7 +323,7 @@ COMMIT;
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
 execute stmt3;
-DEALLOCATE PREPARE stmt3;;
+DEALLOCATE PREPARE stmt3;
 
 DELETE from Players where idPlayer = `${id passed from html page}`
 COMMIT;
