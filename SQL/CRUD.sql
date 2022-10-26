@@ -218,7 +218,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;;
 
-SELECT idItem, itemName from Games
+SELECT idItem, itemName from Items
 WHERE idItem = `${HTML page will send over id to be retrieved}`;
 
 COMMIT;
@@ -229,7 +229,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;;
 
-SELECT idItem, itemName from Games 
+SELECT idItem, itemName from Items 
 WHERE itemName = `${game Name passed from html page}`;
 
 COMMIT;
@@ -262,6 +262,70 @@ execute stmt3;
 DEALLOCATE PREPARE stmt3;;
 
 DELETE from Items where idItem = `${id passed from html page}`
+COMMIT;
+
+-- Playerss SQLs --
+
+-- Display all players
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+SELECT idPlayers, playerName from Players;
+
+COMMIT;
+
+-- Retrieve one specific item by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+SELECT idPlayer, playerName from Players
+WHERE idItem = `${HTML page will send over id to be retrieved}`;
+
+COMMIT;
+
+-- Retrieve one specific item by name
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+SELECT idPlayer, playerName from Players 
+WHERE playerName = `${game Name passed from html page}`;
+
+COMMIT;
+
+-- Create player sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+INSERT INTO 'Players' (playerName, playerDescription) VALUES (`${This will be a name}`)
+
+COMMIT;
+
+-- Update player sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+UPDATE `Players`
+SET playerName = `${new name}`
+WHERE idPlayer = `${id from html page}`
+COMMIT;
+
+-- Delete Player by id SQL
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;;
+
+DELETE from Players where idPlayer = `${id passed from html page}`
 COMMIT;
 
 SET SQL_MODE=@OLD_SQL_MODE;
