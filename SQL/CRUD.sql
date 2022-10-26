@@ -3,6 +3,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 DECLARE @database as varchar(45)='cs340_janneyt';
 
+-- Character SQLs --
 
 -- Display Character sqls full page
 START TRANSACTION;
@@ -47,6 +48,8 @@ SET characterName = `${new name}`, characterDescription = `${new description}`
 WHERE idCharacter = `${id from html page}`
 COMMIT;
 
+-- Character SQLs --
+
 -- Delete Character by id SQL
 START TRANSACTION;
 USE @database;
@@ -85,6 +88,58 @@ START TRANSACTION;
 use @database;
 
 INSERT INTO 'Countries' (countryName, sizeInKm, population) VALUES (`${This will be a name}`,`${This will be a size in integers}`, `${This will be a population in integers}`)
+
+COMMIT;
+
+-- Update Character sql
+START TRANSACTION;
+use @database;
+
+UPDATE `Countries`
+SET countryName = `${new name}`, sizeInKm = `${new size}`, population = `${population}`
+WHERE idCountry = `${id from html page}`
+COMMIT;
+
+-- Delete Character by id SQL
+START TRANSACTION;
+USE @database;
+
+DELETE from country where idCountry = `${id passed from html page}`
+COMMIT;
+
+-- Games SQLs --
+
+-- Display all games
+START TRANSACTION;
+USE @database;
+
+SELECT idGame, gameName from Games;
+
+COMMIT;
+
+-- Retrieve one specific game by id
+START TRANSACTION;
+USE @database;
+
+SELECT idGame, gameName from Games
+WHERE idGame = `${HTML page will send over id to be retrieved}`;
+
+COMMIT;
+
+-- Retrieve one specific game by name
+START TRANSACTION;
+USE @database;
+
+SELECT idGame, gameName from Games 
+WHERE gameName = `${game Name passed from html page}`;
+
+COMMIT;
+
+-- Create game sql
+START TRANSACTION;
+use @database;
+
+INSERT INTO 'Games' (gameName, sizeInKm, population) VALUES (`${This will be a name}`,`${This will be a size in integers}`, `${This will be a population in integers}`)
 
 COMMIT;
 
