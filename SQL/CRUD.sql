@@ -143,20 +143,20 @@ INSERT INTO 'Games' (gameName, sizeInKm, population) VALUES (`${This will be a n
 
 COMMIT;
 
--- Update Character sql
+-- Update game sql
 START TRANSACTION;
 use @database;
 
-UPDATE `Countries`
-SET countryName = `${new name}`, sizeInKm = `${new size}`, population = `${population}`
-WHERE idCountry = `${id from html page}`
+UPDATE `Games`
+SET gameName = `${new name}`
+WHERE idGame = `${id from html page}`
 COMMIT;
 
--- Delete Character by id SQL
+-- Delete Game by id SQL
 START TRANSACTION;
 USE @database;
 
-DELETE from country where idCountry = `${id passed from html page}`
+DELETE from game where idGame = `${id passed from html page}`
 COMMIT;
 
 SET SQL_MODE=@OLD_SQL_MODE;
