@@ -384,16 +384,8 @@ INSERT into 'TranslationOutputs' (outputContents) VALUES ('${This will be a tran
 
 COMMIT;
 
--- Update player sql
-START TRANSACTION;
-PREPARE stmt3 from @setdatabase;
-execute stmt3;
-DEALLOCATE PREPARE stmt3;
+-- Update Translation output or intput not possible as translation is deterministic
 
-UPDATE `Players`
-SET playerName = `${new name}`
-WHERE idPlayer = `${id from html page}`
-COMMIT;
 
 -- Delete Player by id SQL
 START TRANSACTION;
@@ -401,10 +393,10 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from Players where idPlayer = `${id passed from html page}`
+DELETE from TranslationOuputs where idTranslationOutput = `${id passed from html page}`
 COMMIT;
 
--- Playerss SQLs --
+-- Players SQLs --
 
 -- Display all players
 START TRANSACTION;
