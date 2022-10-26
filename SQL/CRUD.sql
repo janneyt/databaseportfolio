@@ -264,6 +264,146 @@ DEALLOCATE PREPARE stmt3;
 DELETE from Items where idItem = `${id passed from html page}`
 COMMIT;
 
+-- Players SQLs --
+
+-- Display all players
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT idPlayers, playerName from Players;
+
+COMMIT;
+
+-- Retrieve one specific player by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT idPlayer, playerName from Players
+WHERE idItem = `${HTML page will send over id to be retrieved}`;
+
+COMMIT;
+
+-- Retrieve one specific player by name
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT idPlayer, playerName from Players 
+WHERE playerName = `${game Name passed from html page}`;
+
+COMMIT;
+
+-- Create player sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+INSERT INTO 'Players' (playerName, playerDescription) VALUES (`${This will be a name}`)
+
+COMMIT;
+
+-- Update player sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+UPDATE `Players`
+SET playerName = `${new name}`
+WHERE idPlayer = `${id from html page}`
+COMMIT;
+
+-- Delete Player by id SQL
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+DELETE from Players where idPlayer = `${id passed from html page}`
+COMMIT;
+
+-- Translations SQLs --
+
+-- Display all translations
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT idTranslationInput, 
+       inputContents, 
+       (select lht.idTranslationOutput
+            from Language_has_TranslationOutputs as lht
+            where ti.idTranslationInput = lht.idTranslationInput),
+        (select outputContents 
+            from TranslationOutputs as tout
+            join Language_has_TranslationOutputs as lht
+            on lht.idTranslationOutpus = tout.idTranslationOutputs
+            where lht.idTranslationInput = ti.idTranslationInput)
+        from TranslationInputs as ti;
+
+COMMIT;
+
+-- Retrieve one specific translation by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT idTranslationInput, 
+       inputContents, 
+       (select lht.idTranslationOutput
+            from Language_has_TranslationOutputs as lht
+            where ti.idTranslationInput = lht.idTranslationInput),
+        (select outputContents 
+            from TranslationOutputs as tout
+            join Language_has_TranslationOutputs as lht
+            on lht.idTranslationOutpus = tout.idTranslationOutputs
+            where lht.idTranslationInput = ti.idTranslationInput)
+        from TranslationInputs as ti;
+WHERE inputContents = `${HTML page will send over id to be retrieved}`;
+
+COMMIT;
+
+
+
+-- Create translation sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+INSERT INTO 'TranslationInputs' (inputContents) VALUES (`${This will be an English word}`)
+INSERT into 'TranslationOutputs' (outputContents) VALUES ('${This will be a translated word}')
+
+COMMIT;
+
+-- Update player sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+UPDATE `Players`
+SET playerName = `${new name}`
+WHERE idPlayer = `${id from html page}`
+COMMIT;
+
+-- Delete Player by id SQL
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+DELETE from Players where idPlayer = `${id passed from html page}`
+COMMIT;
+
 -- Playerss SQLs --
 
 -- Display all players
