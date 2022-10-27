@@ -136,6 +136,16 @@ def delete_language_rule():
 def update_language_rule():
     return render_template('language_rules/update_language_rule.html')
 
+# ROUTES RELATED TO LANGUAGES HAVE LANGUAGE RULES PAGES
+@app.route('/display_language_rules_for_language.html')
+def display_language_rules_for_language():
+    return render_template('languages_have_language_rules/display_language_rules_for_language.html')
+
+@app.route('/add_language_rule_to_language.html')
+def add_language_rule_for_language():
+    return render_template('languages_have_language_rules/add_language_rule_to_language.html')
+
+
 # ROUTES RELATED TO LANGUAGE PAGES
 @app.route('/display_languages.html')
 def display_languages():
