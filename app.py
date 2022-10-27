@@ -14,14 +14,18 @@ def index():
 
 
 # ROUTE RELATED TO CHARACTERS HAVE LANGUAGES PAGES
-@app.route('/display_characters_have_languages.html')
+@app.route('/display_characters_have_languages')
 def display_characters_have_languages():
     return render_template('characters_have_languages/display_characters_have_languages.html')
 
 #ROUTES RELATED TO CHARACTERS HAVE ITEMS PAGES
-@app.route('/display_characters_have_items.html')
+@app.route('/display_characters_have_items')
 def display_characters_have_items():
     return render_template('characters_have_items/display_characters_have_items.html')
+
+@app.route('/add_item_to_character')
+def add_item_to_character():
+    return render_template('characters_have_items/add_item_to_character.html')
 
 # ROUTES RELATED TO CHARACTER PAGES
 @app.route('/display_characters.html')
