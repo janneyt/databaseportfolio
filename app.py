@@ -18,6 +18,11 @@ def index():
 def display_characters_have_languages():
     return render_template('characters_have_languages/display_characters_have_languages.html')
 
+#ROUTES RELATED TO CHARACTERS HAVE ITEMS PAGES
+@app.route('/display_characters_have_items.html')
+def display_characters_have_items():
+    return render_template('characters_have_items/display_characters_have_items.html')
+
 # ROUTES RELATED TO CHARACTER PAGES
 @app.route('/display_characters.html')
 def display_characters():
