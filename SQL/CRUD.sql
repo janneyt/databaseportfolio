@@ -48,7 +48,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-INSERT INTO 'Characters' (characterName, characterDescription) VALUES (`${This will be a name}`,`${This will be a description}`)
+INSERT INTO Characters (characterName, characterDescription) VALUES (`${This will be a name}`,`${This will be a description}`);
 
 COMMIT;
 
@@ -60,7 +60,7 @@ DEALLOCATE PREPARE stmt3;
 
 UPDATE `Characters`
 SET characterName = `${new name}`, characterDescription = `${new description}`
-WHERE idCharacter = `${id from html page}`
+WHERE idCharacter = `${id from html page}`;
 COMMIT;
 
 -- Character SQLs --
@@ -71,7 +71,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from Characters where idCharacter = `${id passed from html page}`
+DELETE from Characters where idCharacter = `${id passed from html page}`;
 COMMIT;
 
 -- Display country sqls full page
@@ -112,7 +112,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-INSERT INTO 'Countries' (countryName, sizeInKm, population) VALUES (`${This will be a name}`,`${This will be a size in integers}`, `${This will be a population in integers}`)
+INSERT INTO Countries (countryName, sizeInKm, population) VALUES (`${This will be a name}`,`${This will be a size in integers}`, `${This will be a population in integers}`);
 
 COMMIT;
 
@@ -124,7 +124,7 @@ DEALLOCATE PREPARE stmt3;
 
 UPDATE `Countries`
 SET countryName = `${new name}`, sizeInKm = `${new size}`, population = `${population}`
-WHERE idCountry = `${id from html page}`
+WHERE idCountry = `${id from html page}`;
 COMMIT;
 
 -- Delete Character by id SQL
@@ -133,7 +133,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from country where idCountry = `${id passed from html page}`
+DELETE from country where idCountry = `${id passed from html page}`;
 COMMIT;
 
 -- Games SQLs --
@@ -188,7 +188,7 @@ DEALLOCATE PREPARE stmt3;
 
 UPDATE `Games`
 SET gameName = `${new name}`
-WHERE idGame = `${id from html page}`
+WHERE idGame = `${id from html page}`;
 COMMIT;
 
 -- Delete Game by id SQL
@@ -197,7 +197,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from game where idGame = `${id passed from html page}`
+DELETE from game where idGame = `${id passed from html page}`;
 COMMIT;
 
 -- Items SQLs --
@@ -240,7 +240,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-INSERT INTO 'Items' (itemName, itemDescription) VALUES (`${This will be a name}`,`${This will be description}`)
+INSERT INTO 'Items' (itemName, itemDescription) VALUES (`${This will be a name}`,`${This will be description}`);
 
 COMMIT;
 
@@ -252,7 +252,7 @@ DEALLOCATE PREPARE stmt3;
 
 UPDATE `Items`
 SET itemName = `${new name}`
-WHERE idItem = `${id from html page}`
+WHERE idItem = `${id from html page}`;
 COMMIT;
 
 -- Delete Item by id SQL
@@ -261,7 +261,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from Items where idItem = `${id passed from html page}`
+DELETE from Items where idItem = `${id passed from html page}`;
 COMMIT;
 
 -- Players SQLs --
@@ -304,7 +304,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-INSERT INTO 'Players' (playerName, playerDescription) VALUES (`${This will be a name}`)
+INSERT INTO 'Players' (playerName, playerDescription) VALUES (`${This will be a name}`);
 
 COMMIT;
 
@@ -316,7 +316,7 @@ DEALLOCATE PREPARE stmt3;
 
 UPDATE `Players`
 SET playerName = `${new name}`
-WHERE idPlayer = `${id from html page}`
+WHERE idPlayer = `${id from html page}`;
 COMMIT;
 
 -- Delete Player by id SQL
@@ -325,7 +325,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from Players where idPlayer = `${id passed from html page}`
+DELETE from Players where idPlayer = `${id passed from html page}`;
 COMMIT;
 
 -- Translations SQLs --
@@ -366,7 +366,7 @@ SELECT idTranslationInput,
             join Language_has_TranslationOutputs as lht
             on lht.idTranslationOutpus = tout.idTranslationOutputs
             where lht.idTranslationInput = ti.idTranslationInput)
-        from TranslationInputs as ti;
+        from TranslationInputs as ti
 WHERE inputContents = `${HTML page will send over id to be retrieved}`;
 
 COMMIT;
@@ -379,8 +379,8 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-INSERT INTO 'TranslationInputs' (inputContents) VALUES (`${This will be an English word}`)
-INSERT into 'TranslationOutputs' (outputContents) VALUES ('${This will be a translated word}')
+INSERT INTO TranslationInputs (inputContents) VALUES (`${This will be an English word}`);
+INSERT into TranslationOutputs (outputContents) VALUES ('${This will be a translated word}');
 
 COMMIT;
 
@@ -393,7 +393,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from TranslationOuputs where idTranslationOutput = `${id passed from html page}`
+DELETE from TranslationOuputs where idTranslationOutput = `${id passed from html page}`;
 COMMIT;
 
 -- Players SQLs --
@@ -436,7 +436,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-INSERT INTO 'Players' (playerName, playerDescription) VALUES (`${This will be a name}`)
+INSERT INTO Players (playerName, playerDescription) VALUES (`${This will be a name}`);
 
 COMMIT;
 
@@ -448,7 +448,7 @@ DEALLOCATE PREPARE stmt3;
 
 UPDATE `Players`
 SET playerName = `${new name}`
-WHERE idPlayer = `${id from html page}`
+WHERE idPlayer = `${id from html page}`;
 COMMIT;
 
 -- Delete Player by id SQL
@@ -457,7 +457,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from Players where idPlayer = `${id passed from html page}`
+DELETE from Players where idPlayer = `${id passed from html page}`;
 COMMIT;
 
 SET SQL_MODE=@OLD_SQL_MODE;

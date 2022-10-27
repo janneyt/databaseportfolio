@@ -12,6 +12,12 @@ app = Flask(__name__, template_folder='html')
 def index():
     return render_template("index/index.html")
 
+
+# ROUTE RELATED TO CHARACTERS HAVE LANGUAGES PAGES
+@app.route('/display_characters_have_languages.html')
+def display_characters_have_languages():
+    return render_template('characters_have_languages/display_characters_have_languages.html')
+
 # ROUTES RELATED TO CHARACTER PAGES
 @app.route('/display_characters.html')
 def display_characters():
