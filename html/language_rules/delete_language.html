@@ -1,0 +1,10 @@
+{% extends "default/default.html" %}
+
+{% block title %}Delete Languages{% endblock %}
+
+{% block main %}
+    <h1>Delete Language</h1>
+    <p>${This will show the Language's name}</p>
+    <p>Are you sure? Once you click delete, the Language cannot be recovered.</p>
+    {% include "languages/forms/delete_language_form.html" %}
+{% endblock %}

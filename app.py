@@ -12,6 +12,18 @@ app = Flask(__name__, template_folder='html')
 def index():
     return render_template("index/index.html")
 
+# ROUTE RELATED TO COUNTRIES HAVE LANGUAGES PAGES
+@app.route('/display_countries_have_languages')
+def display_countries_have_languages():
+    return render_template('countries_have_languages/display_countries_have_languages.html')
+
+@app.route('/add_language_to_country')
+def add_language_to_country():
+    return render_template('countries_have_languages/add_language_to_country.html')
+
+@app.route('/delete_language_from_country')
+def delete_language_from_country():
+    return render_template('countries_have_languages/delete_language_from_country.html')
 
 # ROUTE RELATED TO CHARACTERS HAVE LANGUAGES PAGES
 @app.route('/display_characters_have_languages')
