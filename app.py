@@ -18,6 +18,10 @@ def index():
 def display_characters_have_languages():
     return render_template('characters_have_languages/display_characters_have_languages.html')
 
+@app.route('/delete_language_from_character')
+def delete_language_from_character():
+    return render_template('characters_have_languages/delete_language_from_character.html')
+
 #ROUTES RELATED TO CHARACTERS HAVE ITEMS PAGES
 @app.route('/display_characters_have_items')
 def display_characters_have_items():
@@ -26,6 +30,10 @@ def display_characters_have_items():
 @app.route('/add_item_to_character')
 def add_item_to_character():
     return render_template('characters_have_items/add_item_to_character.html')
+
+@app.route('/delete_item_from_character')
+def delete_item_from_character():
+    return render_template('characters_have_items/delete_item_from_character.html')
 
 # ROUTES RELATED TO CHARACTER PAGES
 @app.route('/display_characters.html')
