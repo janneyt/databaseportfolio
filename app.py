@@ -1,22 +1,134 @@
 
-from flask import Flask
+from flask import Flask,render_template
 import os
 
 # Configuration
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='html')
 
 # Routes 
 
 @app.route('/')
-def root():
-    return render_template("main.j2")
+def index():
+    return render_template("index/index.html")
+
+# ROUTES RELATED TO CHARACTER PAGES
+@app.route('/display_characters.html')
+def display_characters():
+    return render_template('characters/display_characters.html')
+
+@app.route('/add_character.html')
+def add_characters():
+    return render_template('characters/add_character.html')
+
+@app.route('/delete_character.html')
+def delete_characters():
+    return render_template('characters/delete_character.html')
+
+@app.route('/update_character.html')
+def update_characters():
+    return render_template('characters/update_character.html')
+
+# ROUTES RELATED TO COUNTRY PAGES
+@app.route('/display_countries.html')
+def display_countries():
+    return render_template('countries/display_countries.html')
+
+@app.route('/add_country.html')
+def add_country():
+    return render_template('countries/add_country.html')
+
+@app.route('/delete_country.html')
+def delete_country():
+    return render_template('countries/delete_country.html')
+
+@app.route('/update_country.html')
+def update_country():
+    return render_template('countries/update_country.html')
+
+# ROUTES RELATED TO GAME PAGES
+@app.route('/display_games.html')
+def display_games():
+    return render_template('games/display_games.html')
+
+@app.route('/add_game.html')
+def add_game():
+    return render_template('games/add_game.html')
+
+@app.route('/delete_game.html')
+def delete_game():
+    return render_template('games/delete_game.html')
+
+@app.route('/update_game.html')
+def update_game():
+    return render_template('games/update_game.html')
+
+# ROUTES RELATED TO ITEM PAGES
+@app.route('/display_items.html')
+def display_items():
+    return render_template('items/display_items.html')
+
+@app.route('/add_item.html')
+def add_item():
+    return render_template('items/add_item.html')
+
+@app.route('/delete_item.html')
+def delete_item():
+    return render_template('items/delete_item.html')
+
+@app.route('/update_item.html')
+def update_item():
+    return render_template('items/update_item.html')
+
+# ROUTES RELATED TO LANGUAGE PAGES
+@app.route('/display_languages.html')
+def display_languages():
+    return render_template('languages/display_languages.html')
+
+@app.route('/add_language.html')
+def add_language():
+    return render_template('languages/add_language.html')
+
+@app.route('/delete_language.html')
+def delete_language():
+    return render_template('languages/delete_language.html')
+
+@app.route('/update_language.html')
+def update_language():
+    return render_template('languages/update_language.html')
+
+# ROUTES RELATED TO PLAYER PAGES
+@app.route('/display_players.html')
+def display_players():
+    return render_template('players/display_players.html')
+
+@app.route('/add_player.html')
+def add_player():
+    return render_template('players/add_player.html')
+
+@app.route('/delete_player.html')
+def delete_player():
+    return render_template('players/delete_player.html')
+
+@app.route('/update_player.html')
+def update_player():
+    return render_template('players/update_player.html')
+
+# ROUTES RELATED TO TRANSLATION PAGES
+@app.route('/display_translations.html')
+def display_translations():
+    return render_template('translations/display_translations.html')
+
+@app.route('/add_translation.html')
+def add_translation():
+    return render_template('translations/add_translation.html')
+
+@app.route('/delete_translation.html')
+def delete_translation():
+    return render_template('translations/delete_translation.html')
 
 # Listener
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 60644)) 
-    #                                 ^^^^
-    #              You can replace this number with any valid port
-    
-    app.run(port=port) 
+    port = int(os.environ.get('PORT', 60644))     
+    app.run(port=port, debug=True)
