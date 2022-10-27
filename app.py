@@ -119,6 +119,23 @@ def delete_item():
 def update_item():
     return render_template('items/update_item.html')
 
+# ROUTES RELATED TO LANGUAGE RULES PAGES
+@app.route('/display_language_rules.html')
+def display_language_rules():
+    return render_template('language_rules/display_language_rules.html')
+
+@app.route('/add_language_rule.html')
+def add_language_rule():
+    return render_template('language_rules/add_language_rule.html')
+
+@app.route('/delete_language_rule.html')
+def delete_language_rule():
+    return render_template('language_rules/delete_language_rule.html')
+
+@app.route('/update_language_rule.html')
+def update_language_rule():
+    return render_template('language_rules/update_language_rule.html')
+
 # ROUTES RELATED TO LANGUAGE PAGES
 @app.route('/display_languages.html')
 def display_languages():
