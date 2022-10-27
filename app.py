@@ -18,6 +18,10 @@ def index():
 def display_characters_have_languages():
     return render_template('characters_have_languages/display_characters_have_languages.html')
 
+@app.route('/add_language_to_character')
+def add_language_to_character():
+    return render_template('characters_have_languages/add_language_to_character.html')
+
 @app.route('/delete_language_from_character')
 def delete_language_from_character():
     return render_template('characters_have_languages/delete_language_from_character.html')
