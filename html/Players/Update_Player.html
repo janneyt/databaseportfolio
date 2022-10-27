@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Update Player{% endblock %}
 
+{% block main %}
     <h1>Edit Player Page</h1>
-    <form > <!-- TODO: Add an action attribute --> 
-        <!-- The id will be hidden, which is what makes this an edit and not a create feature -->
-        <label for="playername">Name your player: ${playerName}</label><br>
-        <input type="text" id="playername" name="playername"><br>
-        <input type="submit" value="Submit">
-        <button><a href="Display_Player.html">Cancel</a></button>
-    </form> 
-
-</body>
-
-</html>
+    {% include "players/forms/update_player_form.html" %}
+{% endblock %}

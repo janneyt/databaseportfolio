@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Delete Game{% endblock %}
 
+{% block main %}
     <h1>Delete Game</h1>
     <p>${This will show the Game's name}</p>
     <p>Are you sure? Once you click delete, the Game cannot be recovered.</p>
-    <form> <!-- TODO: Add action -->
-        <input type="hidden" name="${idGame}"}>${idGame in hidden field}
-        <br />
-        <input type="submit" id="delete" name="delete">
-        <button><a href="Display_Game.html">Cancel</a></button>
-    </form>
-
-</body>
-
-</html>
+    {% include "games/forms/delete_game_form.html" %}
+{% endblock %}

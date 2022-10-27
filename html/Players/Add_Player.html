@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Add Player{% endblock %}
 
+{% block main %}
     <h1>Add Player Page</h1>
-    <form > <!-- TODO: Add an action attribute --> 
-        <label for="playername">Name your player:</label><br>
-        <input type="text" id="playername" name="playername"><br>
-        <input type="submit" value="Submit">
-        <button><a href="Display_Player.html">Cancel</a></button>
-    </form> 
-
-</body>
-
-</html>
+    {% include "players/forms/add_player_form.html" %}
+{% endblock %}

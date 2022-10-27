@@ -1,0 +1,12 @@
+{% extends "Default/default.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block main %}
+    <h1>Index Page</h1>
+    <p>The following pages wil be part of the main navigation:</p>
+    {% include "index/views/index_button_view.html" %}
+
+    <p>The following is a listing of individual pages.</p>
+    {% include "index/views/index_list_view.html" %}
+{% endblock %}
