@@ -1,36 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="../language_gen.css">
-</head>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Display Languages{% endblock %}
 
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../../static/language_gen.css">
+{% endblock %}
+
+{% block main %}
     <h1>Languages:</h1>
-    <table>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Game</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-        <tr>
-          <td>English</td>
-          <td>The language that rifles your pockets for spare vocabulary and grammar</td>
-          <td>Fun first game!</td>
-          <td><button><a href="Update_Language.html">Edit Language</a></button></td>
-          <td><button><a href="Delete_Language.html">Delete Language</a></button></td>
-        </tr>
-      </table> 
-      <br/>
-      <button>
-        <a href="Add_Language.html">
-            Add Language
-        </a>
-        
-      </button>
-
-</body>
-
-</html>
+    {% include "languages/views/display_languages_view.html" %}
+{% endblock %}

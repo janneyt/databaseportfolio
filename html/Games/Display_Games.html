@@ -1,32 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="../language_gen.css">
-</head>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Display Games{% endblock %}
 
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../../static/language_gen.css">
+{% endblock %}
+
+{% block main %}
     <h1>Games:</h1>
-    <table>
-        <tr>
-          <th>Name</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-        <tr>
-          <td>Fun first game!</td>
-          <td><button><a href="Update_Game.html">Edit Game</a></button></td>
-          <td><button><a href="Delete_Game.html">Delete Game</a></button></td>
-        </tr>
-      </table> 
-      <br/>
-      <button>
-        <a href="Add_Game.html">
-            Add Game
-        </a>
-        
-      </button>
-
-</body>
-
-</html>
+    {% include "games/views/display_games_view.html" %}
+{% endblock %}

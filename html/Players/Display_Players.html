@@ -1,32 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="../language_gen.css">
-</head>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Display Players{% endblock %}
 
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../../static/language_gen.css">
+{% endblock %}
+
+{% block main %}
     <h1>Players:</h1>
-    <table>
-        <tr>
-          <th>Name</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-        <tr>
-          <td>JRR Tolkien</td>
-          <td><button><a href="Update_Player.html">Edit Player</a></button></td>
-          <td><button><a href="Delete_Player.html">Delete Player</a></button></td>
-        </tr>
-      </table> 
-      <br/>
-      <button>
-        <a href="Add_Player.html">
-            Add Player
-        </a>
-        
-      </button>
-
-</body>
-
-</html>
+    {% include "players/views/display_players_view.html" %}
+{% endblock %}

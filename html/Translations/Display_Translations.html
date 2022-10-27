@@ -1,33 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="../language_gen.css">
-</head>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Display Translations{% endblock %}
 
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../../static/language_gen.css">
+{% endblock %}
+
+{% block main %}
     <h1>Translations:</h1>
-    <table>
-        <tr>
-          <th>Original Word</th>
-          <th>Translation</th>
-          <th>Delete</th>
-        </tr>
-        <tr>
-          <td>${Some input coming from the TranslationInputs table}</td>
-          <td>${Some output coming from the selected algorithm used to translate}</td>
-          <!--Translations cannot be edited, merely deleted-->>
-          <td><button><a href="Delete_Player.html">Delete Translation</a></button> Deleting does not change the way the word is translated</td>
-        </tr>
-      </table> 
-      <br/>
-      <button>
-        <a href="Add_Translation.html">
-            Translate New Word
-        </a>
-        
-      </button>
-
-</body>
-
-</html>
+    {% include "translations/views/display_translations_view.html" %}
+{% endblock %}

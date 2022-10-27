@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Add Item{% endblock %}
 
-    <h1>Add item Page</h1>
-    <form > <!-- TODO: Add an action attribute --> 
-        <label for="itemname">Name your item:</label><br>
-        <input type="text" id="itemname" name="itemname"><br>
-        <label for="itemdescription">Describe Your Item</label><br>
-        <input type="text" id="itemdescription" name="itemdescription"><br>
-        <label for="gamename">Game Name</label><br>
-        <input type="text" id="gamename" name="gamename">`${Pulls game name from game id}`<br>
-        <label for="playername">Player Name</label><br>
-        <input type="text" id="playername" name="playername">`${Pulls player name from player id}`<br><br>
-        <input type="submit" value="Submit">
-        <button><a href="Display_Item.html">Cancel</a></button>
-    </form> 
-
-</body>
-
-</html>
+{% block main %}
+    <h1>Add Item Page</h1>
+    {% include "items/forms/add_item_form.html" %}
+{% endblock %}

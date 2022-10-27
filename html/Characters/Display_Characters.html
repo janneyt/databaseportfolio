@@ -1,40 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="../language_gen.css">
-</head>
+{% extends "default/default.html" %}
 
-<body>
+{% block title %}Display Characters{% endblock %}
 
-    <h1>Characters:</h1>
-    <table>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Country</th>
-          <th>Player</th>
-          <th>Game</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-        <tr>
-          <td>Bilbo Baggins</td>
-          <td>A reluctant hero who prefers to eat and sleep over adventuring, until adventuring takes his soul.</td>
-          <td>The Shire</td>
-          <td>JRR Tolkien</td>
-          <td>Fun first game!</td>
-          <td><button><a href="Update_Character.html">Edit Character</a></button></td>
-          <td><button><a href="Delete_Character.html">Delete Character</a></button></td>
-        </tr>
-      </table> 
-      <br/>
-      <button>
-        <a href="Add_Character.html">
-            Add Character
-        </a>
-        
-      </button>
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../../static/language_gen.css">
+{% endblock %}
 
-</body>
-
-</html>
+{% block main %}
+    <h1>Characters</h1>
+    {% include "characters/views/display_characters_view.html" %}
+{% endblock %}
