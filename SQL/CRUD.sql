@@ -775,6 +775,111 @@ where chr.idCountry = `${passed variable}`;
 
 COMMIT;
 
+-- Language_Rules have languages SQLs --
+
+-- Display all language-Language_Rule relationships
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.langName, lrn.ruleName from Language_rules_has_Languages as lrn_lang
+join Languages as lang 
+on lrn_lang.idLanguage = lang.idLanguage
+join Language_Rules as lrn 
+on lrn.idLanguageRule = lrn_lang.idLanguageRule; 
+
+COMMIT;
+
+-- Retrieve one specific language by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.languageName, lrn.Language_RuleName from Language_Rules_has_Languages as lrn_lang
+join Languages as lang 
+on lrn_lang.idLanguage = lang.idLanguage
+join Language_Rules as lrn 
+on lrn.idLanguageRule = lrn_item.idLanguageRule
+where lang.idLanguage = `${Passed id}`; 
+
+COMMIT;
+
+-- Retrieve one specific Language_Rule by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.languageName, lrn.Language_RuleName from Language_Rules_has_Languages as lrn_lang
+join Languages as language 
+on lrn_lang.idLanguage = lang.idLanguage
+join Language_Rules as lrn 
+on lrn.idLanguageRule = lrn_lang.idLanguageRule
+where lrn.idLanguageRule = `${Passed id}`; 
+
+COMMIT;
+
+-- Delete the relationship between a Language_Rule and an item, 
+-- but not the Language_Rule and items themselves
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Language_Rules_has_Languages
+where idLanguageRule = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Delete an item from a Language_Rule 
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Language_Rules_have_Languages
+where idLanguageRule = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Delete a Language_Rule
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Language_Rules_have_Languages
+where idLanguageRule = `${Passed id}` ; 
+
+COMMIT;
+
+-- Delete an item
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Language_Rules_have_Languages
+where idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Create Language_Rule-item relationship sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+INSERT INTO Language_Rules_has_Languages (idLanguage, idLanguageRule)
+select (
+    select idLanguage from Languages where idLanguage = `${passed variable}`
+), lrn.idLanguageRule from Language_Rules as lrn
+where lrn.idLanguageRule = `${passed variable}`;
+
+COMMIT;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
