@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS `Countries` (
   CONSTRAINT `fk_Countries_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -82,13 +82,13 @@ CREATE TABLE IF NOT EXISTS `Items` (
   CONSTRAINT `fk_Items_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Items_Countries1`
     FOREIGN KEY (`idCountry`)
     REFERENCES `Countries` (`idCountry`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -108,8 +108,8 @@ CREATE TABLE IF NOT EXISTS `Players` (
   CONSTRAINT `fk_Players_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -134,18 +134,18 @@ CREATE TABLE IF NOT EXISTS `Characters` (
   CONSTRAINT `fk_Characters_Players`
     FOREIGN KEY (`idPlayer`)
     REFERENCES `Players` (`idPlayer`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Characters_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Characters_Countries1`
     FOREIGN KEY (`idCountry`)
     REFERENCES `Countries` (`idCountry`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -166,8 +166,8 @@ CREATE TABLE IF NOT EXISTS `Languages` (
   CONSTRAINT `fk_Languages_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -203,13 +203,13 @@ CREATE TABLE IF NOT EXISTS `Countries_has_Languages` (
   CONSTRAINT `fk_Countries_has_Languages_idCountry`
     FOREIGN KEY (`idCountry`)
     REFERENCES `Countries` (`idGame`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Countries_has_Languages_idLanguage`
     FOREIGN KEY (`idLanguage`)
     REFERENCES `Languages` (`idLanguage`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
@@ -257,8 +257,8 @@ CREATE TABLE IF NOT EXISTS `Languages_has_LanguageRules` (
   CONSTRAINT `fk_Languages_has_LanguageRules_Languages1`
     FOREIGN KEY (`idLanguage`)
     REFERENCES `Languages` (`idLanguage`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_Languages_has_LanguageRules_LanguageRules1`
     FOREIGN KEY (`idLanguageRule`)
     REFERENCES `LanguageRules` (`idLanguageRule`)
@@ -285,18 +285,18 @@ CREATE TABLE IF NOT EXISTS `Languages_has_TranslationOutputs` (
   CONSTRAINT `fk_Languages_has_Translation_Outputs_Languages1`
     FOREIGN KEY (`idLanguage`)
     REFERENCES `Languages` (`idLanguage`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Languages_has_TranslationPOutputs_TranslationOutputs1`
     FOREIGN KEY (`idTranslationOutput`)
     REFERENCES `TranslationOutputs` (`idTranslationOutput`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Languages_has_Translation_Outputs_TranslationInputs1`
     FOREIGN KEY (`idTranslationInput`)
     REFERENCES `TranslationInputs` (`idTranslationInput`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
