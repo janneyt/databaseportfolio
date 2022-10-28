@@ -1,0 +1,13 @@
+{% extends "default/default.html" %}
+
+{% block title %}Display Character's Languages{% endblock %}
+
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="../../static/language_gen.css">
+{% endblock %}
+
+{% block main %}
+    <h1>Character's Known Languages</h1>
+    {% include "/characters_have_languages/views/display_characters_have_languages_view.html" %}
+{% endblock %}

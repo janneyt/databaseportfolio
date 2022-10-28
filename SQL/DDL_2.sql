@@ -7,7 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema cs340_dempsjam
 -- -----------------------------------------------------
-SET @dropschema := 'cs340_janneyt';
+SET @dropschema := 'cs340_dempsjam';
 SET @sql := CONCAT('DROP SCHEMA IF EXISTS ', @dropschema);
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
@@ -15,7 +15,7 @@ DEALLOCATE PREPARE stmt;
 -- -----------------------------------------------------
 -- Schema cs340_dempsjam
 -- -----------------------------------------------------
-SET @createschema := 'cs340_janneyt';
+SET @createschema := 'cs340_dempsjam';
 set @createsql := CONCAT('CREATE SCHEMA IF NOT EXISTS ', @createschema);
 PREPARE stmt2 from @createsql;
 execute stmt2;
@@ -279,20 +279,20 @@ CREATE TABLE IF NOT EXISTS `Languages_has_TranslationOutputs` (
   `idTranslationOutput` INT NOT NULL,
   `idTranslationInput` INT NOT NULL,
   PRIMARY KEY (`idLanguage`, `idTranslationOutput`, `idTranslationInput`),
-  INDEX `fk_Languages_has_Translation Outputs_Translation Outputs1_idx` (`idTranslationOutput` ASC) VISIBLE,
-  INDEX `fk_Languages_has_Translation Outputs_Languages1_idx` (`idLanguage` ASC) VISIBLE,
-  INDEX `fk_Languages_has_Translation Outputs_TranslationInputs1_idx` (`idTranslationInput` ASC) VISIBLE,
-  CONSTRAINT `fk_Languages_has_Translation Outputs_Languages1`
+  INDEX `fk_Languages_has_Translation_Outputs_TranslationOutputs1_idx` (`idTranslationOutput` ASC) VISIBLE,
+  INDEX `fk_Languages_has_Translation_Outputs_Languages1_idx` (`idLanguage` ASC) VISIBLE,
+  INDEX `fk_Languages_has_Translation_Outputs_TranslationInputs1_idx` (`idTranslationInput` ASC) VISIBLE,
+  CONSTRAINT `fk_Languages_has_Translation_Outputs_Languages1`
     FOREIGN KEY (`idLanguage`)
     REFERENCES `Languages` (`idLanguage`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Languages_has_Translation Outputs_Translation Outputs1`
+  CONSTRAINT `fk_Languages_has_TranslationPOutputs_TranslationOutputs1`
     FOREIGN KEY (`idTranslationOutput`)
-    REFERENCES `Translation Outputs` (`idTranslationOutput`)
+    REFERENCES `TranslationOutputs` (`idTranslationOutput`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Languages_has_Translation Outputs_TranslationInputs1`
+  CONSTRAINT `fk_Languages_has_Translation_Outputs_TranslationInputs1`
     FOREIGN KEY (`idTranslationInput`)
     REFERENCES `TranslationInputs` (`idTranslationInput`)
     ON DELETE NO ACTION

@@ -12,6 +12,45 @@ app = Flask(__name__, template_folder='html')
 def index():
     return render_template("index/index.html")
 
+# ROUTE RELATED TO COUNTRIES HAVE LANGUAGES PAGES
+@app.route('/display_countries_have_languages.html')
+def display_countries_have_languages():
+    return render_template('countries_have_languages/display_countries_have_languages.html')
+
+@app.route('/add_language_to_country.html')
+def add_language_to_country():
+    return render_template('countries_have_languages/add_language_to_country.html')
+
+@app.route('/delete_language_from_country.html')
+def delete_language_from_country():
+    return render_template('countries_have_languages/delete_language_from_country.html')
+
+# ROUTE RELATED TO CHARACTERS HAVE LANGUAGES PAGES
+@app.route('/display_characters_have_languages.html')
+def display_characters_have_languages():
+    return render_template('characters_have_languages/display_characters_have_languages.html')
+
+@app.route('/add_language_to_character.html')
+def add_language_to_character():
+    return render_template('characters_have_languages/add_language_to_character.html')
+
+@app.route('/delete_language_from_character.html')
+def delete_language_from_character():
+    return render_template('characters_have_languages/delete_language_from_character.html')
+
+#ROUTES RELATED TO CHARACTERS HAVE ITEMS PAGES
+@app.route('/display_characters_have_items.html')
+def display_characters_have_items():
+    return render_template('characters_have_items/display_characters_have_items.html')
+
+@app.route('/add_item_to_character.html')
+def add_item_to_character():
+    return render_template('characters_have_items/add_item_to_character.html')
+
+@app.route('/delete_item_from_character.html')
+def delete_item_from_character():
+    return render_template('characters_have_items/delete_item_from_character.html')
+
 # ROUTES RELATED TO CHARACTER PAGES
 @app.route('/display_characters.html')
 def display_characters():
@@ -79,6 +118,33 @@ def delete_item():
 @app.route('/update_item.html')
 def update_item():
     return render_template('items/update_item.html')
+
+# ROUTES RELATED TO LANGUAGE RULES PAGES
+@app.route('/display_language_rules.html')
+def display_language_rules():
+    return render_template('language_rules/display_language_rules.html')
+
+@app.route('/add_language_rule.html')
+def add_language_rule():
+    return render_template('language_rules/add_language_rule.html')
+
+@app.route('/delete_language_rule.html')
+def delete_language_rule():
+    return render_template('language_rules/delete_language_rule.html')
+
+@app.route('/update_language_rule.html')
+def update_language_rule():
+    return render_template('language_rules/update_language_rule.html')
+
+# ROUTES RELATED TO LANGUAGES HAVE LANGUAGE RULES PAGES
+@app.route('/display_language_rules_for_language.html')
+def display_language_rules_for_language():
+    return render_template('languages_have_language_rules/display_language_rules_for_language.html')
+
+@app.route('/add_language_rule_to_language.html')
+def add_language_rule_for_language():
+    return render_template('languages_have_language_rules/add_language_rule_to_language.html')
+
 
 # ROUTES RELATED TO LANGUAGE PAGES
 @app.route('/display_languages.html')

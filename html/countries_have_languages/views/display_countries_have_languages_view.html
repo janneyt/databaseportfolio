@@ -1,0 +1,39 @@
+<table>
+  <tr>
+    <th>Name</th>
+
+    <th>Languages</th>
+  </tr>
+  <tr>
+    <td>${countryName}</td>
+
+    <td>
+      <label for="languages">Languages in ${countryName}:</label>
+
+      <select name="languages" id="languages">
+        <option value="Elvish">Elvish</option>
+        <option value="Westron">Westron</option>
+        <option value="Sylvan Elvish">Sylvan Elvish</option>
+      </select>
+    </td>
+    <td>
+      <button>
+        <a href="/add_language_to_country.html">
+          Add Language
+        </a>
+      </button>
+    </td>
+    <td>
+      <button>
+        <a href="/delete_language_from_country.html">
+          Delete Language
+        </a>
+      </button>
+    </td>
+  </tr>
+
+</table>
+<br />
+<button>
+  <a href="/display_countries.html">Cancel</a>
+</button>
