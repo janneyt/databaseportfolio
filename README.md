@@ -1,4 +1,6 @@
-# databaseportfolio
+# RPG Masters
+
+# Overview
 
 A poor game master runs 10 games in a week with at least 5 players, but up to 20 players in a single game. The website must record Languages, Characters, Items, and Countries, sometimes totaling over 2000 entries each, for the game master’s Players. Keeping
 track of this via pen and paper is both time consuming and the records can be easily lost. This is further complicated if you want to create an otherworldly language, but trying to track it in the real world. Each character has a one-to-many relationship with languages and items, and a one-to-one relationship with countries. A player has a one-to-many relationship with a character.
