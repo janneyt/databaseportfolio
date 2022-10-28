@@ -13,41 +13,41 @@ def index():
     return render_template("index/index.html")
 
 # ROUTE RELATED TO COUNTRIES HAVE LANGUAGES PAGES
-@app.route('/display_countries_have_languages')
+@app.route('/display_countries_have_languages.html')
 def display_countries_have_languages():
     return render_template('countries_have_languages/display_countries_have_languages.html')
 
-@app.route('/add_language_to_country')
+@app.route('/add_language_to_country.html')
 def add_language_to_country():
     return render_template('countries_have_languages/add_language_to_country.html')
 
-@app.route('/delete_language_from_country')
+@app.route('/delete_language_from_country.html')
 def delete_language_from_country():
     return render_template('countries_have_languages/delete_language_from_country.html')
 
 # ROUTE RELATED TO CHARACTERS HAVE LANGUAGES PAGES
-@app.route('/display_characters_have_languages')
+@app.route('/display_characters_have_languages.html')
 def display_characters_have_languages():
     return render_template('characters_have_languages/display_characters_have_languages.html')
 
-@app.route('/add_language_to_character')
+@app.route('/add_language_to_character.html')
 def add_language_to_character():
     return render_template('characters_have_languages/add_language_to_character.html')
 
-@app.route('/delete_language_from_character')
+@app.route('/delete_language_from_character.html')
 def delete_language_from_character():
     return render_template('characters_have_languages/delete_language_from_character.html')
 
 #ROUTES RELATED TO CHARACTERS HAVE ITEMS PAGES
-@app.route('/display_characters_have_items')
+@app.route('/display_characters_have_items.html')
 def display_characters_have_items():
     return render_template('characters_have_items/display_characters_have_items.html')
 
-@app.route('/add_item_to_character')
+@app.route('/add_item_to_character.html')
 def add_item_to_character():
     return render_template('characters_have_items/add_item_to_character.html')
 
-@app.route('/delete_item_from_character')
+@app.route('/delete_item_from_character.html')
 def delete_item_from_character():
     return render_template('characters_have_items/delete_item_from_character.html')
 
