@@ -460,6 +460,321 @@ DEALLOCATE PREPARE stmt3;
 DELETE from Players where idPlayer = `${id passed from html page}`;
 COMMIT;
 
+-- Characters have items SQLs --
+
+-- Display all item-character relationships
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT item.itemName, chr.characterName from Characters_have_items as chr_item
+join Items as item 
+on chr_item.idItem = item.idItem
+join Characters as chr 
+on chr.idCharacter = chr_item.idCharacter; 
+
+COMMIT;
+
+-- Retrieve one specific item by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT item.itemName, chr.characterName from Characters_have_items as chr_item
+join Items as item 
+on chr_item.idItem = item.idItem
+join Characters as chr 
+on chr.idCharacter = chr_item.idCharacter
+where item.idItem = `${Passed id}`; 
+
+COMMIT;
+
+-- Retrieve one specific character by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT item.itemName, chr.characterName from Characters_have_items as chr_item
+join Items as item 
+on chr_item.idItem = item.idItem
+join Characters as chr 
+on chr.idCharacter = chr_item.idCharacter
+where chr.idCharacter = `${Passed id}`; 
+
+COMMIT;
+
+-- Delete the relationship between a character and an item, 
+-- but not the character and items themselves
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from characters_have_items
+where idCharacter = `${Passed id}` and idItem = `${idItem passed from html}`; 
+
+COMMIT;
+
+-- Delete an item from a character 
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from characters_have_items
+where idCharacter = `${Passed id}` and idItem = `${idItem passed from html}`; 
+
+COMMIT;
+
+-- Delete a character
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from characters_have_items
+where idCharacter = `${Passed id}` ; 
+
+COMMIT;
+
+-- Delete an item
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from characters_have_items
+where idItem = `${idItem passed from html}`; 
+
+COMMIT;
+
+-- Create character-item relationship sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+INSERT INTO Characters_has_Items (idItem, idCharacter)
+select (
+    select idItem from Items where idItem = `${passed variable}`
+), chr.idCharacter from Characters as chr
+where chr.idCharacter = `${passed variable}`;
+
+COMMIT;
+
+-- Characters have languages SQLs --
+
+-- Display all language-character relationships
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.langName, chr.characterName from Characters_has_Languages as chr_lang
+join Languages as lang 
+on chr_lang.idLanguage = lang.idLanguage
+join Characters as chr 
+on chr.idCharacter = chr_lang.idCharacter; 
+
+COMMIT;
+
+-- Retrieve one specific language by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.languageName, chr.characterName from Characters_has_Languages as chr_lang
+join Languages as lang 
+on chr_lang.idLanguage = lang.idLanguage
+join Characters as chr 
+on chr.idCharacter = chr_item.idCharacter
+where lang.idLanguage = `${Passed id}`; 
+
+COMMIT;
+
+-- Retrieve one specific character by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.languageName, chr.characterName from Characters_has_Languages as chr_lang
+join Languages as language 
+on chr_lang.idLanguage = lang.idLanguage
+join Characters as chr 
+on chr.idCharacter = chr_lang.idCharacter
+where chr.idCharacter = `${Passed id}`; 
+
+COMMIT;
+
+-- Delete the relationship between a character and an item, 
+-- but not the character and items themselves
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Characters_has_Languages
+where idLanguage = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Delete an item from a character 
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Characters_have_Languages
+where idCharacter = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Delete a character
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Characters_have_Languages
+where idLanguage = `${Passed id}` ; 
+
+COMMIT;
+
+-- Delete an item
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Characters_have_Languages
+where idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Create character-item relationship sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+INSERT INTO Characters_has_Languages (idLanguage, idCharacter)
+select (
+    select idLanguage from Languages where idLanguage = `${passed variable}`
+), chr.idCharacter from Characters as chr
+where chr.idCharacter = `${passed variable}`;
+
+COMMIT;
+
+-- Countries have languages SQLs --
+
+-- Display all language-Country relationships
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.langName, chr.countryName from Countries_has_Languages as chr_lang
+join Languages as lang 
+on chr_lang.idLanguage = lang.idLanguage
+join Countries as chr 
+on chr.idCountry = chr_lang.idCountry; 
+
+COMMIT;
+
+-- Retrieve one specific language by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.languageName, chr.countryName from Countries_has_Languages as chr_lang
+join Languages as lang 
+on chr_lang.idLanguage = lang.idLanguage
+join Countries as chr 
+on chr.idCountry = chr_item.idCountry
+where lang.idLanguage = `${Passed id}`; 
+
+COMMIT;
+
+-- Retrieve one specific Country by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT lang.languageName, chr.countryName from Countries_has_Languages as chr_lang
+join Languages as language 
+on chr_lang.idLanguage = lang.idLanguage
+join Countries as chr 
+on chr.idCountry = chr_lang.idCountry
+where chr.idCountry = `${Passed id}`; 
+
+COMMIT;
+
+-- Delete the relationship between a Country and an item, 
+-- but not the Country and items themselves
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Countries_has_Languages
+where idCountry = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Delete an item from a Country 
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Countries_have_Languages
+where idCountry = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Delete a Country
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Countries_have_Languages
+where idCountry = `${Passed id}` ; 
+
+COMMIT;
+
+-- Delete an item
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+Delete * from Countries_have_Languages
+where idLanguage = `${idLanguage passed from html}`; 
+
+COMMIT;
+
+-- Create Country-item relationship sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+INSERT INTO Countries_has_Languages (idLanguage, idCountry)
+select (
+    select idLanguage from Languages where idLanguage = `${passed variable}`
+), chr.idCountry from Countries as chr
+where chr.idCountry = `${passed variable}`;
+
+COMMIT;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
