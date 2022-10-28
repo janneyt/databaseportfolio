@@ -1,6 +1,6 @@
 {% extends "default/default.html" %}
 
-{% block title %}Display Languages{% endblock %}
+{% block title %}Display Language Rules for Language{% endblock %}
 
 {% block head %}
   {{ super() }}
@@ -8,6 +8,6 @@
 {% endblock %}
 
 {% block main %}
-    <h1>Languages:</h1>
-    {% include "language_have_language_rules/views/display_language_rules_view.html" %}
+    <h1>Language Rules for Language:</h1>
+    {% include "languages_have_language_rules/views/display_language_rules_for_language_view.html" %}
 {% endblock %}
