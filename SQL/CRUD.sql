@@ -415,7 +415,7 @@ execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
 SELECT idPlayer, playerName from Players
-WHERE idItem = `${HTML page will send over id to be retrieved}`;
+WHERE idPlayer = `${HTML page will send over id to be retrieved}`;
 
 COMMIT;
 
@@ -821,51 +821,6 @@ where lrn.idLanguageRule = `${Passed id}`;
 
 COMMIT;
 
--- Delete the relationship between a Language_Rule and an item, 
--- but not the Language_Rule and items themselves
-START TRANSACTION;
-PREPARE stmt3 from @setdatabase;
-execute stmt3;
-DEALLOCATE PREPARE stmt3;
-
-Delete * from Language_Rules_has_Languages
-where idLanguageRule = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
-
-COMMIT;
-
--- Delete an item from a Language_Rule 
-START TRANSACTION;
-PREPARE stmt3 from @setdatabase;
-execute stmt3;
-DEALLOCATE PREPARE stmt3;
-
-Delete * from Language_Rules_have_Languages
-where idLanguageRule = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
-
-COMMIT;
-
--- Delete a Language_Rule
-START TRANSACTION;
-PREPARE stmt3 from @setdatabase;
-execute stmt3;
-DEALLOCATE PREPARE stmt3;
-
-Delete * from Language_Rules_have_Languages
-where idLanguageRule = `${Passed id}` ; 
-
-COMMIT;
-
--- Delete an item
-START TRANSACTION;
-PREPARE stmt3 from @setdatabase;
-execute stmt3;
-DEALLOCATE PREPARE stmt3;
-
-Delete * from Language_Rules_have_Languages
-where idLanguage = `${idLanguage passed from html}`; 
-
-COMMIT;
-
 -- Create Language_Rule-item relationship sql
 START TRANSACTION;
 PREPARE stmt3 from @setdatabase;
@@ -878,6 +833,70 @@ select (
 ), lrn.idLanguageRule from Language_Rules as lrn
 where lrn.idLanguageRule = `${passed variable}`;
 
+COMMIT;
+
+-- Language Rules SQLs --
+
+-- Display all Language_Rules
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT idLanguage_Rules, ruleName from Language_Rules;
+
+COMMIT;
+
+-- Retrieve one specific item by id
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT idLanguageRules, ruleName from Language_Rules
+WHERE idLanguageRule = `${HTML page will send over id to be retrieved}`;
+
+COMMIT;
+
+-- Retrieve one specific item by name
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT idLanguageRules, ruleName from Language_Rules 
+WHERE ruleName = `${game Name passed from html page}`;
+
+COMMIT;
+
+-- Create LanguageRules sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+INSERT INTO Language_Rules (ruleName, description) VALUES (`${This will be a name}`);
+
+COMMIT;
+
+-- Update LanguageRules sql
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+UPDATE `Language_Rules`
+SET ruleName = `${new name}`
+WHERE idLanguageRule = `${id from html page}`;
+COMMIT;
+
+-- Delete LanguageRules by id SQL
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+DELETE from Language_Rules where idLanguageRule = `${id passed from html page}`;
 COMMIT;
 
 SET SQL_MODE=@OLD_SQL_MODE;
