@@ -51,8 +51,8 @@ SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `Countries` (
   `idCountry` INT NOT NULL,
   `countryName` VARCHAR(120) NOT NULL,
-  `sizeInKm` INT NOT NULL,
-  `population` INT NOT NULL,
+  `sizeInKm` INT,
+  `population` INT,
   `idGame` INT NOT NULL,
   PRIMARY KEY (`idCountry`),
   CONSTRAINT `fk_Countries_Games1`
