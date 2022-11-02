@@ -905,16 +905,12 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT * from Games where gameName like `{Search term entered here}`;
-COMMIT;
+SELECT gameName from Games where gameName like `{Search term entered here}`;
 
+UNION ALL
 -- SQL for searching by players
-START TRANSACTION;
-PREPARE stmt3 from @setdatabase;
-execute stmt3;
-DEALLOCATE PREPARE stmt3;
 
-SELECT * from Games 
+SELECT playerName from Games 
 join Players on Games.idPlayers = Players.idPlayers
 where playerName like `{Search term entered here}`;
 COMMIT;
