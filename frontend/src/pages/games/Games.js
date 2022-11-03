@@ -12,7 +12,7 @@ function Games() {
         <div id="content">
             <h1>Games</h1>
             <TableView headers={headers} listData={tableData} />
-            <Link to="addGame"><Button>Add Game</Button></Link>
+            <Link to="/addGame"><Button>Add Game</Button></Link>
             <Button onClick={() => navigate(-1)}>Cancel</Button>
         </div>
     )
