@@ -1,13 +1,13 @@
 import Form from '../../components/Forms/Form';
-import { editFormContents } from '../../data/languageData';
+import { editFormContents } from '../../data/languageRuleData';
 
-function EditLanguage() {
+function EditLanguageRule() {
     return (
         <div className="content">
-            <h1>Edit Language Page</h1>
+            <h1>Edit Language Rule Page</h1>
             <Form submitText="Save" inputState={editFormContents} />
         </div>
     )
 }
 
-export default EditLanguage;
+export default EditLanguageRule;
