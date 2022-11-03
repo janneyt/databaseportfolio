@@ -16,8 +16,8 @@ const tableData = [
 ];
 
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Link to="/AddLanguageToCharacter"><Button>Add Language</Button></Link>);
-    tableData[index].push(<Link to="/DeleteLanguageFromCharacter"><Button>Delete Language</Button></Link>);
+    tableData[index].push(<Link to="/addLanguageToCharacter"><Button>Add Language</Button></Link>);
+    tableData[index].push(<Link to="/deleteLanguageFromCharacter"><Button>Delete Language</Button></Link>);
 }
 
 const addFormContents = [
