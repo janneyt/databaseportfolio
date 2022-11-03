@@ -12,7 +12,7 @@ function Countries() {
         <div id="content">
             <h1>Countries</h1>
             <TableView headers={headers} listData={tableData} />
-            <Link to="/AddCountry"><Button>Add Country</Button></Link>
+            <Link to="/addCountry"><Button>Add Country</Button></Link>
             <Button onClick={() => navigate(-1)}>Cancel</Button>
         </div>
     )

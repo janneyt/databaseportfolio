@@ -10,7 +10,7 @@ function Players() {
         <div id="content">
             <h1>Players</h1>
             <TableView headers={headers} listData={tableData} />
-            <Link to="/AddPlayer"><Button>Add Player</Button></Link>
+            <Link to="/addPlayer"><Button>Add Player</Button></Link>
             <Button onClick={() => navigate(-1)}>Cancel</Button>
         </div>
     )

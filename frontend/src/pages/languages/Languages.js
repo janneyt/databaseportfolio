@@ -11,7 +11,7 @@ function Languages() {
         <div id="content">
             <h1>Languages</h1>
             <TableView headers={headers} listData={tableData} />
-            <Link to="/AddLanguage"><Button>Add Language</Button></Link>
+            <Link to="/addLanguage"><Button>Add Language</Button></Link>
             <Button onClick={() => navigate(-1)}>Cancel</Button>
         </div>
     )

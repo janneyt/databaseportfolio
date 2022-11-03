@@ -11,7 +11,7 @@ function Items() {
         <div id="content">
             <h1>Items</h1>
             <TableView headers={headers} listData={tableData} />
-            <Link to="/AddItem"><Button>Add Item</Button></Link>
+            <Link to="/addItem"><Button>Add Item</Button></Link>
             <Button onClick={() => navigate(-1)}>Cancel</Button>
         </div>
     )
