@@ -7,8 +7,6 @@ const TableView = ({headers, listData}) => {
         <th key={index}>{headers}</th>
     );
 
-    console.log("length", listData.length)
-
     for (let index=0; index < listData.length; index++) {
     }
 
