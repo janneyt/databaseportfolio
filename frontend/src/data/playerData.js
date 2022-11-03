@@ -10,8 +10,8 @@ const tableData = [
 // Add the buttons for the display list, anything inside the push
 // will get added to one cell in the table
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Link to="/EditPlayer"><Button>Edit Player</Button></Link>);
-    tableData[index].push(<Link to="/DeletePlayer"><Button>DeletePlayer</Button></Link>);
+    tableData[index].push(<Link to="/editPlayer"><Button>Edit Player</Button></Link>);
+    tableData[index].push(<Link to="/deletePlayer"><Button>DeletePlayer</Button></Link>);
 }
 
 const addFormContents = [

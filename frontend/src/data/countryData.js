@@ -10,9 +10,9 @@ const tableData = [
 ];
 
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Link to="/EditCountry"><Button>Edit Country</Button></Link>);
-    tableData[index].push(<Link to="/DeleteCountry"><Button>DeleteCountry</Button></Link>);
-    tableData[index].push(<Link to="/CountriesHaveLanguages"><Button>Languages</Button></Link>);
+    tableData[index].push(<Link to="/editCountry"><Button>Edit Country</Button></Link>);
+    tableData[index].push(<Link to="/deleteCountry"><Button>DeleteCountry</Button></Link>);
+    tableData[index].push(<Link to="/countriesHaveLanguages"><Button>Languages</Button></Link>);
 }
 
 const addFormContents = [

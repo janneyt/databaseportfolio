@@ -10,7 +10,7 @@ const tableData = [
 // Add the buttons for the display list, anything inside the push
 // will get added to one cell in the table
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<div class="buttonGroup"><Link to="DeleteTranslation"><Button>DeleteTranslation</Button></Link><p>Deleting doesn't change the way the phrase is translated.</p></div>);
+    tableData[index].push(<div class="buttonGroup"><Link to="/deleteTranslation"><Button>DeleteTranslation</Button></Link><p>Deleting doesn't change the way the phrase is translated.</p></div>);
 }
 
 const addFormContents = [

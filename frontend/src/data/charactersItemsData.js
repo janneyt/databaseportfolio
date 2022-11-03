@@ -16,8 +16,8 @@ const tableData = [
 ];
 
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Link to="/AddItemToCharacter"><Button>Add Item</Button></Link>);
-    tableData[index].push(<Link to="/DeleteItemFromCharacter"><Button>Delete Item</Button></Link>);
+    tableData[index].push(<Link to="/addItemToCharacter"><Button>Add Item</Button></Link>);
+    tableData[index].push(<Link to="/deleteItemFromCharacter"><Button>Delete Item</Button></Link>);
 }
 
 const addFormContents = [

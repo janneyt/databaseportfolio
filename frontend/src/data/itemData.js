@@ -12,8 +12,8 @@ const tableData = [
 // Add the buttons for the display list, anything inside the push
 // will get added to one cell in the table
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Link to="/EditItem"><Button>Edit Item</Button></Link>);
-    tableData[index].push(<Link to="/DeleteItem"><Button>DeleteItem</Button></Link>);
+    tableData[index].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
+    tableData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
 }
 
 const addFormContents = [
