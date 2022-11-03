@@ -1,9 +1,25 @@
 import {Link} from 'react-router-dom';
+import Button from '../components/Button';
 
 function Index() {
     return(
         <div id="contents">
             <h1>Index Page</h1>
+            <p>the following pages will be part of the main navigation:</p>
+            <Link to="/characters"><Button>Characters</Button></Link>
+            <Link to="/countries"><Button>Countries</Button></Link>
+            <Link to="/games"><Button>Games</Button></Link>
+            <Link to="/items"><Button>Items</Button></Link>
+            <Link to="/languages"><Button>Languages</Button></Link>
+            <Link to="/players"><Button>Players</Button></Link>
+            <Link to="/translations"><Button>Translations</Button></Link>
+
+            <p>The following are likely to be condensed into other pages, but just working out functionality:</p>
+            <Link to="/CharactersHaveItems"><Button>CharactersHaveItems</Button></Link>
+            <Link to="/CharactersHaveLanguages"><Button>Characters Have Languages</Button></Link>
+            <Link to="/CountriesHaveLanguages"><Button>Countries Have Languages</Button></Link>
+            <Link to="/languageRules"><Button>Language Rules</Button></Link>
+            <Link to="/LanguagesHaveLanguageRules"><Button>Languages Have Language Rules</Button></Link>
 
             <h2>The following is a list of individual pages:</h2>
 
@@ -48,6 +64,12 @@ function Index() {
             <Link to="/deleteTranslation">Delete Translation</Link><br></br>
             <Link to="/translations">Translations</Link><br></br>
 
+            <h2>Language Rules</h2>
+            <Link to="/addLanguageRule">Add Language Rule</Link><br></br>
+            <Link to="/editLanguageRule">Edit Language Rule</Link><br></br>
+            <Link to="/deleteLanguageRule">Delete Language Rule</Link><br></br>
+            <Link to="/languageRules">Language Rules</Link><br></br>
+
             <h2>Characters Have Items</h2>
             <Link to="/addItemToCharacter">Add Item To Character</Link><br></br>
             <Link to="/deleteItemFromCharacter">Delete Item From Character</Link><br></br>
@@ -62,6 +84,10 @@ function Index() {
             <Link to="/addLanguageToCountry">Add Language To Country</Link><br></br>
             <Link to="/deleteLanguageFromCountry">Delete Language From Country</Link><br></br>
             <Link to="/CountriesHaveLanguages">Countries Have Languages</Link><br></br>
+
+            <h2>Languages Have Language Rules</h2>
+            <Link to="/addLanguageRuleToLanguage">Add Language Rule to Language</Link><br></br>
+            <Link to="/LanguagesHaveLanguageRules">Languages Have Language Rules</Link><br></br>
 
         </div>
     )
