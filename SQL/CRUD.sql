@@ -899,6 +899,23 @@ DEALLOCATE PREPARE stmt3;
 DELETE from Language_Rules where idLanguageRule = `${id passed from html page}`;
 COMMIT;
 
+-- SQL for search feature
+START TRANSACTION;
+PREPARE stmt3 from @setdatabase;
+execute stmt3;
+DEALLOCATE PREPARE stmt3;
+
+SELECT gameName from Games where gameName like `{Search term entered here}`;
+
+UNION ALL
+-- SQL for searching by players
+
+SELECT playerName from Games 
+join Players on Games.idPlayers = Players.idPlayers
+where playerName like `{Search term entered here}`;
+COMMIT;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
