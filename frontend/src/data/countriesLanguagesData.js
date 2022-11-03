@@ -1,4 +1,5 @@
 import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 import Select from 'react-select';
 
 const headers = ["Name", "Country's Known Languages", "Add Language", "Delete Language"];
@@ -15,8 +16,8 @@ const tableData = [
 ];
 
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Button>Add Language</Button>);
-    tableData[index].push(<Button>Delete Language</Button>);
+    tableData[index].push(<Link to="/AddLanguageToCountry"><Button>Add Language</Button></Link>);
+    tableData[index].push(<Link to="/DeleteLanguageFromCountry"><Button>Delete Language</Button></Link>);
 }
 
 const addFormContents = [

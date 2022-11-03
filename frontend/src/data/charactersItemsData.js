@@ -1,4 +1,5 @@
 import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 import Select from 'react-select';
 
 const headers = ["Name", "Character's Known Items", "Add Item", "Delete Item"];
@@ -15,8 +16,8 @@ const tableData = [
 ];
 
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Button>Add Item</Button>);
-    tableData[index].push(<Button>Delete Item</Button>);
+    tableData[index].push(<Link to="/AddItemToCharacter"><Button>Add Item</Button></Link>);
+    tableData[index].push(<Link to="/DeleteItemFromCharacter"><Button>Delete Item</Button></Link>);
 }
 
 const addFormContents = [

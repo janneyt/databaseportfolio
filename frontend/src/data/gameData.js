@@ -1,4 +1,5 @@
 import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 
 const headers = ["Name", "Countries", "Players", "Languages", "Edit", "Delete"];
 
@@ -9,11 +10,11 @@ const tableData = [
 // Add the buttons for the display list, anything inside the push
 // will get added to one cell in the table
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Button>Countries</Button>);
-    tableData[index].push(<Button>Players</Button>);
-    tableData[index].push(<Button>Languages</Button>);
-    tableData[index].push(<Button>Edit Game</Button>);
-    tableData[index].push(<Button>DeleteGame</Button>);
+    tableData[index].push(<Link to="/Countries"><Button>Countries</Button></Link>);
+    tableData[index].push(<Link to="/Players"><Button>Players</Button></Link>);
+    tableData[index].push(<Link to="/Languages"><Button>Languages</Button></Link>);
+    tableData[index].push(<Link to="/EditGame"><Button>Edit Game</Button></Link>);
+    tableData[index].push(<Link to="/DeleteGame"><Button>DeleteGame</Button></Link>);
 }
 
 const addFormContents = [

@@ -1,4 +1,5 @@
 import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 
 const headers = ["Name", "Description", "Game", "Edit", "Delete"];
 
@@ -9,8 +10,8 @@ const tableData = [
 // Add the buttons for the display list, anything inside the push
 // will get added to one cell in the table
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Button>Edit Language</Button>);
-    tableData[index].push(<Button>Delete Language</Button>);
+    tableData[index].push(<Link to="/EditLanguage"><Button>Edit Language</Button></Link>);
+    tableData[index].push(<Link to="/DeleteLanguage"><Button>Delete Language</Button></Link>);
 }
 
 const optionsLanguageRules = [
