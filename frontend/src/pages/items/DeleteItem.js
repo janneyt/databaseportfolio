@@ -1,5 +1,5 @@
 import Form from '../../components/Forms/Form';
-import { deleteFormContents } from '../../data/countryData';
+import { deleteFormContents } from '../../data/itemData';
 
 function DeleteItem() {
     return (

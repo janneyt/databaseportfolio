@@ -1,0 +1,45 @@
+<Link to="/addCharacter">Add Character</Link>
+<Link to="/editCharacter">Edit Character</Link>
+<Link to="/deleteCharacter">Delete Character</Link>
+<Link to="/characters">Characters</Link>
+
+<Link to="/addCountry">Add Country</Link>
+<Link to="/editCountry">Edit Country</Link>
+<Link to="/deleteCountry">Delete Country</Link>
+<Link to="/countries">Countries</Link>
+
+<Link to="/addGame">Add Game</Link>
+<Link to="/editGame">Edit Game</Link>
+<Link to="/deleteGame">Delete Game</Link>
+<Link to="/games">Games</Link>
+
+<Link to="/addItem">Add Item</Link>
+<Link to="/editItem">Edit Item</Link>
+<Link to="/deleteItem">Delete Item</Link>
+<Link to="/items">Items</Link>
+
+<Link to="/addLanguage">Add Language</Link>
+<Link to="/editLanguage">Edit Language</Link>
+<Link to="/deleteLanguage">Delete Language</Link>
+<Link to="/languages">Languages</Link>
+
+<Link to="/addPlayer">Add Player</Link>
+<Link to="/editPlayer">Edit Player</Link>
+<Link to="/deletePlayer">Delete Player</Link>
+<Link to="/players">Players</Link>
+
+<Link to="/addTranslation">Add Translation</Link>
+<Link to="/deleteTranslation">Delete Translation</Link>
+<Link to="/translations">Translations</Link>
+
+<Link to="/addItemToCharacter">Add Item To Character</Link>
+<Link to="/deleteItemFromCharacter">Delete Item From Character</Link>
+<Link to="/CharactersHaveItems">CharactersHaveItems</Link>
+
+<Link to="/addLanguageToCharacter">Add Language To Character</Link>
+<Link to="/deleteLanguageFromCharacter">Delete Language FromCharacter</Link>
+<Link to="/CharactersHaveLanguages">CharactersHaveLanguages</Link> 
+
+<Link to="/addLanguageToCountry">Add Language To Country</Link>
+<Link to="/deleteLanguageFromCountry">Delete Language From Country</Link>
+<Link to="/CountriesHaveLanguages">Countries Have Languages</Link>

@@ -1,13 +1,13 @@
 import Form from '../../components/Forms/Form';
-import { editFormContents } from '../../data/countryData';
+import { editFormContents } from '../../data/playerData';
 
-function EditCountry() {
+function EditPlayer() {
     return (
         <div className="content">
-            <h1>Edit Country Page</h1>
+            <h1>Edit Player Page</h1>
             <Form submitText="Save" inputState={editFormContents} />
         </div>
     )
 }
 
-export default EditCountry;
+export default EditPlayer;

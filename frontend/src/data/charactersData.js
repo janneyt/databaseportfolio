@@ -1,4 +1,5 @@
 import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 
 const headers = ["Name", "Description", "Country","Player", "Game", "Edit", "Delete"];
 
@@ -8,8 +9,8 @@ const tableData = [
 ];
 
 for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Button>Edit Character</Button>);
-    tableData[index].push(<Button>DeleteCharacter</Button>);
+    tableData[index].push(<Link to="/editCharacter"><Button>Edit Character</Button></Link>);
+    tableData[index].push(<Link to="/deleteCharacter"><Button>DeleteCharacter</Button></Link>);
 }
 
 const addFormContents = [
@@ -19,7 +20,7 @@ const addFormContents = [
 
 const editFormContents = [
     {type:"text", name:"countryname", label:"Name your country:", value: "${countryName}"},
-    {type:"text", name:"sizeInKM", label:"How large is your country?", value:"${sizeInKM}"}
+    {type:"text", name:"sizeInKM", label:"How large is your country?", value:"${sizeInKM}"},
 ];
 
 const deleteFormContents = [
