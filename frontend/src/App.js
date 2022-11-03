@@ -35,6 +35,11 @@ import Players from './pages/players/Players';
 import DeletePlayer from './pages/players/DeletePlayer';
 import EditPlayer from './pages/players/EditPlayer';
 
+import AddLanguageRule from './pages/language_rules/AddLanguageRule';
+import LanguageRules from './pages/language_rules/LanguageRules';
+import DeleteLanguageRule from './pages/language_rules/DeleteLanguageRule';
+import EditLanguageRule from './pages/language_rules/EditLanguageRule'
+
 import AddTranslation from './pages/translations/AddTranslation';
 import Translations from './pages/translations/Translations';
 import DeleteTranslation from './pages/translations/DeleteTranslation';
@@ -50,6 +55,10 @@ import DeleteLanguageFromCharacter from './pages/characters_have_languages/Delet
 import AddLanguageToCountry from './pages/countries_have_languages/AddLanguageToCountry';
 import CountriesHaveLanguages from './pages/countries_have_languages/CountriesHaveLanguages';
 import DeleteLanguageFromCountry from './pages/countries_have_languages/DeleteLanguageFromCountry';
+
+import AddLanguageRuleToLanguage from './pages/languages_have_language_rules/AddLanguageRuleToLanguage';
+import LanguagesHaveLanguageRules from './pages/languages_have_language_rules/LanguagesHaveLanguageRules';
+
 
 function App() {
   return (
@@ -88,21 +97,29 @@ function App() {
         <Route path="/deletePlayer" element={<DeletePlayer />} />
         <Route path="/players" element={<Players />} />
 
+        <Route path="/addLanguageRule" element={<AddLanguageRule />} />
+        <Route path="/editLanguageRule" element={<EditLanguageRule />} />
+        <Route path="/deleteLanguageRule" element={<DeleteLanguageRule />} />
+        <Route path="/languageRules" element={<LanguageRules />} />
+
         <Route path="/addTranslation" element={<AddTranslation />} />
         <Route path="/deleteTranslation" element={<DeleteTranslation />} />
         <Route path="/translations" element={<Translations />} />
 
         <Route path="/addItemToCharacter" element={<AddItemToCharacter />} />
         <Route path="/deleteItemFromCharacter" element={<DeleteItemFromCharacter />} />
-        <Route path="/CharactersHaveItems" element={<CharactersHaveItems />} />
+        <Route path="/charactersHaveItems" element={<CharactersHaveItems />} />
 
         <Route path="/addLanguageToCharacter" element={<AddLanguageToCharacter />} />
         <Route path="/deleteLanguageFromCharacter" element={<DeleteLanguageFromCharacter />} />
-        <Route path="/CharactersHaveLanguages" element={<CharactersHaveLanguages />} /> 
+        <Route path="/charactersHaveLanguages" element={<CharactersHaveLanguages />} /> 
 
         <Route path="/addLanguageToCountry" element={<AddLanguageToCountry />} />
         <Route path="/deleteLanguageFromCountry" element={<DeleteLanguageFromCountry />} />
-        <Route path="/CountriesHaveLanguages" element={<CountriesHaveLanguages />} />
+        <Route path="/countriesHaveLanguages" element={<CountriesHaveLanguages />} />
+
+        <Route path="/addLanguageRuleToLanguage" element={<AddLanguageRuleToLanguage />} />
+        <Route path="/languagesHaveLanguageRules" element={<LanguagesHaveLanguageRules />} />
 
       </Routes>
     </Router>
