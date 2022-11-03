@@ -2,7 +2,7 @@ import TableView from '../../components/TableView/TableView';
 import {headers, tableData} from '../../data/countryData';
 import Button from '../../components/Button';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Countries() {
 
@@ -12,7 +12,7 @@ function Countries() {
         <div id="content">
             <h1>Countries</h1>
             <TableView headers={headers} listData={tableData} />
-            <Button>Add Country</Button>
+            <Link to="/AddCountry"><Button>Add Country</Button></Link>
             <Button onClick={() => navigate(-1)}>Cancel</Button>
         </div>
     )
