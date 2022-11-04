@@ -15,8 +15,12 @@ function Games() {
             <TableView headers={headers} listData={tableData} />
             <Link to="addGame"><Button>Add Game</Button></Link>
             <Button onClick={() => navigate(-1)}>Cancel</Button>
-
+            <br />
+            <br />
+            Retrieve your game:
             <SearchBar />
+            <h3>Results:</h3>
+            <p><TableView headers={headers} listData={tableData} /></p>
         </div>
     )
 }
