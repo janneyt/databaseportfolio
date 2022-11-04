@@ -1,6 +1,7 @@
 import TableView from '../../components/TableView/TableView';
 import {headers, tableData} from '../../data/gameData';
 import Button from '../../components/Button';
+import { SearchBar } from '../../components/SearchBar';
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -14,6 +15,8 @@ function Games() {
             <TableView headers={headers} listData={tableData} />
             <Link to="/addGame"><Button>Add Game</Button></Link>
             <Button onClick={() => navigate(-1)}>Cancel</Button>
+
+            <SearchBar />
         </div>
     )
 }
