@@ -9,7 +9,7 @@ function CountriesHaveLanguages() {
 
     return(
         <div id="content">
-            <h1>Countrys's Languages</h1>
+            <h1>Country's Languages</h1>
             <TableView headers={headers} listData={tableData} />
             <Button onClick={() => navigate(-1)}>Cancel</Button>
         </div>
