@@ -468,7 +468,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT item.itemName, chr.characterName from Characters_have_items as chr_item
+SELECT item.itemName, chr.characterName from Characters_has_items as chr_item
 join Items as item 
 on chr_item.idItem = item.idItem
 join Characters as chr 
@@ -482,7 +482,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT item.itemName, chr.characterName from Characters_have_items as chr_item
+SELECT item.itemName, chr.characterName from Characters_has_items as chr_item
 join Items as item 
 on chr_item.idItem = item.idItem
 join Characters as chr 
@@ -497,7 +497,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT item.itemName, chr.characterName from Characters_have_items as chr_item
+SELECT item.itemName, chr.characterName from Characters_has_items as chr_item
 join Items as item 
 on chr_item.idItem = item.idItem
 join Characters as chr 
@@ -513,7 +513,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-Delete * from characters_have_items
+Delete * from characters_has_items
 where idCharacter = `${Passed id}` and idItem = `${idItem passed from html}`; 
 
 COMMIT;
@@ -524,7 +524,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-Delete * from characters_have_items
+Delete * from characters_has_items
 where idCharacter = `${Passed id}` and idItem = `${idItem passed from html}`; 
 
 COMMIT;
@@ -546,7 +546,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-Delete * from characters_have_items
+Delete * from characters_has_items
 where idItem = `${idItem passed from html}`; 
 
 COMMIT;
@@ -734,7 +734,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-Delete * from Countries_have_Languages
+Delete * from Countries_has_Languages
 where idCountry = `${Passed id}` and idLanguage = `${idLanguage passed from html}`; 
 
 COMMIT;
@@ -745,7 +745,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-Delete * from Countries_have_Languages
+Delete * from Countries_has_Languages
 where idCountry = `${Passed id}` ; 
 
 COMMIT;
@@ -756,7 +756,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-Delete * from Countries_have_Languages
+Delete * from Countries_has_Languages
 where idLanguage = `${idLanguage passed from html}`; 
 
 COMMIT;
@@ -783,7 +783,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT lang.langName, lrn.ruleName from Language_rules_has_Languages as lrn_lang
+SELECT lang.langName, lrn.ruleName from Languages_has_LanguageRules as lrn_lang
 join Languages as lang 
 on lrn_lang.idLanguage = lang.idLanguage
 join Language_Rules as lrn 
@@ -797,7 +797,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT lang.languageName, lrn.Language_RuleName from Language_Rules_has_Languages as lrn_lang
+SELECT lang.languageName, lrn.Language_RuleName from Languages_has_LanguageRules as lrn_lang
 join Languages as lang 
 on lrn_lang.idLanguage = lang.idLanguage
 join Language_Rules as lrn 
@@ -812,7 +812,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT lang.languageName, lrn.Language_RuleName from Language_Rules_has_Languages as lrn_lang
+SELECT lang.languageName, lrn.Language_RuleName from Languages_has_LanguageRules as lrn_lang
 join Languages as language 
 on lrn_lang.idLanguage = lang.idLanguage
 join Language_Rules as lrn 
@@ -827,10 +827,10 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-INSERT INTO Language_Rules_has_Languages (idLanguage, idLanguageRule)
+INSERT INTO Languages_has_LanguageRules (idLanguage, idLanguageRule)
 select (
     select idLanguage from Languages where idLanguage = `${passed variable}`
-), lrn.idLanguageRule from Language_Rules as lrn
+), lrn.idLanguageRule from LanguageRules as lrn
 where lrn.idLanguageRule = `${passed variable}`;
 
 COMMIT;
@@ -843,7 +843,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT idLanguage_Rules, ruleName from Language_Rules;
+SELECT idLanguageRule, ruleName from LanguageRules;
 
 COMMIT;
 
@@ -853,7 +853,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT idLanguageRules, ruleName from Language_Rules
+SELECT idLanguageRule, ruleName from LanguageRules
 WHERE idLanguageRule = `${HTML page will send over id to be retrieved}`;
 
 COMMIT;
@@ -864,7 +864,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-SELECT idLanguageRules, ruleName from Language_Rules 
+SELECT idLanguageRule, ruleName from LanguageRules 
 WHERE ruleName = `${game Name passed from html page}`;
 
 COMMIT;
@@ -875,7 +875,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-INSERT INTO Language_Rules (ruleName, description) VALUES (`${This will be a name}`);
+INSERT INTO LanguageRules (ruleName, description) VALUES (`${This will be a name}`);
 
 COMMIT;
 
@@ -885,7 +885,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-UPDATE `Language_Rules`
+UPDATE `LanguageRules`
 SET ruleName = `${new name}`
 WHERE idLanguageRule = `${id from html page}`;
 COMMIT;
@@ -896,7 +896,7 @@ PREPARE stmt3 from @setdatabase;
 execute stmt3;
 DEALLOCATE PREPARE stmt3;
 
-DELETE from Language_Rules where idLanguageRule = `${id passed from html page}`;
+DELETE from LanguageRules where idLanguageRule = `${id passed from html page}`;
 COMMIT;
 
 -- SQL for search feature
