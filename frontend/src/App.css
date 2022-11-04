@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+body {
+  margin: 1em;
+}
+
+footer {
+  margin: 1em;
+  margin-left: 0;
+}
+
+button {
+  margin: 2px;
+  padding: 2px;
+}
+
+table {
+  border: 1px solid black;
+  margin: 1em;
+  margin-left: 0;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
