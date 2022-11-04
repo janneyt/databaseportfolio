@@ -5,7 +5,7 @@ const headers = ["Name", "Description", "Country","Player", "Game", "Edit", "Del
 
 const tableData = [
     ["Bilbo Baggins", "A reluctant hero who prefers to eat and sleep over adventuring, until adventuring takes his soul", "The Shire", "JRR Tolkien", "Fun first game!"],
-    ["Bilbo Baggins", "A reluctant hero who prefers to eat and sleep over adventuring, until adventuring takes his soul", "The Shire", "JRR Tolkien", "Fun first game!"]
+    ["Another Character", "Just a lazy drunk", "Not the Shire", "JRR Tolkien", "Fun first game!"]
 ];
 
 for (let index=0; index < tableData.length; index++) {

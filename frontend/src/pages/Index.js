@@ -5,7 +5,9 @@ function Index() {
     return(
         <div id="contents">
             <h1>Index Page</h1>
-            <p>the following pages will be part of the main navigation:</p>
+
+            <p>Note that the submit buttons are not yet inplemented. </p>
+            <p>The following pages will be part of the main navigation:</p>
             <Link to="/characters"><Button>Characters</Button></Link>
             <Link to="/countries"><Button>Countries</Button></Link>
             <Link to="/games"><Button>Games</Button></Link>

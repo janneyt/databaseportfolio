@@ -12,7 +12,7 @@ for (let index=0; index < tableData.length; index++) {
     tableData[index].push(<Link to="/addLanguageRuleToLanguage"><Button>Add Language Rule</Button></Link>);
     tableData[index].push(
         <div class="optionGroup">
-            <Link to="/deleteLanguageRuleFromLanguage"><Button>Delete Language Rule</Button></Link>
+            <Link to="/deleteLanguageRule"><Button>Delete Language Rule</Button></Link>
             <Link to="/deleteLanguage"><Button>Delete Language</Button></Link>
         </div>);
 }
