@@ -27,8 +27,9 @@ const editFormContents = [
     {type:"text", name:"itemname", label:"Name Your Item:", value: "${itemName}"},
     {type:"text", name:"itemdescription", label:"Describe Your Item", value:"${itemDescription}"},
     {type:"text", name:"gamename", label:"Game Name (${Pulls game name from game id})", value:"${gameName}"},
-    {type:"text", name:"playername", label: "Player Name *${Pulls player name from player id}", value: "${playerName}"}
+    
 ];
+
 
 const deleteFormContents = [
     {type:"hidden", name:"${idItem}"}

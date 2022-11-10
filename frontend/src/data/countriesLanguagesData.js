@@ -6,13 +6,15 @@ const headers = ["Name", "Country's Known Languages", "Add Language", "Delete La
 
 const countryLanguages = [{value:"countrylanguages", label:"{$languageName}"},
 {value:"westron", label:"Westron"},
-{value:"sylvanelvish", label:"Sylvan Elvish"}
+{value:"sylvanelvish", label:"Sylvan Elvish"},
+{value:"None", label:"Null"}
 ];
 
 // Currently reusing the same Select, this is temporary anyway.
 const tableData = [
     ["${countryName}", <Select options={countryLanguages}/>],
-    ["USA", <Select options={countryLanguages}/>]
+    ["USA", <Select options={countryLanguages}/>],
+    ["Gondor", <Select options={countryLanguages} />]
 ];
 
 for (let index=0; index < tableData.length; index++) {

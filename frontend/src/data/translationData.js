@@ -1,10 +1,14 @@
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 
-const headers = ["Original Word", "Translation", "Delete"];
+const headers = ["Language ID","Original Word", "Translation", "Delete"];
 
 const tableData = [
-    ["${Some input coming from the TranslationInputs table}", "${Some output coming from the selected algorithm used to translate}"]
+    ["1","${Some input coming from the TranslationInputs table}", "${Some output coming from the selected algorithm used to translate}"],
+    ["1","Idea","Idee"],
+    ["2","Boys","Ragazze"],
+    ["1","Machine","Machine"],
+    ["2","Machine","Macchina"]
 ];
 
 // Add the buttons for the display list, anything inside the push

@@ -5,7 +5,8 @@ const headers = ["Language", "Language Rule", "Add Language Rule", "Delete Langu
 
 const tableData = [
     ["Elvish", "Replace every ${num letters} with ${letter}"],
-    ["${language}", "${languageRule}"]
+    ["${language}", "${languageRule}"],
+    ["Irish","Some rule from linguistics"]
 ];
 
 for (let index=0; index < tableData.length; index++) {

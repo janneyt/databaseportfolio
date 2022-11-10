@@ -5,6 +5,7 @@ const headers = ["Name", "Description", "Country","Player", "Game", "Edit", "Del
 
 const tableData = [
     ["Bilbo Baggins", "A reluctant hero who prefers to eat and sleep over adventuring, until adventuring takes his soul", "The Shire", "JRR Tolkien", "Fun first game!"],
+    ["Another Character", "Just a lazy drunk", "Not the Shire", "JRR Tolkien", "Fun first game!"],
     ["Another Character", "Just a lazy drunk", "Not the Shire", "JRR Tolkien", "Fun first game!"]
 ];
 
@@ -14,17 +15,17 @@ for (let index=0; index < tableData.length; index++) {
 }
 
 const addFormContents = [
-    {type:"text", name:"countryname", label:"Name your country:"},
-    {type:"text", name:"sizeInKM", label:"How large is your country?"}
+    {type:"text", name:"charactername", label:"Name your character:", value: "${characterName}"},
+    {type:"text", name:"characterdescription", label:"Please describe your character", value: "${characterDescription}"}
 ];
 
 const editFormContents = [
-    {type:"text", name:"countryname", label:"Name your country:", value: "${countryName}"},
-    {type:"text", name:"sizeInKM", label:"How large is your country?", value:"${sizeInKM}"},
+    {type:"text", name:"charactername", label:"Name your character:", value: "${characterName}"},
+    {type:"text", name:"characterdescription", label:"Please describe your character", value: "${characterDescription}"}
 ];
 
 const deleteFormContents = [
-    {type:"hidden", name:"${idCountry}"}
+    {type:"hidden", name:"${idCharacter}"}
 ];
 
 
