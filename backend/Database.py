@@ -33,7 +33,7 @@ class Database:
         return self._results
 
     def get_json(self):
-        """Retuns the results in JSON format."""
+        """Returns the results in JSON format."""
         return self._results.convert_to_json()
 
     def execute(self):
