@@ -19,6 +19,10 @@ class Database:
         the list of queries."""
         self._queries.pop(index)
 
+    def delete_queries(self):
+        """Deletes all queries from Database object."""
+        self._queries = []
+
     def get_queries(self):
         """Returns the list of current queries."""
         return self._queries
@@ -44,4 +48,9 @@ class Database:
         """Adds a query to the list of queries with the given
         columns, table, and optional append (for things like WHERE)
         in case they are needed."""
-        self._queries.append('SELECT ' + columns + ' FROM ' + table + ' ' + append)
+        query = 'SELECT ' + columns + ' FROM ' + table
+
+        if append != '':
+            query += ' ' + append
+
+        self._queries.append(query)
