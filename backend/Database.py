@@ -2,12 +2,21 @@ from Data import Data
 
 class Database:
 
-    def __init__(self, sql_object, queries=[]):
+    def __init__(self, sql_object, queries=[], tables=[]):
         """Initialize variables, need to give a MySQL
         object with app data given as the sql_object."""
         self._mysql = sql_object
         self._queries = queries
         self._results = Data()
+
+    def update_case(self, input):
+        """Given a string as input, will ensure only
+        the first letter is capitalized (to match
+        case of table names in database)."""
+        input.casefold()
+        input.capitalize()
+
+        return input
 
     def add_query(self, query):
         """Adds a manual query to the list of queries
@@ -50,6 +59,10 @@ class Database:
         """Adds a query to the list of queries with the given
         columns, table, and optional append (for things like WHERE)
         in case they are needed."""
+
+        # Ensure proper table case
+        table = self.update_case(table)
+
         query = 'SELECT ' + columns + ' FROM ' + table
 
         if append != '':
@@ -61,6 +74,9 @@ class Database:
         """Adds an insert query to the current list of queries given
         a table, columns, and values to insert. The append parameter
         given will be added on to the end of the query."""
+
+        # Ensure proper table case
+        table = self.update_case(table)
 
         query = 'INSERT INTO ' + table + ' (' + columns + ') VALUES ' + '(' + values + ')'
 
@@ -74,6 +90,9 @@ class Database:
         a table, a string of set_pairs to update, a filter, and an optional
         append string."""
 
+        # Ensure proper table case
+        table = self.update_case(table)
+
         query = 'UPDATE ' + table + ' SET ' + set_pairs + ' WHERE ' + filter
 
         if append != '':
@@ -84,6 +103,9 @@ class Database:
     def add_delete(self, table, filter):
         """Adds a DELETE query to the current list of queries given
         a table and a filter."""
+
+        # Ensure proper table case
+        table = self.update_case(table)
 
         query = 'DELETE FROM ' + table + ' WHERE ' + filter
 
