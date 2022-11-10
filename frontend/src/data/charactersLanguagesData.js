@@ -6,13 +6,15 @@ const headers = ["Name", "Character's Known Languages", "Add Language", "Delete 
 
 const bilboLanguages = [{value:"elvish", label:"Elvish"},
 {value:"westron", label:"Westron"},
-{value:"sylvanelvish", label:"Sylvan Elvish"}
+{value:"sylvanelvish", label:"Sylvan Elvish"},
+{value:"None", label:"Null"}
 ];
 
 // Currently reusing the same Select, this is temporary anyway.
 const tableData = [
     ["Bilbo Baggins", <Select options={bilboLanguages}/>],
-    ["Frodo Baggins", <Select options={bilboLanguages}/>]
+    ["Frodo Baggins", <Select options={bilboLanguages}/>],
+    ["Meriadoc Brandybuck", <Select options={bilboLanguages} />]
 ];
 
 for (let index=0; index < tableData.length; index++) {

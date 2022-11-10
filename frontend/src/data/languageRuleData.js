@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 const headers = ["Name", "Description", "Edit", "Delete"];
 
 const tableData = [
-    ["Change a to e", "Change all occurrences of the letter a to letter e"]
+    ["Change a to e", "Change all occurrences of the letter a to letter e"],
+    ["Change b to p", "Loss of vocalization"],
+    ["Change g to k", "Loss of vocalization"]
 ];
 
 // Add the buttons for the display list, anything inside the push

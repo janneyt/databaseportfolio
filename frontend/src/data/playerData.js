@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 const headers = ["Name", "Edit", "Delete"];
 
 const tableData = [
-    ["JRR Tolkien"]
+    ["JRR Tolkien"],
+    ["George Martin"],
+    ["Matthew Mercer"]
 ];
 
 // Add the buttons for the display list, anything inside the push

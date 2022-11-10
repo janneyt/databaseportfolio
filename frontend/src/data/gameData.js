@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 const headers = ["Name", "Countries", "Players", "Languages", "Edit", "Delete"];
 
 const tableData = [
-    ["Fun first game!"]
+    ["Fun first game!"],
+    ["Once again, brilliant game!"],
+    ["Bit repetitious innit? Third time through"]
 ];
 
 // Add the buttons for the display list, anything inside the push

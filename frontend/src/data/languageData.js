@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 const headers = ["Name", "Description", "Game", "Edit", "Delete"];
 
 const tableData = [
-    ["English", "The language that rifles your pockets for spare vocabulary and grammar", "Fun first language!"]
+    ["English", "The language that rifles your pockets for spare vocabulary and grammar", "Fun first language!"],
+    ["Spanish", "What the Romans would speak today if they hadn't lost the empire"],
+    ["Italian", "No, the Romans were from Italia, they'd speak Italian"],
+    ["Romanian", "Guys, it is literally in our name."]
 ];
 
 // Add the buttons for the display list, anything inside the push

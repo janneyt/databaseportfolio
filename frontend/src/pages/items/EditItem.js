@@ -1,5 +1,5 @@
 import Form from '../../components/Forms/Form';
-import { editFormContents } from '../../data/itemData';
+import { editFormContents, } from '../../data/itemData';
 
 function EditItems() {
     return (
