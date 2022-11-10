@@ -27,7 +27,10 @@ def select_data():
         else:
             database.add_select(data.columns, data.table)
 
-    database.execute()
+    try:
+        database.execute()
+    except:
+        return "Queries not added correctly.", 405
 
     return database.get_json()
 
