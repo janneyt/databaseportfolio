@@ -11,7 +11,8 @@ class Database:
 
     def add_query(self, query):
         """Adds a manual query to the list of queries
-        to execute."""
+        to execute. More complicated queries may need
+        to use this method."""
         self._queries.append(query)
 
     def remove_query(self, index):
@@ -44,6 +45,7 @@ class Database:
 
         self._results.set_data(cursor.fetchall())
 
+
     def add_select(self, columns, table, append=''):
         """Adds a query to the list of queries with the given
         columns, table, and optional append (for things like WHERE)
@@ -54,3 +56,36 @@ class Database:
             query += ' ' + append
 
         self._queries.append(query)
+
+    def add_insert(self, table, columns, values, append=''):
+        """Adds an insert query to the current list of queries given
+        a table, columns, and values to insert. The append parameter
+        given will be added on to the end of the query."""
+
+        query = 'INSERT INTO ' + table + ' (' + columns + ') VALUES ' + '(' + values + ')'
+
+        if append != '':
+            query += ' ' + append
+
+        self._queries.append(query)
+
+    def add_update(self, table, set_pairs, filter='', append=''):
+        """Adds an UPDATE query to the current list of queries given
+        a table, a string of set_pairs to update, a filter, and an optional
+        append string."""
+
+        query = 'UPDATE ' + table + ' SET ' + set_pairs + ' WHERE ' + filter
+
+        if append != '':
+            query += ' ' + append
+
+        self._queries.append(query)
+
+    def add_delete(self, table, filter):
+        """Adds a DELETE query to the current list of queries given
+        a table and a filter."""
+
+        query = 'DELETE FROM ' + table + ' WHERE ' + filter
+
+        self._queries.append(query)
+

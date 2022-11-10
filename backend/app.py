@@ -23,12 +23,16 @@ def select_data():
 
     print(data)
 
+    # Ensure an append is passed to the add_select method
+    # Optional, parameter
     if 'append' not in data:
         data["append"] = ''
 
+    # Only pass to the add_select if the proper tables are present
     if 'columns' in data and 'table' in data:
         database.add_select(data["columns"], data["table"], data["append"])
 
+    # Test print - For Debug purposes
     print(database.get_queries())
 
     try:
