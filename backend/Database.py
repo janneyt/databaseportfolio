@@ -1,15 +1,16 @@
 from Data import Data
+from flask_mysqldb import MySQL
 
 class Database:
 
-    def __init__(self, sql_object, queries=[], tables=[]):
+    def __init__(self, sql_object: MySQL, queries=[], tables=[]):
         """Initialize variables, need to give a MySQL
         object with app data given as the sql_object."""
         self._mysql = sql_object
         self._queries = queries
         self._results = Data()
 
-    def update_case(self, input):
+    def update_case(self, input: str) -> str:
         """Given a string as input, will ensure only
         the first letter is capitalized (to match
         case of table names in database)."""
@@ -18,13 +19,13 @@ class Database:
 
         return input
 
-    def add_query(self, query):
+    def add_query(self, query: str):
         """Adds a manual query to the list of queries
         to execute. More complicated queries may need
         to use this method."""
         self._queries.append(query)
 
-    def remove_query(self, index):
+    def remove_query(self, index: int):
         """Removes the query at a given index from
         the list of queries."""
         self._queries.pop(index)
@@ -55,7 +56,7 @@ class Database:
         self._results.set_data(cursor.fetchall())
 
 
-    def add_select(self, columns, table, append=''):
+    def add_select(self, columns: list, table: str, append=''):
         """Adds a query to the list of queries with the given
         columns, table, and optional append (for things like WHERE)
         in case they are needed."""
@@ -63,14 +64,17 @@ class Database:
         # Ensure proper table case
         table = self.update_case(table)
 
-        query = 'SELECT ' + columns + ' FROM ' + table
+        # Build string of columns from columns list
+        columns_str = ",".join(columns)
+
+        query = 'SELECT ' + columns_str + ' FROM ' + table
 
         if append != '':
             query += ' ' + append
 
         self._queries.append(query)
 
-    def add_insert(self, table, columns, values, append=''):
+    def add_insert(self, table: str, columns: list, values: list, append=''):
         """Adds an insert query to the current list of queries given
         a table, columns, and values to insert. The append parameter
         given will be added on to the end of the query."""
@@ -78,14 +82,36 @@ class Database:
         # Ensure proper table case
         table = self.update_case(table)
 
-        query = 'INSERT INTO ' + table + ' (' + columns + ') VALUES ' + '(' + values + ')'
+        # Convert list values into strings
+        columns_str = ','.join(columns)
+        values_str = ','.join(values)
+
+        # Build Insert query
+        query = 'INSERT INTO ' + table + ' (' + columns_str + ') VALUES ' + '(' + values_str + ')'
 
         if append != '':
             query += ' ' + append
 
         self._queries.append(query)
 
-    def add_update(self, table, set_pairs, filter='', append=''):
+        # Build append search to get only the item
+        # added back from the SQL table
+        append = 'WHERE '
+        for index in range(len(columns)):
+            if index == 0:
+                temp = str(columns[index]) + "=" + str(values[index])
+                append += temp
+            else:
+                temp = " AND " + str(columns[index]) + "=" + str(values[index])
+                append += temp
+
+        append += ";"
+
+        self.add_select(columns, table, append)
+
+
+
+    def add_update(self, table: str, set_pairs: list, filter='', append=''):
         """Adds an UPDATE query to the current list of queries given
         a table, a string of set_pairs to update, a filter, and an optional
         append string."""
@@ -93,12 +119,30 @@ class Database:
         # Ensure proper table case
         table = self.update_case(table)
 
-        query = 'UPDATE ' + table + ' SET ' + set_pairs + ' WHERE ' + filter
+        # Convert list values into strings
+        set_pairs_str = ','.join(set_pairs)
+
+        query = 'UPDATE ' + table + ' SET ' + set_pairs_str + ' WHERE ' + filter
 
         if append != '':
             query += ' ' + append
 
         self._queries.append(query)
+
+        # BUILD SELECT to RETURN data UPDATED
+        # -----------------------------------
+
+        # Get keys for the set_pairs
+        keys = get_keys(set_pairs, "=")
+
+        # Build string from keys for SELECT columns
+        keys_str = ','.join(keys)
+
+        # Build append search for SELECT
+        append = 'WHERE ' + filter
+
+        # Add select to queries
+        self.add_select(keys_str, table, append)
 
     def add_delete(self, table, filter):
         """Adds a DELETE query to the current list of queries given
@@ -111,3 +155,14 @@ class Database:
 
         self._queries.append(query)
 
+def get_keys(pairs: list, delimiter: str):
+    """Extracts keys for a list of strings in the format key=pair as
+    a single entry of the list as a string, where = can be any given
+    delimeter."""
+    keys = []
+
+    for value in pairs:
+        split_values = value.split(delimiter)
+        keys.append(split_values[0])
+
+    return keys

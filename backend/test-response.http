@@ -1,10 +1,19 @@
 POST http://localhost:5000/select_data
 Content-Type: application/json
+<<<<<<< HEAD
 Authorization: x-access-token
 
+=======
+>>>>>>> 37cca6a80c0a579c6fe3b64f1d311f4541b40ac8
 
 {
     "columns":["idItem"],
     "table":"Items",
+<<<<<<< HEAD
     "append":"where iditem = 1;"
 }
+=======
+    "append":"where iditem = 1"
+}
+
+>>>>>>> 37cca6a80c0a579c6fe3b64f1d311f4541b40ac8
