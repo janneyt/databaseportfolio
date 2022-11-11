@@ -40,10 +40,10 @@ def select_data():
     except:
         database.delete_queries()  # Ensure failures don't add future queries
         return "Queries not added correctly.", 405
-
+    print(database)
     return database.get_json()
 
-@app.route('delete_data', methods=['POST'])
+@app.route('/delete_data', methods=['POST'])
 def delete_data():
     data = request.get_json()
 

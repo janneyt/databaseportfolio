@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 // Axios for API data
 import axios from 'axios';
 
-// dotenv for url
-import * as dotenv from 'dotenv';
-dotenv.config();
+
 
 const headers = ["Name", "Description", "Game","Country", "Edit", "Delete"];
 
@@ -23,8 +21,11 @@ const tableData = (action, specifics) => {
         Example specifics:
         {
             "columns":"iditems",
-
+            "table":"Items",
+            "append":"WHERE idItem = 1"
         }
+
+        This function can error. Put INSIDE A TRY/CATCH due to all the errors it can throw
     */ 
 
     // Specifics should be a map  
@@ -43,15 +44,18 @@ const tableData = (action, specifics) => {
     };
 
     // Create the url from the .env format
-    const local_url = dotenv.local_url;
+    // Having problems with dotenv, going around it atm
+    const local_url = 'localhost:5000';
 
     if(action.toUpperCase() === "READ"){
         
-        axios.post(
+        const data = axios.post(
             local_url+'/select_data',
-            
+            specifics
         );
+        if(data.)
     };
+    
 };
 
 // Add the buttons for the display list, anything inside the push

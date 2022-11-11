@@ -1,0 +1,7 @@
+POST localhost:5000/select_data
+
+{
+    "columns":["idItem"],
+    "table":"Items",
+    "append":"where iditem = 1;"
+}
