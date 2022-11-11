@@ -8,9 +8,9 @@ import os
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_username'
-app.config['MYSQL_PASSWORD'] = '###'
-app.config['MYSQL_DB'] = 'cs340_username'
+app.config['MYSQL_USER'] = 'cs340_dempsjam'
+app.config['MYSQL_PASSWORD'] = '3077'
+app.config['MYSQL_DB'] = 'cs340_dempsjam'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 database = Database(MySQL(app))
@@ -23,11 +23,13 @@ def select_data():
 
     # Ensure an append is passed to the add_select method
     if 'append' not in data:
-        data["append"] = ''
+        append = ''
+    else:
+        append = data['append']
 
     # Only pass to the add_select if the proper tables are present
     if 'columns' in data and 'table' in data:
-        database.add_select(data["columns"], data["table"], data["append"])
+        database.add_select(data["columns"], data["table"], append)
 
     # Test print - For Debug purposes
     print(database.get_queries())
@@ -89,6 +91,8 @@ def insert_data():
 
     if 'table' in data and 'columns' in data and 'values' in data:
         database.add_insert(data['table'], data['columns'], data['values'], data['append'])
+
+    print(database.get_queries())
 
     # Attempt to execute queries given to database
     try:
