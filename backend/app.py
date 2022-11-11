@@ -39,7 +39,7 @@ def select_data():
         database.execute()
     except:
         database.delete_queries()  # Ensure failures don't add future queries
-        return "Queries not added correctly.", 405
+        return "The queries are wrong or database connection is missing", 405
 
     return database.get_json()
 
@@ -56,7 +56,7 @@ def delete_data():
         database.execute()
     except:
         database.delete_queries()
-        return "Queries not added correctly.", 405
+        return "The queries are wrong or database connection is missing", 405
 
     return make_response(204)
 
