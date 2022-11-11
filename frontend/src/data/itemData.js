@@ -1,11 +1,14 @@
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 
+
+
 // Axios for API data
 import axios from 'axios';
 
-const headers = ["Name", "Description", "Game","Country", "Edit", "Delete"];
-let tableData = [["","","","","",""]]
+const headers = ["Name", "Description", "Game", "Country", "Edit", "Delete"];
+let tableData = [["", "", "", "", "", ""]]
+
 
 /*[
     ["Sword", "A sharp, pointy object with +1 to offense, -1 to your money", "Fun first game", "USA"],
@@ -44,24 +47,30 @@ const returnedData = (action, specifics) => {
     };
     const headers = ["Name", "Description", "Game", "Country", "Edit", "Delete"];
     let tableData = [[""]];
-    const data = { "columns": "", "table": "" }
+    let data = { "columns": "", "table": "" }
+    console.log("data", data);
     // Convert to using AXIOS config
     const local_url = 'http://localhost:5000';
 
     if (action.toUpperCase() === "READ") {
 
-        data = axios.post(
+        axios.post(
             local_url + '/select_data',
             specifics,
             // Don't mess with this, we can only send JSON
             {
                 headers: { 'Content-Type': 'application/json' }
             }
-        ).then(response => JSON.parse(response.data))
-            .then(data => { return data })
-            .catch(error => console.log(error.response))
-        console.log(data);
+        ).then(function (response) { data = JSON.parse(response.data) })
+            .catch(function (error) { console.log(error.response) })
+        
+            ;
+        console.log("data after axios", data);
     };
+    // Iterate over the new data, add to tableData
+    for (let index = 0; index < data.length; index++) {
+        console.log(data[index])
+    }
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
 
@@ -93,4 +102,4 @@ const deleteFormContents = [
 
 
 
-export {headers, tableData, returnedData, addFormContents,editFormContents, deleteFormContents};
+export { headers, tableData, returnedData, addFormContents, editFormContents, deleteFormContents };
