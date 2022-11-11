@@ -43,6 +43,23 @@ def select_data():
 
     return database.get_json()
 
+@app.route('delete_data', methods=['POST'])
+def delete_data():
+    data = request.get_json()
+
+    print(data)
+
+    if 'table' in data and 'filter' in data:
+        database.add_delete(data["table"], data["filters"])
+
+    try:
+        database.execute()
+    except:
+        database.delete_queries()
+        return "Queries not added correctly.", 405
+
+    return database.get_json()
+
 
 # Listener
 
