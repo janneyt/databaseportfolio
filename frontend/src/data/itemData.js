@@ -53,6 +53,7 @@ const tableData = (action, specifics) => {
             local_url+'/select_data',
             specifics
         );
+        if(data.)
     };
     
 };
