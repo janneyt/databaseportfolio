@@ -7,8 +7,23 @@ import axios from 'axios';
 
 
 const headers = ["Name", "Description", "Game","Country", "Edit", "Delete"];
+let tableData = [];
+const fetchTableData = (data) =>{
+    if(!data.idItem){
+        throw new Error("No idItem returned in response");
+    }
+    console.log("fetchTableData data",data);
+    return [data.idItem,"Not sure", "not sure", "not sure"]
+}; 
 
-const tableData = (action, specifics) => {
+/*[
+    ["Sword", "A sharp, pointy object with +1 to offense, -1 to your money", "Fun first game", "USA"],
+    ["Club", "A blunt stick. Thick. User smash.", "Fun first game", "USA"],
+    ["Axe", "A stick with sharp bits.", "Fun first game", "USA"],
+];*/
+
+const returnedData = (action, specifics) => {
+
     /*
         Takes the action and specifics data members and creates axios posts.
 
@@ -28,38 +43,40 @@ const tableData = (action, specifics) => {
         This function can error. Put INSIDE A TRY/CATCH due to all the errors it can throw
     */ 
 
-    // Specifics should be a map  
-    if(!(specifics instanceof Map)){
-        throw new Error("Please pass a map to function");
-    };
+    
 
     // Format should be JSON
-    if(!JSON.parse(specifics)){
+    try{
+        const send = JSON.parse(specifics)
+    }
+    catch{
         throw new Error("JSON conversion failed, please ensure JSON format")
     };
 
-    // columns and table are required
-    if(!specifics.columns || !specifics.table){
-        throw new Error("Required fields missing, consult README")
-    };
-
-    // Create the url from the .env format
-    // Having problems with dotenv, going around it atm
-    const local_url = 'localhost:5000';
+    // Convert to using AXIOS config
+    const local_url = 'http://localhost:5000';
 
     if(action.toUpperCase() === "READ"){
-        
-        const data = axios.post(
+        console.log(specifics);
+        return tableData =  axios.post(
             local_url+'/select_data',
-            specifics
-        );
-        if(data.)
+            specifics,
+            // Don't mess with this, we can only send JSON
+            {
+                headers:{'Content-Type': 'application/json'}
+            }
+        ).then(data => JSON.parse(data))
+        .then(tableData => fetchTableData(tableData))
+        .catch("Could not fetch data");
+
     };
     
+
 };
 
 // Add the buttons for the display list, anything inside the push
 // will get added to one cell in the table
+
 for (let index=0; index < tableData.length; index++) {
     tableData[index].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
     tableData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
@@ -85,4 +102,4 @@ const deleteFormContents = [
 ];
 
 
-export {headers, tableData, addFormContents,editFormContents, deleteFormContents};
+export {headers, tableData, addFormContents,editFormContents, deleteFormContents, returnedData};

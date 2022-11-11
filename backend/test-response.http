@@ -1,7 +1,9 @@
-POST localhost:5000/select_data
+POST http://localhost:5000/select_data
+Content-Type: application/json
 
 {
     "columns":["idItem"],
     "table":"Items",
-    "append":"where iditem = 1;"
+    "append":"where iditem = 1"
 }
+
