@@ -65,7 +65,7 @@ class Database:
         table = self.update_case(table)
 
         # Build string of columns from columns list
-        columns_str = ",".join(columns)
+        columns_str = ", ".join(columns)
 
         query = 'SELECT ' + columns_str + ' FROM ' + table
 

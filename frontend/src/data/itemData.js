@@ -1,19 +1,15 @@
 import Button from '../components/Button';
-import { Link } from 'react-router-dom';
-
+import { json, Link } from 'react-router-dom';
+import { useState } from 'react';
 
 
 // Axios for API data
 import axios from 'axios';
 
 const headers = ["Name", "Description", "Game", "Country", "Edit", "Delete"];
-let tableData = [
-    ["Sword", "A sharp, pointy object with +1 to offense, -1 to your money", "Fun first game", "USA"],
-    ["Club", "A blunt stick. Thick. User smash.", "Fun first game", "USA"],
-    ["Axe", "A stick with sharp bits.", "Fun first game", "USA"],
-];
 
-const returnedData = (action, specifics) => {
+
+const ReturnedData = async (action, specifics) => {
 
     /*
         Takes the action and specifics data members and creates axios posts.
@@ -34,47 +30,69 @@ const returnedData = (action, specifics) => {
         This function can error. Put INSIDE A TRY/CATCH due to all the errors it can throw
     */
 
-    // Format should be JSON
+    const [tableData, setTableData] = useState([["","","",""]])
+    let filledData = tableData;
     try {
-        specifics = JSON.parse(specifics)
-        console.log(specifics)
+        specifics = JSON.parse(specifics);
     }
     catch {
-        throw new Error("JSON conversion failed, please ensure JSON format")
-    };
-    const headers = ["Name", "Description", "Game", "Country", "Edit", "Delete"];
-    let tableData = [[""]];
-    let data = { "columns": "", "table": "" }
-    console.log("data", data);
+        throw new Error("Please convert to proper JSON format")
+    }
+
+
     // Convert to using AXIOS config
     const local_url = 'http://localhost:5000';
-
+    let data = ["", "", "", "", "", ""];
     if (action.toUpperCase() === "READ") {
+        const fillData = async () => {
 
-        axios.post(
-            local_url + '/select_data',
-            specifics,
-            // Don't mess with this, we can only send JSON
-            {
-                headers: { 'Content-Type': 'application/json' }
-            }
-        ).then(function (response) { data = JSON.parse(response.data) })
-            .catch(function (error) { console.log(error.response) })
-        
-            ;
-        console.log("data after axios", data);
+            return await axios.post(
+                local_url + '/select_data',
+                specifics,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+        }
+        try {
+            const response = await fillData();
+            data = await response.data;
+            filledData = tableData;
+            for (let index = 0; index < data.length; index++) {
+                for (let element = 0; element < data[index].length; element++) {
+
+                    filledData[index][element].push(data[index][element])
+
+
+                }
+
+
+                // Add the buttons for the display list, anything inside the push
+                // will get added to one cell in the table
+                filledData[index].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
+                filledData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
+
+            };
+
+            setTableData(fillData);
+
+            return tableData
+        }
+        catch (error){
+            console.log("error:", error)
+            // If there's a bad axios call, fill with empty values
+            filledData = [["1", "error","database", "not connected"]]
+            filledData[0].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
+            filledData[0].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
+            return filledData
+        }
+
+
     };
-    // Iterate over the new data, add to tableData
-    for (let index = 0; index < data.length; index++) {
-        console.log(data[index])
-    }
-    // Add the buttons for the display list, anything inside the push
-    // will get added to one cell in the table
 
-    for (let index = 0; index < tableData.length; index++) {
-        tableData[index].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
-        tableData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
-    }
+
 
 };
 
@@ -99,4 +117,4 @@ const deleteFormContents = [
 
 
 
-export { headers, tableData, returnedData, addFormContents, editFormContents, deleteFormContents };
+export { headers, ReturnedData, addFormContents, editFormContents, deleteFormContents };

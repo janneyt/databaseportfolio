@@ -2,9 +2,10 @@ import Button from '../../components/Button';
 
 const TableRow = ({row, index}) => {
 
-
-    const rowValues = row.map((value) =>
-        <td>{value}</td>
+    console.log("row instance", row instanceof Array)
+    console.log("row", row)
+    const rowValues = row.map((value, index) =>
+        <td key={index}>{value}</td>
     );
 
     return (
