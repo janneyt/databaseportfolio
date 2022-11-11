@@ -4,17 +4,8 @@ import { Link } from 'react-router-dom';
 // Axios for API data
 import axios from 'axios';
 
-
-
 const headers = ["Name", "Description", "Game","Country", "Edit", "Delete"];
-let tableData = [];
-const fetchTableData = (data) =>{
-    if(!data.idItem){
-        throw new Error("No idItem returned in response");
-    }
-    console.log("fetchTableData data",data);
-    return [data.idItem,"Not sure", "not sure", "not sure"]
-}; 
+let tableData = [["","","","","",""]]
 
 /*[
     ["Sword", "A sharp, pointy object with +1 to offense, -1 to your money", "Fun first game", "USA"],
@@ -22,7 +13,7 @@ const fetchTableData = (data) =>{
     ["Axe", "A stick with sharp bits.", "Fun first game", "USA"],
 ];*/
 
-const returnedData = async (action, specifics) => {
+const returnedData = (action, specifics) => {
 
     /*
         Takes the action and specifics data members and creates axios posts.
@@ -41,63 +32,65 @@ const returnedData = async (action, specifics) => {
         }
 
         This function can error. Put INSIDE A TRY/CATCH due to all the errors it can throw
-    */ 
+    */
 
     // Format should be JSON
-    try{
+    try {
         specifics = JSON.parse(specifics)
         console.log(specifics)
     }
-    catch{
+    catch {
         throw new Error("JSON conversion failed, please ensure JSON format")
     };
-
+    const headers = ["Name", "Description", "Game", "Country", "Edit", "Delete"];
+    let tableData = [[""]];
+    const data = { "columns": "", "table": "" }
     // Convert to using AXIOS config
     const local_url = 'http://localhost:5000';
 
-    if(action.toUpperCase() === "READ"){
+    if (action.toUpperCase() === "READ") {
 
-        tableData =  await axios.post(
-            local_url+'/select_data',
+        data = axios.post(
+            local_url + '/select_data',
             specifics,
             // Don't mess with this, we can only send JSON
             {
-                headers:{'Content-Type': 'application/json'}
+                headers: { 'Content-Type': 'application/json' }
             }
-        )
-        console.log(tableData)
-        return tableData;
+        ).then(response => JSON.parse(response.data))
+            .then(data => { return data })
+            .catch(error => console.log(error.response))
+        console.log(data);
     };
-    
+    // Add the buttons for the display list, anything inside the push
+    // will get added to one cell in the table
+
+    for (let index = 0; index < tableData.length; index++) {
+        tableData[index].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
+        tableData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
+    }
 
 };
 
-// Add the buttons for the display list, anything inside the push
-// will get added to one cell in the table
-
-for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
-    tableData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
-}
-
 const addFormContents = [
-    {type:"text", name:"itemname", label:"Name Your Item:"},
-    {type:"text", name:"itemdescription", label:"Describe Your Item:"},
-    {type:"text", name:"gamename", label:"Game Name (${Pulls game name from game id})"},
-    {type:"text", name:"playername", label: "Player Name *${Pulls player name from player id}"}
+    { type: "text", name: "itemname", label: "Name Your Item:" },
+    { type: "text", name: "itemdescription", label: "Describe Your Item:" },
+    { type: "text", name: "gamename", label: "Game Name (${Pulls game name from game id})" },
+    { type: "text", name: "playername", label: "Player Name *${Pulls player name from player id}" }
 ];
 
 const editFormContents = [
-    {type:"text", name:"itemname", label:"Name Your Item:", value: "${itemName}"},
-    {type:"text", name:"itemdescription", label:"Describe Your Item", value:"${itemDescription}"},
-    {type:"text", name:"gamename", label:"Game Name (${Pulls game name from game id})", value:"${gameName}"},
-    
+    { type: "text", name: "itemname", label: "Name Your Item:", value: "${itemName}" },
+    { type: "text", name: "itemdescription", label: "Describe Your Item", value: "${itemDescription}" },
+    { type: "text", name: "gamename", label: "Game Name (${Pulls game name from game id})", value: "${gameName}" },
+
 ];
 
 
 const deleteFormContents = [
-    {type:"hidden", name:"${idItem}"}
+    { type: "hidden", name: "${idItem}" }
 ];
 
 
-export {headers, tableData, addFormContents,editFormContents, deleteFormContents, returnedData};
+
+export {headers, tableData, returnedData, addFormContents,editFormContents, deleteFormContents};
