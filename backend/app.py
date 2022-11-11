@@ -8,9 +8,9 @@ import os
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_username'
-app.config['MYSQL_PASSWORD'] = 'Password'
-app.config['MYSQL_DB'] = 'cs340_username'
+app.config['MYSQL_USER'] = 'cs340_dempsjam'
+app.config['MYSQL_PASSWORD'] = '3077'
+app.config['MYSQL_DB'] = 'cs340_dempsjam'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 database = Database(MySQL(app))
@@ -43,7 +43,7 @@ def select_data():
 
     return database.get_json()
 
-@app.route('delete_data', methods=['POST'])
+@app.route('/delete_data', methods=['POST'])
 def delete_data():
     data = request.get_json()
 
@@ -60,7 +60,7 @@ def delete_data():
 
     return make_response(204)
 
-@app.route('update_data', methods='POST')
+@app.route('/update_data', methods='POST')
 def update_data():
     data = request.get_json()
 
