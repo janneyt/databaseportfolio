@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 // Axios for API data
 import axios from 'axios';
 
-// dotenv for url
-import * as dotenv from 'dotenv';
-dotenv.config();
+
 
 const headers = ["Name", "Description", "Game","Country", "Edit", "Delete"];
 
@@ -46,11 +44,12 @@ const tableData = (action, specifics) => {
     };
 
     // Create the url from the .env format
-    const local_url = dotenv.local_url;
+    // Having problems with dotenv, going around it atm
+    const local_url = 'localhost:5000';
 
     if(action.toUpperCase() === "READ"){
         
-        return axios.post(
+        const data = axios.post(
             local_url+'/select_data',
             specifics
         );
