@@ -93,6 +93,23 @@ class Database:
 
         self._queries.append(query)
 
+        # Build append search to get only the item
+        # added back from the SQL table
+        append = 'WHERE '
+        for index in range(len(columns)):
+            if index == 0:
+                temp = str(columns[index]) + "=" + str(values[index])
+                append += temp
+            else:
+                temp = " AND " + str(columns[index]) + "=" + str(values[index])
+                append += temp
+
+        append += ";"
+
+        self.add_select(columns, table, append)
+
+
+
     def add_update(self, table: str, set_pairs: list, filter='', append=''):
         """Adds an UPDATE query to the current list of queries given
         a table, a string of set_pairs to update, a filter, and an optional

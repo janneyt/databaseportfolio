@@ -74,10 +74,27 @@ def update_data():
         database.execute()
     except:
         database.delete_queries()
-        return "Queries not added correctly.", 405
+        return "The queries are wrong or database connection is missing", 405
 
     return make_response(database.get_json(), 204)
 
+@app.route('/insert_data', methods=['POST'])
+def insert_data():
+    data = request.get_json()
+
+    if 'append' not in data:
+        data['append'] = ''
+
+    if 'table' in data and 'columns' in data and 'values' in data:
+        database.add_insert(data['table'], data['columns'], data['values'], data['append'])
+
+    try:
+        database.execute()
+    except:
+        database.delete_queries()
+        return "The queries are wrong or database connection is missing", 405
+
+    return make_response(database.get_json(), 204)
 
 # Listener
 
