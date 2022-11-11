@@ -1,15 +1,16 @@
 from Data import Data
+from flask_mysqldb import MySQL
 
 class Database:
 
-    def __init__(self, sql_object, queries=[], tables=[]):
+    def __init__(self, sql_object: MySQL, queries=[], tables=[]):
         """Initialize variables, need to give a MySQL
         object with app data given as the sql_object."""
         self._mysql = sql_object
         self._queries = queries
         self._results = Data()
 
-    def update_case(self, input):
+    def update_case(self, input: str) -> str:
         """Given a string as input, will ensure only
         the first letter is capitalized (to match
         case of table names in database)."""
@@ -18,13 +19,13 @@ class Database:
 
         return input
 
-    def add_query(self, query):
+    def add_query(self, query: str):
         """Adds a manual query to the list of queries
         to execute. More complicated queries may need
         to use this method."""
         self._queries.append(query)
 
-    def remove_query(self, index):
+    def remove_query(self, index: int):
         """Removes the query at a given index from
         the list of queries."""
         self._queries.pop(index)
@@ -92,6 +93,23 @@ class Database:
             query += ' ' + append
 
         self._queries.append(query)
+
+        # Build append search to get only the item
+        # added back from the SQL table
+        append = 'WHERE '
+        for index in range(len(columns)):
+            if index == 0:
+                temp = str(columns[index]) + "=" + str(values[index])
+                append += temp
+            else:
+                temp = " AND " + str(columns[index]) + "=" + str(values[index])
+                append += temp
+
+        append += ";"
+
+        self.add_select(columns, table, append)
+
+
 
     def add_update(self, table: str, set_pairs: list, filter='', append=''):
         """Adds an UPDATE query to the current list of queries given
