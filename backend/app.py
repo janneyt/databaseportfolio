@@ -60,7 +60,7 @@ def delete_data():
 
     return make_response(204)
 
-@app.route('/update_data', methods='POST')
+@app.route('/update_data', methods=['POST'])
 def update_data():
     data = request.get_json()
 
