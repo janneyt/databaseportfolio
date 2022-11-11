@@ -7,13 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
 const fetchTableData = () => {
-    const list_param = JSON.stringify(["idItem","itemName","itemDescription"])
-
-    console.log(list_param);
-    let parameters = JSON.stringify(
-        '{"columns":'+list_param+', "table":"Items"}'
-    );
-
+    const parameters = '{"columns":["idItem","itemName","itemDescription"],"table":"Items"}'
+    
     const data = returnedData("READ", parameters)
     return data;
 };

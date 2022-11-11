@@ -22,7 +22,7 @@ const fetchTableData = (data) =>{
     ["Axe", "A stick with sharp bits.", "Fun first game", "USA"],
 ];*/
 
-const returnedData = (action, specifics) => {
+const returnedData = async (action, specifics) => {
 
     /*
         Takes the action and specifics data members and creates axios posts.
@@ -43,11 +43,10 @@ const returnedData = (action, specifics) => {
         This function can error. Put INSIDE A TRY/CATCH due to all the errors it can throw
     */ 
 
-    
-
     // Format should be JSON
     try{
-        const send = JSON.parse(specifics)
+        specifics = JSON.parse(specifics)
+        console.log(specifics)
     }
     catch{
         throw new Error("JSON conversion failed, please ensure JSON format")
@@ -57,18 +56,17 @@ const returnedData = (action, specifics) => {
     const local_url = 'http://localhost:5000';
 
     if(action.toUpperCase() === "READ"){
-        console.log(specifics);
-        return tableData =  axios.post(
+
+        tableData =  await axios.post(
             local_url+'/select_data',
             specifics,
             // Don't mess with this, we can only send JSON
             {
                 headers:{'Content-Type': 'application/json'}
             }
-        ).then(data => JSON.parse(data))
-        .then(tableData => fetchTableData(tableData))
-        .catch("Could not fetch data");
-
+        )
+        console.log(tableData)
+        return tableData;
     };
     
 
