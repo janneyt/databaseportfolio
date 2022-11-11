@@ -3,6 +3,9 @@ import {headers, tableData} from '../../data/itemData';
 import Button from '../../components/Button';
 import { Link, useNavigate } from 'react-router-dom';
 
+// Axios for promises/APIs
+import Axios from 'axios';
+
 function Items() {
 
     const navigate = useNavigate();
