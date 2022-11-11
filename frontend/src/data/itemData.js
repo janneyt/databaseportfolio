@@ -23,8 +23,11 @@ const tableData = (action, specifics) => {
         Example specifics:
         {
             "columns":"iditems",
-
+            "table":"Items",
+            "append":"WHERE idItem = 1"
         }
+
+        This function can error. Put INSIDE A TRY/CATCH due to all the errors it can throw
     */ 
 
     // Specifics should be a map  
@@ -47,11 +50,12 @@ const tableData = (action, specifics) => {
 
     if(action.toUpperCase() === "READ"){
         
-        axios.post(
+        return axios.post(
             local_url+'/select_data',
-            
+            specifics
         );
     };
+    
 };
 
 // Add the buttons for the display list, anything inside the push
