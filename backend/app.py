@@ -3,14 +3,19 @@ from flask import Flask,render_template, request, make_response
 from flask_mysqldb import MySQL
 from Database import Database
 import os
+from flask_cors import CORS
+
 
 # Configuration
 app = Flask(__name__)
+CORS(app)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_dempsjam'
-app.config['MYSQL_PASSWORD'] = '3077'
-app.config['MYSQL_DB'] = 'cs340_dempsjam'
+
+app.config['MYSQL_USER'] = 'cs340_janneyt'
+app.config['MYSQL_PASSWORD'] = '5008'
+app.config['MYSQL_DB'] = 'cs340_janneyt'
+
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 database = Database(MySQL(app))
@@ -39,6 +44,7 @@ def select_data():
         database.execute()
     except:
         database.delete_queries()  # Ensure failures don't add future queries
+
         return "The queries are wrong or database connection is missing", 405
 
     return database.get_json()
