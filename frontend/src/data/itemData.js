@@ -7,14 +7,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const headers = ["Name", "Description", "Game", "Country", "Edit", "Delete"];
-let tableData = [["", "", "", "", "", ""]]
-
-
-/*[
+let tableData = [
     ["Sword", "A sharp, pointy object with +1 to offense, -1 to your money", "Fun first game", "USA"],
     ["Club", "A blunt stick. Thick. User smash.", "Fun first game", "USA"],
     ["Axe", "A stick with sharp bits.", "Fun first game", "USA"],
-];*/
+];
 
 const returnedData = (action, specifics) => {
 
