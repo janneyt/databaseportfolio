@@ -1,0 +1,10 @@
+POST http://localhost:5000/select_data
+Content-Type: application/json
+Authorization: x-access-token
+
+
+{
+    "columns":["idItem"],
+    "table":"Items",
+    "append":"where iditem = 1;"
+}
