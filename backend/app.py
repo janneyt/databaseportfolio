@@ -21,10 +21,7 @@ database = Database(MySQL(app))
 def select_data():
     data = request.get_json()
 
-    print(data)
-
     # Ensure an append is passed to the add_select method
-    # Optional, parameter
     if 'append' not in data:
         data["append"] = ''
 
@@ -35,6 +32,7 @@ def select_data():
     # Test print - For Debug purposes
     print(database.get_queries())
 
+    # Attempt to execute queries given to database
     try:
         database.execute()
     except:
@@ -52,10 +50,11 @@ def delete_data():
     if 'table' in data and 'filter' in data:
         database.add_delete(data["table"], data["filters"])
 
+    # Attempt to execute queries given to database  
     try:
         database.execute()
     except:
-        database.delete_queries()
+        database.delete_queries()  # Ensure failures don't add future queries
         return "The queries are wrong or database connection is missing", 405
 
     return make_response(204)
@@ -64,16 +63,18 @@ def delete_data():
 def update_data():
     data = request.get_json()
 
+    # Initialize append only if not received
     if 'append' not in data:
         data['append'] = ''
 
     if 'table' in data and 'set_pairs' in data and 'filter' in data:
         database.add_update(data['table'], data['set_pairs'], data['filter'], data['append'])
 
+    # Attempt to execute queries given to database
     try:
         database.execute()
     except:
-        database.delete_queries()
+        database.delete_queries()  # Ensure failures don't add future queries
         return "The queries are wrong or database connection is missing", 405
 
     return make_response(database.get_json(), 204)
@@ -82,16 +83,18 @@ def update_data():
 def insert_data():
     data = request.get_json()
 
+    # Initialize append only if not received
     if 'append' not in data:
         data['append'] = ''
 
     if 'table' in data and 'columns' in data and 'values' in data:
         database.add_insert(data['table'], data['columns'], data['values'], data['append'])
 
+    # Attempt to execute queries given to database
     try:
         database.execute()
     except:
-        database.delete_queries()
+        database.delete_queries()  # Ensure failures don't add future queries
         return "The queries are wrong or database connection is missing", 405
 
     return make_response(database.get_json(), 204)
