@@ -3,6 +3,7 @@ import {headers, tableData} from '../../data/languageData';
 import Button from '../../components/Button';
 import { useNavigate, Link } from 'react-router-dom';
 
+
 function Languages() {
 
     const navigate = useNavigate();

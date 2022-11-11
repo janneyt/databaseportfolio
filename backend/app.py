@@ -1,5 +1,5 @@
 
-from flask import Flask,render_template, request
+from flask import Flask,render_template, request, make_response
 from flask_mysqldb import MySQL
 from Database import Database
 import os
@@ -42,6 +42,41 @@ def select_data():
         return "Queries not added correctly.", 405
 
     return database.get_json()
+
+@app.route('delete_data', methods=['POST'])
+def delete_data():
+    data = request.get_json()
+
+    print(data)
+
+    if 'table' in data and 'filter' in data:
+        database.add_delete(data["table"], data["filters"])
+
+    try:
+        database.execute()
+    except:
+        database.delete_queries()
+        return "Queries not added correctly.", 405
+
+    return make_response(204)
+
+@app.route('update_data', methods='POST')
+def update_data():
+    data = request.get_json()
+
+    if 'append' not in data:
+        data['append'] = ''
+
+    if 'table' in data and 'set_pairs' in data and 'filter' in data:
+        database.add_update(data['table'], data['set_pairs'], data['filter'], data['append'])
+
+    try:
+        database.execute()
+    except:
+        database.delete_queries()
+        return "Queries not added correctly.", 405
+
+    return make_response(database.get_json(), 204)
 
 
 # Listener
