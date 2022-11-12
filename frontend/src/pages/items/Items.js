@@ -42,7 +42,7 @@ function Items() {
     const [tableData, setTableData] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
-    // useEffect will re-render the page when any
+    // useEffect will re-render the affected components when any
     // of the dependencies (isLoading in this case) changes.
     // 
     useEffect(() => {
