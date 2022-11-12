@@ -25,7 +25,7 @@ database = Database(MySQL(app))
 @app.route('/select_data', methods=['POST'])
 def select_data():
     data = request.get_json()
-    print(data)
+    print("JSON DATA:", data)
     # Ensure an append is passed to the add_select method
     if 'append' not in data:
         append = ''
@@ -37,14 +37,13 @@ def select_data():
         database.add_select(data["columns"], data["table"], append)
 
     # Test print - For Debug purposes
-    print(database.get_queries())
+    print("QUERIES:", database.get_queries())
 
     # Attempt to execute queries given to database
     try:
         database.execute()
     except:
         database.delete_queries()  # Ensure failures don't add future queries
-
         return "The queries are wrong or database connection is missing", 405
 
     return database.get_json()
