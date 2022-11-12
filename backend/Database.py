@@ -54,6 +54,7 @@ class Database:
             cursor.execute(query)
 
         self._results.set_data(cursor.fetchall())
+        self._queries = []
 
 
     def add_select(self, columns: list, table: str, append=''):
