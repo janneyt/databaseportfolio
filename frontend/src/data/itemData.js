@@ -10,7 +10,7 @@ import { useState } from 'react';
  */
 
 // Setup the headers
-const headers = ["Item ID", "Name", "Description", "Game", "Country", "Edit", "Delete"];
+const headers = ["Item ID", "Name", "Description", "Edit", "Delete"];
 
 // As in the original setup
 const addFormContents = [
