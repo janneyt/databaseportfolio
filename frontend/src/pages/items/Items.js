@@ -2,7 +2,7 @@ import TableView from '../../components/TableView/TableView';
 import { headers, ReturnedData } from '../../data/itemData';
 import Button from '../../components/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { dataNext } from '../../axios/crud.js';
 
 /**
  * Unfortunately, implementing CRUD required a rewrite of the Items page. The steps are as follows:
@@ -26,17 +26,7 @@ import { useState } from 'react';
 let tableData = [[]]
 function Items() {
     const navigate = useNavigate();
-    const dataNext = async () => {
-        const res = await ReturnedData("READ", '{"columns":["idItem","itemName","itemDescription"],"table":"Items"}')
-            .then((response) =>
-                {
-                    const data = response;
-                    tableData = data
-                    return data
-                }
-            ).catch((error) => console.log("error in items.js", error));
-        return res;
-    }
+    
     dataNext();
 
     return (
