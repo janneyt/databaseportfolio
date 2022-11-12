@@ -1,10 +1,10 @@
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import { Button } from 'react';
-
+import Button from '../components/Button';
+import { fetchItemTableData } from '../data/itemData.js';
 
 const client = axios.create({
-  local_url: "http://localhost:5000" 
+  baseURL: "http://localhost:5000" 
 });
 
 /**
@@ -28,17 +28,93 @@ const client = axios.create({
 
 let tableData = [[]]
 
-const dataNext = async (list_params) => {
-    const res = await ReturnedData("READ", list_params, "post")
-        .then((response) =>
-            {
-                const data = response;
-                tableData = data
-                return data
-            }
-        ).catch((error) => console.log("error in items.js", error));
-    return res;
+const DataNext = async (page_determiner) => {
+    /**
+     * This is an interface to fit between Items and itemData. It's meant to make
+     * all pages be able to call dataNext, which will then decide which data page to call
+     */
+    if(!page_determiner){
+        throw new Error("Please provide the page name for your data transfer");
+    } else if(page_determiner.toLowerCase() === "items"){
+        const itemData = ["idItem","itemName","itemDescription"]
+        /* Head off to itemData, which will also call functions in this file as well */
+        return fetchItemTableData(itemData);
+    }
+
 }
+
+const readData = async (specifics) => {
+    try {
+
+        // Async call
+        const data = await fillData(specifics);
+
+        tableData = data
+
+        // Another placeholder
+        const filledData = [[]];
+
+        // I iterated over the length of the data returned from the server
+        // Note: we don't want to stringify this, but it is a JSON object
+        // Thus, we have to cram the object into an array for use in React
+        // I'm going to iterate over the values of the returned data and save
+        // it into the placeholder array
+        for (let index = 0; index < data.length; index++) {
+            // NOTE ON INDEXING: data is of form [{}] so data has length > 1 but
+            // it's not necessarily true that all keys for all data members exist
+            // We can't make filledData indexing related to data indexing or vice versa
+
+
+            // There's a finite number of unique keys, so although we don't want
+            // the keys, we iterate over them to find the values
+            const keys = Object.keys(data[index]);
+
+            // filledData does not necessarily have an existing member at *index*
+            filledData[index] = []
+
+            // This is where I iterate over the keys and place the values in filledData
+            for (let element = 0; element < keys.length; element++) {
+
+                // Push, not indexing or assignment, because filledData is an array
+                filledData[index].push(data[index][keys[element]])
+            }
+
+            // Add the buttons for the display list, anything inside the push
+            // will get added to one cell in the table
+            filledData[index].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
+            filledData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
+
+        };
+
+        // This must be returned to the calling, awaiting function
+        tableData = filledData
+
+        return filledData
+    }
+
+    /**
+     * Vitally important: this catch statement actually returns the values that
+     * allows the Items page to shaw a blank screen instead of erroring
+     */
+    catch (error) {
+
+        // If there's a bad axios call, fill with empty values
+        const filledData = [["1", "error", "database", "not connected"]]
+
+        // filledData[0] is required because filledData is a 2d array and we have to add
+        // to the first element of the array
+        filledData[0].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
+        filledData[0].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
+        
+        tableData = filledData
+        console.log("tableData 1", tableData)
+        return filledData
+    }
+
+
+};
+
+
 
 // Axios being saved to state causes infinted rerenders.
 const fillData = async (specifics) => {
@@ -52,6 +128,7 @@ const fillData = async (specifics) => {
      * 
      * TODO: write similar functions for GET and DELETE
      */
+    console.log("inside fillData")
 
     return await client.post(
         '/select_data',
@@ -62,7 +139,9 @@ const fillData = async (specifics) => {
             }
         }
     ).then(
-        (response) => JSON.parse(response)
+        (response) => response.data
+    ).then(
+        (data) => {tableData = data; return data}
     );
 }
 
@@ -94,78 +173,18 @@ const ReturnedData = async (action, specifics) => {
         specifics = JSON.parse(specifics);
     }
     catch {
-        throw new Error("Please convert to proper JSON format")
+        throw new Error("Please convert to proper JSON format. Thrown by your friendly Returned Data.")
     }
 
     // Promises require me to put a bunch of placeholder/default values
     // There's probably a more elegant way to do this but I don't want to break it
 
     if (action.toUpperCase() === "READ") {
-
-        try {
-
-            // Async call
-            const data = await fillData(specifics);
-
-            // Another placeholder
-            const filledData = [[]];
-
-            // I iterated over the length of the data returned from the server
-            // Note: we don't want to stringify this, but it is a JSON object
-            // Thus, we have to cram the object into an array for use in React
-            // I'm going to iterate over the values of the returned data and save
-            // it into the placeholder array
-            for (let index = 0; index < data.length; index++) {
-                // NOTE ON INDEXING: data is of form [{}] so data has length > 1 but
-                // it's not necessarily true that all keys for all data members exist
-                // We can't make filledData indexing related to data indexing or vice versa
-
-
-                // There's a finite number of unique keys, so although we don't want
-                // the keys, we iterate over them to find the values
-                const keys = Object.keys(data[index]);
-
-                // filledData does not necessarily have an existing member at *index*
-                filledData[index] = []
-
-                // This is where I iterate over the keys and place the values in filledData
-                for (let element = 0; element < keys.length; element++) {
-
-                    // Push, not indexing or assignment, because filledData is an array
-                    filledData[index].push(data[index][keys[element]])
-                }
-
-                // Add the buttons for the display list, anything inside the push
-                // will get added to one cell in the table
-                filledData[index].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
-                filledData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
-            };
-
-            // This must be returned to the calling, awaiting function
-            return filledData
-        }
-
-        /**
-         * Vitally important: this catch statement actually returns the values that
-         * allows the Items page to shaw a blank screen instead of erroring
-         */
-        catch (error) {
-
-            // If there's a bad axios call, fill with empty values
-            const filledData = [["1", "error", "database", "not connected"]]
-
-            // filledData[0] is required because filledData is a 2d array and we have to add
-            // to the first element of the array
-            filledData[0].push(<Link to="/editItem"><Button>Edit Item</Button></Link>);
-            filledData[0].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
-            return filledData
-        }
-
-
-    };
-
-
+        await readData(specifics);
+        return tableData
+        
+    }
 
 };
 
-export { ReturnedData, dataNext };
+export { DataNext, ReturnedData, tableData };

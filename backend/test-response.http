@@ -1,5 +1,5 @@
 POST http://localhost:5000/select_data
-Content-Type: application/json
+content-type: application/json
 
 {
     "columns":["idItem","itemName","itemDescription"],

@@ -1,7 +1,4 @@
-import Button from '../components/Button';
-import { json, Link } from 'react-router-dom';
-import { useState } from 'react';
-import { ReturnedData } from '../axios/crud.js';
+import { ReturnedData, tableData } from '../axios/crud.js';
 /**
  * I had to entirely rewrite itemData to allow it to make asynchronous POST calls
  * The scoping for each item is incredibly important
@@ -9,10 +6,22 @@ import { ReturnedData } from '../axios/crud.js';
  * I'll explain how I had to rewrite the function below, but I will note one of the major
  * TODOs left: setup an AXIOS config at the project level so the local_url is not hardcoded
  */
+let fetchedData = [[]]
+
+const item_params = ["idItem","itemName","itemDescription"];
 
 const headers = ["Name", "Description", "Game", "Country", "Edit", "Delete"];
 
+const fetchItemTableData = async (item_params, append) => {
+    const list_param = JSON.stringify(item_params)
+    let parameters = JSON.stringify(
+        append ? '{"columns":'+list_param+', "table":"Items", "append":"'+append+'"}' : '{"columns":'+list_param+', "table":"Items"}'
+    );
+    await ReturnedData("READ", parameters);
+    fetchedData = tableData
+    return
 
+};
 
 // As in the original setup
 const addFormContents = [
@@ -36,4 +45,4 @@ const deleteFormContents = [
 
 
 
-export { headers, ReturnedData, addFormContents, editFormContents, deleteFormContents };
+export { headers, fetchedData, fetchItemTableData, addFormContents, editFormContents, deleteFormContents };
