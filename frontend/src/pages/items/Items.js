@@ -28,17 +28,10 @@ let tableData = [[]]
 function Items() {
     const navigate = useNavigate();
 
-    DataNext("Items");
-    tableData = fetchedData;
-    const [post, setPost] = useState([[]]);
-
     useEffect(() => {
         DataNext("Items");
-        tableData = fetchedData;
-        console.log("in Items", tableData)
-        setPost(tableData)
     }, []);
-    console.log(tableData)
+
     return (
         <>
             <div id="content">
