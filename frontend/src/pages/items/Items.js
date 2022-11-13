@@ -1,9 +1,10 @@
 import TableView from '../../components/TableView/TableView';
 import { headers, fetchedData } from '../../data/itemData';
 import Button from '../../components/Button';
-import { Link, renderMatches, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { DataNext } from '../../axios/crud.js';
 import { useEffect, useState } from 'react';
+
 
 /**
  * Unfortunately, implementing CRUD required a rewrite of the Items page. The steps are as follows:
@@ -24,12 +25,13 @@ import { useEffect, useState } from 'react';
  * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
 */
 
-let tableData = [[]]
 function Items() {
     const navigate = useNavigate();
+    const [post, setPost] = useState([[]]);
 
     useEffect(() => {
         DataNext("Items");
+        setPost(fetchedData)
     }, []);
 
     return (
@@ -38,7 +40,7 @@ function Items() {
                 <h1>Items</h1>
                 <TableView headers={headers} listData={fetchedData} />
                 <Link to="/addItem"><Button>Add Item</Button></Link>
-                <Button onClick={() => { navigate(-1) }}>Cancel</Button>
+                <Button onClick={() => { console.log("This needs to be fetchedData", fetchedData); navigate(-1) }}>Cancel</Button>
             </div>
         </>
     )

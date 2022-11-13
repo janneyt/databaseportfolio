@@ -8,17 +8,30 @@ import { ReturnedData, tableData } from '../axios/crud.js';
  */
 let fetchedData = [[]]
 
-const item_params = ["idItem","itemName","itemDescription"];
+const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
 
-const headers = ["Name", "Description", "Game", "Country", "Edit", "Delete"];
-
-const fetchItemTableData = async (item_params, append) => {
+const fetchItemTableData = async (item_params, append, purpose) => {
     const list_param = JSON.stringify(item_params)
+    const append_str = JSON.stringify(append)
     let parameters = JSON.stringify(
-        append ? '{"columns":'+list_param+', "table":"Items", "append":"'+append+'"}' : '{"columns":'+list_param+', "table":"Items"}'
+        append ? '{"columns":' + list_param + ', "table":"Items", "append":"' + append + '"}' : '{"columns":' + list_param + ', "table":"Items"}'
     );
     await ReturnedData("READ", parameters);
     fetchedData = tableData
+    console.log("not inside purpose", fetchedData)
+    if (purpose && purpose.toLowerCase() === "edit") {
+        console.log("inside purpose", fetchedData)
+        const editFormContents = [
+            { type: "text", name: "itemname", label: "Name Your Item:", value: fetchedData[0] },
+            { type: "text", name: "itemdescription", label: "Describe Your Item", value: fetchedData[1] },
+            { type: "text", name: "gamename", label: "Game Name", value: fetchedData[2] },
+
+        ];
+        
+        fetchedData = editFormContents
+        console.log("data editformcontents", fetchedData)
+        return editFormContents
+    }
     return
 
 };

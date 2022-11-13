@@ -26,11 +26,14 @@ database = Database(MySQL(app))
 def select_data():
     data = request.get_json()
     print("JSON DATA:", data)
+    print("JSON DATA:", data)
+    
     # Ensure an append is passed to the add_select method
     if 'append' not in data:
         append = ''
     else:
         append = data['append']
+
 
     # Only pass to the add_select if the proper tables are present
     if 'columns' in data and 'table' in data:
@@ -72,6 +75,7 @@ def update_data():
 
     # Initialize append only if not received
     if 'append' not in data:
+        
         data['append'] = ''
 
     if 'table' in data and 'set_pairs' in data and 'filter' in data:
