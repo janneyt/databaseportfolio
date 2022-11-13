@@ -7,6 +7,8 @@ const client = axios.create({
     baseURL: "http://localhost:5000"
 });
 
+let keys = [null]
+
 let data = [[]]
 
 /**
@@ -28,7 +30,7 @@ let data = [[]]
  * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
 */
 
-const DataNext = (page_determiner, append, purpose) => {
+const DataNext = (page_determiner, append, purpose, id) => {
     /**
      * This is an interface to fit between Items and itemData. It's meant to make
      * all pages be able to call dataNext, which will then decide which data page to call
@@ -40,9 +42,10 @@ const DataNext = (page_determiner, append, purpose) => {
         const header_len = headers.length
         const header_mod = headers
         const itemData = header_mod.slice(0, header_len - 4)
+        console.log("not in nottingham",id)
 
         /* Head off to itemData, which will also call functions in this file as well */
-        return fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null);
+        return fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null, id);
     }
 
 }
@@ -103,13 +106,15 @@ const readData = (specifics) => {
 
             // There's a finite number of unique keys, so although we don't want
             // the keys, we iterate over them to find the values
-            const keys = Object.keys(data[index]);
+            keys = Object.keys(data[index]);
 
             // filledData does not necessarily have an existing member at *index*
             filledData[index] = []
 
             // This is where I iterate over the keys and place the values in filledData
             for (let element = 0; element < keys.length; element++) {
+
+
                 // Put the filled Data in the right spot in the header
                 for (let header_element = 0; header_element < headers.length; header_element++) {
 
@@ -121,7 +126,7 @@ const readData = (specifics) => {
                 }
 
             }
-
+            const id = filledData[index][0]
             // Placeholders for future FKs
             filledData[index].push("Game 1")
             filledData[index].push("The Shire")
@@ -129,7 +134,7 @@ const readData = (specifics) => {
 
             // Add the buttons for the display list, anything inside the push
             // will get added to one cell in the table
-            filledData[index].push(<Link to="/editItem" state={{ id: index + 1 }}><Button>Edit Item</Button></Link>);
+            filledData[index].push(<Link to="/editItem" state={{id: id}} ><Button>Edit Item</Button></Link>);
             filledData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
 
         };
@@ -238,4 +243,4 @@ const ReturnedData = (action, specifics) => {
 
 };
 
-export { DataNext, ReturnedData };
+export { DataNext, ReturnedData, keys };

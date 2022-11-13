@@ -4,12 +4,11 @@ import FormInput from './FormInput';
 import FormSelect from './FormSelect';
 
 
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Form = ({ submitText="Submit", inputState}) => {
     
     const [inputFields, setInputFields] = useState(inputState)
-    const location = useLocation();
     
 
     const handleFormChange = (index, e) => {
@@ -40,7 +39,6 @@ const Form = ({ submitText="Submit", inputState}) => {
             {formFields}
             <Button type="submit">{submitText}</Button>
             <Button onClick={() => {
-                console.log("fetchedData in form",location.state);
                 navigate(-1);
                 }}>Cancel</Button>
         </form>

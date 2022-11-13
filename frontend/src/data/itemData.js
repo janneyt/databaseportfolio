@@ -1,4 +1,4 @@
-import { ReturnedData } from '../axios/crud.js';
+import { ReturnedData, keys } from '../axios/crud.js';
 /**
  * I had to entirely rewrite itemData to allow it to make asynchronous POST calls
  * The scoping for each item is incredibly important
@@ -10,7 +10,8 @@ import { ReturnedData } from '../axios/crud.js';
 
 const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
 
-const fetchItemTableData = (item_params, append, purpose) => {
+const fetchItemTableData = (item_params, append, purpose, id) => {
+    console.log("IDDDDD",id)
     const list_param = JSON.stringify(item_params)
     const append_str = JSON.stringify(append)
 
@@ -21,11 +22,17 @@ const fetchItemTableData = (item_params, append, purpose) => {
 
 
     if (purpose && purpose.toLowerCase() === "edit") {
-        console.log("before editFormContents", fetchedData)
+        let find = 0
+        for(let indexing = 0; indexing < fetchedData.length; indexing++){
+            if(fetchedData[indexing][0] === id){
+                find = indexing
+            }
+        }
         const editFormContents = [
-            { type: "text", name: "itemname", label: "Name Your Item:", value: fetchedData[0][1] },
-            { type: "text", name: "itemdescription", label: "Describe Your Item", value: fetchedData[0][2] },
-            { type: "text", name: "gamename", label: "Game Name", value: fetchedData[0][3] },
+            // TODO: dynamically generate fetchedData's indices, instead of hardcoding
+            { type: "text", name: "itemname", label: "Name Your Item:", value: fetchedData[find][1] },
+            { type: "text", name: "itemdescription", label: "Describe Your Item", value: fetchedData[find][2] },
+            { type: "text", name: "gamename", label: "Game Name", value: fetchedData[find][3] },
 
         ];
         console.log("post editFormContents", fetchedData)

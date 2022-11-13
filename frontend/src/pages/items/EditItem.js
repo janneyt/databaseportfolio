@@ -12,13 +12,16 @@ const ShowIfLoaded = ({ isLoading, children }) => {
 
 function EditItems() {
     const location = useLocation();
-    const id = location.state.id;
+    let id = 0;
     const [post, setPost] = useState([{}]);
     const append = 'WHERE idItem = ' + id.toString()
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        setPost(DataNext("Items", append, "edit"))
+        if(location.state){
+            id = location.state.id ? location.state.id : 0
+        }
+        setPost(DataNext("Items", append, "edit", id))
         console.log("fetched data", post)
         setIsLoading(false)
     }, [isLoading]);

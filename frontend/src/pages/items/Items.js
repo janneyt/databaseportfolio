@@ -48,7 +48,7 @@ function Items() {
                 <ShowIfLoaded isLoading = {isLoading}>
                     <TableView headers={headers} listData={post} />
                     <Link to="/addItem"><Button>Add Item</Button></Link>
-                    <Button state={{former:post}}onClick={() => { navigate(-1) }}>Cancel</Button>
+                    <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>
             </div>
         </>
