@@ -4,11 +4,13 @@ import FormInput from './FormInput';
 import FormSelect from './FormSelect';
 
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Form = ({ submitText="Submit", inputState}) => {
     
     const [inputFields, setInputFields] = useState(inputState)
+    const location = useLocation();
+    
 
     const handleFormChange = (index, e) => {
         e.preventDefault()
@@ -21,7 +23,7 @@ const Form = ({ submitText="Submit", inputState}) => {
         // Check to see what type of input to place into the form
         // Currently this can be type="text" or "select"
         // Defaults to "text"
-        console.log("form rows", row)
+
         if (row.type == "text") {
             return <FormInput key={index} inputObj={row} onChange={handleFormChange} index={index} />
         };
@@ -38,7 +40,7 @@ const Form = ({ submitText="Submit", inputState}) => {
             {formFields}
             <Button type="submit">{submitText}</Button>
             <Button onClick={() => {
-                console.log("fetchedData in form");
+                console.log("fetchedData in form",location.state);
                 navigate(-1);
                 }}>Cancel</Button>
         </form>

@@ -4,8 +4,10 @@ import Button from '../components/Button';
 import { fetchItemTableData, headers } from '../data/itemData.js';
 
 const client = axios.create({
-  baseURL: "http://localhost:5000" 
+    baseURL: "http://localhost:5000"
 });
+
+let data = [[]]
 
 /**
  * Unfortunately, implementing CRUD required a rewrite of the Items page. The steps are as follows:
@@ -26,18 +28,18 @@ const client = axios.create({
  * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
 */
 
-let tableData = [[]]
-
-const DataNext = async (page_determiner, append, purpose) => {
+const DataNext = (page_determiner, append, purpose) => {
     /**
      * This is an interface to fit between Items and itemData. It's meant to make
      * all pages be able to call dataNext, which will then decide which data page to call
      */
-    if(!page_determiner){
+
+    if (!page_determiner) {
         throw new Error("Please provide the page name for your data transfer");
-    } else if(page_determiner.toLowerCase() === "items"){
+    } else if (page_determiner.toLowerCase() === "items") {
         const header_len = headers.length
-        const itemData = headers.splice(0,header_len)
+        const header_mod = headers
+        const itemData = header_mod.slice(0, header_len - 4)
 
         /* Head off to itemData, which will also call functions in this file as well */
         return fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null);
@@ -46,8 +48,9 @@ const DataNext = async (page_determiner, append, purpose) => {
 }
 
 const fillUpdateData = async (specifics) => {
-    try{
-        return await client.post(
+
+    try {
+        return client.post(
             '/select_data',
             specifics,
             {
@@ -56,31 +59,33 @@ const fillUpdateData = async (specifics) => {
                 }
             }
         ).then(
-            (response) => response.data
-        ).then(
-            (data) => {tableData = data; return data}
-        );
+            (response) => { return response.data }
+        )
 
-    } catch{
+    } catch {
 
     }
 }
 
 const updateData = async (specifics) => {
-    try{
+    try {
 
-    } catch{
+    } catch {
         const data = await fillUpdateData(specifics);
     }
 }
 
-const readData = async (specifics) => {
+const readData = (specifics) => {
     try {
 
-        // Async call
-        const data = await fillData(specifics);
+        fillData(specifics).then(
+            (response) => {
+                data = response
+                return response
+            }
+        )
 
-        tableData = data
+
 
         // Another placeholder
         const filledData = [[]];
@@ -106,28 +111,28 @@ const readData = async (specifics) => {
             // This is where I iterate over the keys and place the values in filledData
             for (let element = 0; element < keys.length; element++) {
                 // Put the filled Data in the right spot in the header
-                for(let header_element = 0; header_element < headers.length; header_element++){
+                for (let header_element = 0; header_element < headers.length; header_element++) {
 
-                    if(keys[element] === headers[header_element]){
+                    if (keys[element] === headers[header_element]) {
+
                         filledData[index][header_element] = data[index][keys[element]]
+
                     }
                 }
-                
+
             }
 
             // Placeholders for future FKs
             filledData[index].push("Game 1")
             filledData[index].push("The Shire")
 
+
             // Add the buttons for the display list, anything inside the push
             // will get added to one cell in the table
-            filledData[index].push(<Link to="/editItem" state={{id:index+1}}><Button>Edit Item</Button></Link>);
+            filledData[index].push(<Link to="/editItem" state={{ id: index + 1 }}><Button>Edit Item</Button></Link>);
             filledData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
 
         };
-
-        // This must be returned to the calling, awaiting function
-        tableData = filledData
 
         return filledData
     }
@@ -143,11 +148,10 @@ const readData = async (specifics) => {
 
         // filledData[0] is required because filledData is a 2d array and we have to add
         // to the first element of the array
-        filledData[0].push(<Link to="/editItem" state={{id: 0}}><Button>Edit Item</Button></Link>);
+        filledData[0].push(<Link to="/editItem" state={{ id: 0 }}><Button>Edit Item</Button></Link>);
         filledData[0].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
-        
-        tableData = filledData
-        console.log("tableData 1", tableData)
+
+        console.log(error);
         return filledData
     }
 
@@ -168,23 +172,28 @@ const fillData = async (specifics) => {
      * 
      * TODO: write similar functions for GET and DELETE
      */
-
-    return await client.post(
-        '/select_data',
-        specifics,
-        {
-            headers: {
-                'Content-Type': 'application/json'
+    
+    try {
+        const response = await client.post(
+            '/select_data',
+            specifics,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
-        }
-    ).then(
-        (response) => response.data
-    ).then(
-        (data) => {tableData = data; return data}
-    );
+        );
+
+        data = response.data;
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        data = [[]];
+        return error;
+    }
 }
 
-const ReturnedData = async (action, specifics) => {
+const ReturnedData = (action, specifics) => {
 
     /*
         Takes the action and specifics data members and creates axios posts.
@@ -219,14 +228,14 @@ const ReturnedData = async (action, specifics) => {
     // There's probably a more elegant way to do this but I don't want to break it
 
     if (action.toUpperCase() === "READ") {
-        await readData(specifics);
-        return tableData;
-        
-    } else if(action.toUpperCase() === "UPDATE") {
-        await updateData(specifics);
-        return tableData;
+        return readData(specifics);
+
+    } else if (action.toUpperCase() === "UPDATE") {
+        return updateData(specifics);
+
+
     }
 
 };
 
-export { DataNext, ReturnedData, tableData };
+export { DataNext, ReturnedData };

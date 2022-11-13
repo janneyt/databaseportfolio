@@ -1,4 +1,4 @@
-import { ReturnedData, tableData } from '../axios/crud.js';
+import { ReturnedData } from '../axios/crud.js';
 /**
  * I had to entirely rewrite itemData to allow it to make asynchronous POST calls
  * The scoping for each item is incredibly important
@@ -6,33 +6,36 @@ import { ReturnedData, tableData } from '../axios/crud.js';
  * I'll explain how I had to rewrite the function below, but I will note one of the major
  * TODOs left: setup an AXIOS config at the project level so the local_url is not hardcoded
  */
-let fetchedData = [[]]
+
 
 const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
 
-const fetchItemTableData = async (item_params, append, purpose) => {
+const fetchItemTableData = (item_params, append, purpose) => {
     const list_param = JSON.stringify(item_params)
     const append_str = JSON.stringify(append)
+
     let parameters = JSON.stringify(
         append ? '{"columns":' + list_param + ', "table":"Items", "append":"' + append + '"}' : '{"columns":' + list_param + ', "table":"Items"}'
     );
-    await ReturnedData("READ", parameters);
-    fetchedData = tableData
-    console.log("not inside purpose", fetchedData)
+    let fetchedData = ReturnedData("READ", parameters);
+
+
     if (purpose && purpose.toLowerCase() === "edit") {
-        console.log("inside purpose", fetchedData)
+        console.log("before editFormContents", fetchedData)
         const editFormContents = [
-            { type: "text", name: "itemname", label: "Name Your Item:", value: fetchedData[0] },
-            { type: "text", name: "itemdescription", label: "Describe Your Item", value: fetchedData[1] },
-            { type: "text", name: "gamename", label: "Game Name", value: fetchedData[2] },
+            { type: "text", name: "itemname", label: "Name Your Item:", value: fetchedData[0][1] },
+            { type: "text", name: "itemdescription", label: "Describe Your Item", value: fetchedData[0][2] },
+            { type: "text", name: "gamename", label: "Game Name", value: fetchedData[0][3] },
 
         ];
+        console.log("post editFormContents", fetchedData)
         
         fetchedData = editFormContents
-        console.log("data editformcontents", fetchedData)
+
         return editFormContents
     }
-    return
+
+    return fetchedData
 
 };
 
@@ -58,4 +61,4 @@ const deleteFormContents = [
 
 
 
-export { headers, fetchedData, fetchItemTableData, addFormContents, editFormContents, deleteFormContents };
+export { headers, fetchItemTableData, addFormContents, editFormContents, deleteFormContents };
