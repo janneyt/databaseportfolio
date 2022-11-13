@@ -26,13 +26,17 @@ function EditItems() {
         setIsLoading(false)
     }, [isLoading]);
 
+    const updateForm = () => {
+        
+    }
+
     return (
         <>
             <div className="content">
 
                 <h1>Edit Item Page</h1>
                 <ShowIfLoaded isLoading={isLoading}>
-                    <Form submitText="Save" inputState={post} />
+                    <Form submitText="Save" inputState={post} onSubmit={updateForm}/>
                 </ShowIfLoaded>
             </div>
         </>

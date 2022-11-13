@@ -22,5 +22,5 @@ POST http://localhost:5000/update_data
 Content-Type: application/json
 
 {
-    {"set_pairs":["itemname=sword", itemdescription="Yet another sword"], "table":"Items", "filter":"iditem = 1"}
+    {"set_pairs":["itemname"="sword", "itemdescription"="Yet another sword"], "table":"Items", "filter":"iditem = 1"}
 }
