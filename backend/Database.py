@@ -31,7 +31,8 @@ class Database:
             input.lower()
             input.capitalize()
         except Exception as error:
-            self.debug("Failed Case Update", error)
+            self.debug("Failed Case Update", str(error))
+            raise error
 
         return input
 
@@ -73,7 +74,7 @@ class Database:
         try:
             cursor = self._mysql.connection.cursor()
         except Exception as error:
-            self.debug("connection failure", error)
+            self.debug("connection failure", str(error))
             raise error  # Pass error up to app.py
 
         for query_tuple in self._queries:
@@ -136,11 +137,11 @@ class Database:
         append = ''  # Reset append value
         for index in range(len(columns)):
             if index == 0:
-                append += f'WHERE {columns[index]} = {values[index]}'
+                append += f' WHERE {columns[index]} = {values[index]}'
             else:
                 append += f' AND {columns[index]} = {values[index]}'
 
-        self.add_select(columns, table, append)
+        self.add_select(table, columns, append)
 
 
 
@@ -166,10 +167,10 @@ class Database:
         # BUILD SELECT to RETURN data UPDATED
         # -----------------------------------
 
-        append = f'WHERE {filter}'
+        append = f' WHERE {filter}'
 
         # Add select to queries
-        self.add_select(columns, table, append)
+        self.add_select(table, columns, append)
 
     def add_delete(self, table, filter):
         """Adds a DELETE query to the current list of queries given
