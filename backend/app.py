@@ -44,6 +44,7 @@ def select_data():
         database.execute()
     except Exception as error:
         database.delete_queries()  # Ensure failures don't add future queries
+        database.debug("failed execute", str(error))
         return str(error), 405
 
     return database.get_json()
@@ -63,6 +64,7 @@ def delete_data():
         database.execute()
     except Exception as error:
         database.delete_queries()  # Ensure failures don't add future queries
+        database.debug("failed execute",str(error))
         return str(error), 405
 
     return "Delete succesful", 204
@@ -88,6 +90,7 @@ def update_data():
         database.execute()
     except Exception as error:
         database.delete_queries()  # Ensure failures don't add future queries
+        database.debug("failed execute", str(error))
         return str(error), 405
 
     return database.get_json()
@@ -114,6 +117,7 @@ def insert_data():
         database.execute()
     except Exception as error:
         database.delete_queries()  # Ensure failures don't add future queries
+        database.debug("failed execute", str(error))
         return str(error), 405
 
     return make_response(database.get_json(), 204)
