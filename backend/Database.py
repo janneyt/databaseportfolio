@@ -9,30 +9,50 @@ class Database:
         self._mysql = sql_object
         self._queries = queries
         self._results = Data()
+        self._debug = True
 
+    def debug(self, reason: str, msg: str):
+        """Method that prints a message to the command line
+        for debug purposes if self._debug is True."""
+        if self._debug:
+            print(f'[DEBUG - {reason.upper()}]: {msg}')
+
+    def set_debug(self, setting: bool):
+        """Changes the debug value without having to change
+        a hardcoded value. The _debug attribute default is True.
+        Must be True or False."""
+        self._debug = setting
+        
     def update_case(self, input: str) -> str:
         """Given a string as input, will ensure only
         the first letter is capitalized (to match
         case of table names in database)."""
-        input.casefold()
-        input.capitalize()
+        try:
+            input.lower()
+            input.capitalize()
+        except Exception as error:
+            self.debug("Failed Case Update", error)
 
         return input
 
-    def add_query(self, query: str):
+    def add_query(self, query: str, data = {}):
         """Adds a manual query to the list of queries
         to execute. More complicated queries may need
-        to use this method."""
-        self._queries.append(query)
+        to use this method. The insert data can be used
+        to pass values and protect against injection attacks."""
+        self._queries.append((query, data))
+        self.debug("Added Query", query)
 
     def remove_query(self, index: int):
         """Removes the query at a given index from
         the list of queries."""
+        self.debug("remove query", self._queries[index])
         self._queries.pop(index)
 
     def delete_queries(self):
         """Deletes all queries from Database object."""
         self._queries = []
+        self.debug("delete queries", f"Current queries: {self._queries}")
 
     def get_queries(self):
         """Returns the list of current queries."""
@@ -49,15 +69,25 @@ class Database:
 
     def execute(self):
         """Executes the list of queries given to the Database Class."""
-        cursor = self._mysql.connection.cursor()
-        for query in self._queries:
-            cursor.execute(query)
+        # Attempt connection to mysql server
+        try:
+            cursor = self._mysql.connection.cursor()
+        except Exception as error:
+            self.debug("connection failure", error)
+            raise error  # Pass error up to app.py
+
+        for query_tuple in self._queries:
+            query, data = query_tuple
+            if data != {}:
+                cursor.execute(query, data)
+            else:
+                cursor.execute(query)
 
         self._results.set_data(cursor.fetchall())
-        self._queries = []
+        self._queries = []  # Clear executed queries
 
 
-    def add_select(self, columns: list, table: str, append=''):
+    def add_select(self, table: str, columns: list, append=''):
         """Adds a query to the list of queries with the given
         columns, table, and optional append (for things like WHERE)
         in case they are needed."""
@@ -68,12 +98,9 @@ class Database:
         # Build string of columns from columns list
         columns_str = ", ".join(columns)
 
-        query = 'SELECT ' + columns_str + ' FROM ' + table
-
-        if append != '':
-            query += ' ' + append
-
-        self._queries.append(query)
+        # Append query
+        query = f'SELECT {columns_str} FROM {table}{append}'
+        self.add_query(query)
 
     def add_insert(self, table: str, columns: list, values: list, append=''):
         """Adds an insert query to the current list of queries given
@@ -83,36 +110,41 @@ class Database:
         # Ensure proper table case
         table = self.update_case(table)
 
+        insert_dict = {}
+        for index in range(len(columns)):
+            insert_dict[columns[index]] = values[index]
+
+        self.debug("Prepare insert dict", insert_dict)
+
+        prepare_values = []
+        for column in columns:
+            prepare_values.append(f"%({column})s")
+
+
         # Convert list values into strings
         columns_str = ','.join(columns)
-        values_str = ','.join(values)
+        values_str = ','.join(prepare_values)
 
         # Build Insert query
-        query = 'INSERT INTO ' + table + ' (' + columns_str + ') VALUES ' + '(' + values_str + ')'
+        query = f'INSERT INTO {table} ({columns_str}) VALUES ({values_str}){append}'
 
-        if append != '':
-            query += ' ' + append
-
-        self._queries.append(query)
+        self.add_query(query, insert_dict)
 
         # Build append search to get only the item
         # added back from the SQL table
-        append = 'WHERE '
+        
+        append = ''  # Reset append value
         for index in range(len(columns)):
             if index == 0:
-                temp = str(columns[index]) + "=" + str(values[index])
-                append += temp
+                append += f'WHERE {columns[index]} = {values[index]}'
             else:
-                temp = " AND " + str(columns[index]) + "=" + str(values[index])
-                append += temp
-
-        append += ";"
+                append += f' AND {columns[index]} = {values[index]}'
 
         self.add_select(columns, table, append)
 
 
 
-    def add_update(self, table: str, set_pairs: list, filter='', append=''):
+    def add_update(self, table: str, columns: list, values: list, filter='', append=''):
         """Adds an UPDATE query to the current list of queries given
         a table, a string of set_pairs to update, a filter, and an optional
         append string."""
@@ -120,30 +152,24 @@ class Database:
         # Ensure proper table case
         table = self.update_case(table)
 
+        pair_list = []
+        for index in range(len(columns)):
+            pair_list.append('='.join((columns[index], values[index])))
+
         # Convert list values into strings
-        set_pairs_str = ','.join(set_pairs)
+        set_pairs_str = ','.join(pair_list)
 
-        query = 'UPDATE ' + table + ' SET ' + set_pairs_str + ' WHERE ' + filter
+        query = f'UPDATE {table} SET {set_pairs_str} WHERE {filter}{append}'
 
-        if append != '':
-            query += ' ' + append
-
-        self._queries.append(query)
+        self.add_query(query)
 
         # BUILD SELECT to RETURN data UPDATED
         # -----------------------------------
 
-        # Get keys for the set_pairs
-        keys = get_keys(set_pairs, "=")
-
-        # Build string from keys for SELECT columns
-        keys_str = ','.join(keys)
-
-        # Build append search for SELECT
-        append = 'WHERE ' + filter
+        append = f'WHERE {filter}'
 
         # Add select to queries
-        self.add_select(keys_str, table, append)
+        self.add_select(columns, table, append)
 
     def add_delete(self, table, filter):
         """Adds a DELETE query to the current list of queries given
@@ -152,18 +178,6 @@ class Database:
         # Ensure proper table case
         table = self.update_case(table)
 
-        query = 'DELETE FROM ' + table + ' WHERE ' + filter
+        query = f'DELETE FROM {table} WHERE {filter}'
 
-        self._queries.append(query)
-
-def get_keys(pairs: list, delimiter: str):
-    """Extracts keys for a list of strings in the format key=pair as
-    a single entry of the list as a string, where = can be any given
-    delimeter."""
-    keys = []
-
-    for value in pairs:
-        split_values = value.split(delimiter)
-        keys.append(split_values[0])
-
-    return keys
+        self.add_query(query)

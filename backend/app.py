@@ -27,24 +27,24 @@ def select_data():
     data = request.get_json()
     print("JSON DATA:", data)
     # Ensure an append is passed to the add_select method
-    if 'append' not in data:
+    try:
+        append = f" {data['append']}"
+    except:
         append = ''
-    else:
-        append = data['append']
 
     # Only pass to the add_select if the proper tables are present
-    if 'columns' in data and 'table' in data:
-        database.add_select(data["columns"], data["table"], append)
-
-    # Test print - For Debug purposes
-    print("QUERIES:", database.get_queries())
+    try:
+        database.add_select(data["table"], data["columns"], append)
+    except KeyError as key:
+        database.debug("KeyError:", f'Key: {key} not found.')
+        return str(f'KeyError: {key} not found.'), 405
 
     # Attempt to execute queries given to database
     try:
         database.execute()
-    except:
+    except Exception as error:
         database.delete_queries()  # Ensure failures don't add future queries
-        return "The queries are wrong or database connection is missing", 405
+        return str(error), 405
 
     return database.get_json()
 
@@ -52,64 +52,73 @@ def select_data():
 def delete_data():
     data = request.get_json()
 
-    print(data)
-
-    if 'table' in data and 'filter' in data:
+    try:
         database.add_delete(data["table"], data["filters"])
+    except KeyError as key:
+        database.debug("KeyError", f'Key: {key} not found.')
+        return str(f'Key: {key} not found.'), 405
 
-    # Attempt to execute queries given to database  
+    # Attempt to execute queries given to database
     try:
         database.execute()
-    except:
+    except Exception as error:
         database.delete_queries()  # Ensure failures don't add future queries
-        return "The queries are wrong or database connection is missing", 405
+        return str(error), 405
 
-    return make_response(204)
+    return "Delete succesful", 204
 
 @app.route('/update_data', methods=['POST'])
 def update_data():
     data = request.get_json()
 
-    # Initialize append only if not received
-    if 'append' not in data:
-        data['append'] = ''
+    # Ensure an append is passed to the add_select method
+    try:
+        append = f" {data['append']}"
+    except:
+        append = ''
 
-    if 'table' in data and 'set_pairs' in data and 'filter' in data:
-        database.add_update(data['table'], data['set_pairs'], data['filter'], data['append'])
-
+    try:
+        database.add_update(data['table'], data['columns'], data['values'], data['filter'], append)
+    except KeyError as key:
+        database.debug("KeyError:", f'Key: {key} not found.')
+        return str(f'KeyError: {key} not found.'), 405
+ 
     # Attempt to execute queries given to database
     try:
         database.execute()
-    except:
+    except Exception as error:
         database.delete_queries()  # Ensure failures don't add future queries
-        return "The queries are wrong or database connection is missing", 405
+        return str(error), 405
 
-    return make_response(database.get_json(), 204)
+    return database.get_json()
 
 @app.route('/insert_data', methods=['POST'])
 def insert_data():
     data = request.get_json()
 
-    # Initialize append only if not received
-    if 'append' not in data:
-        data['append'] = ''
+    # Ensure an append is passed to the add_select method
+    try:
+        append = f" {data['append']}"
+    except:
+        append = ''
 
-    if 'table' in data and 'columns' in data and 'values' in data:
-        database.add_insert(data['table'], data['columns'], data['values'], data['append'])
-
-    print(database.get_queries())
+    # Only pass to the add_insert if the proper tables are present
+    try:
+        database.add_insert(data["table"], data["columns"], data["values"], append)
+    except KeyError as key:
+        database.debug("KeyError:", f'Key: {key} not found.')
+        return str(f'KeyError: {key} not found.'), 405
 
     # Attempt to execute queries given to database
     try:
         database.execute()
-    except:
+    except Exception as error:
         database.delete_queries()  # Ensure failures don't add future queries
-        return "The queries are wrong or database connection is missing", 405
+        return str(error), 405
 
     return make_response(database.get_json(), 204)
 
-# Listener
+
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 60645))     
-    app.run(port=port, debug=True)
+    app.run(port=60645, debug=True)
