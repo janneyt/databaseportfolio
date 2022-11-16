@@ -42,19 +42,38 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const header_len = headers.length
         const header_mod = headers
         const itemData = header_mod.slice(0, header_len - 4)
-        console.log("not in nottingham",id)
+        
 
         /* Head off to itemData, which will also call functions in this file as well */
-        return await fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null, id);
+        const returnedData = await fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null, id);
+        console.log("returned data in crud", returnedData)
+        return returnedData
     }
 
 }
 
-const fillUpdateData = (specifics) => {
-
+const updateData = async (page, updates, original, append) => {
+    if(!page){
+        throw new Error("Page could not be determined.")
+    }
     try {
+        console.log("updates in crud", updates);
+        //database.add_update(data['table'], data['columns'], data['values'], data['filter'], append)
+        const header_len = headers.length
+        const header_mod = headers
+        const columns = header_mod.slice(0, header_len - 4)
+        const values = [];
+        for(const index = 0; index < updates.length; index++){
+            values.push(updates["value"])
+        }
+        const specifics = {
+            "table":page,
+            "columns":columns,
+            "values": values,
+            "filter": append
+        }
         return client.post(
-            '/select_data',
+            '/update_data',
             specifics,
             {
                 headers: {
@@ -64,17 +83,8 @@ const fillUpdateData = (specifics) => {
         ).then(
             (response) => { return response.data }
         )
-
     } catch {
 
-    }
-}
-
-const updateData = async (specifics) => {
-    try {
-
-    } catch {
-        const data = await fillUpdateData(specifics);
     }
 }
 
@@ -243,4 +253,4 @@ const ReturnedData = async (action, specifics) => {
 
 };
 
-export { DataNext, ReturnedData, keys };
+export { DataNext, ReturnedData, keys, updateData };

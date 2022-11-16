@@ -47,7 +47,7 @@ const Form = ({ submitText="Submit", inputState, parent_callback}) => {
             {formFields}
             <Button type="submit">{submitText}</Button>
             <Button onClick={() => {
-                navigate("/items");
+                navigate(-1);
                 }}>Cancel</Button>
         </form>
     );

@@ -92,7 +92,7 @@ class Database:
         """Adds a query to the list of queries with the given
         columns, table, and optional append (for things like WHERE)
         in case they are needed."""
-
+        
         # Ensure proper table case
         table = self.update_case(table)
 
