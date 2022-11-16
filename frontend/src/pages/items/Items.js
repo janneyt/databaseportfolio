@@ -1,7 +1,7 @@
 import TableView from '../../components/TableView/TableView';
 import { headers } from '../../data/itemData';
 import Button from '../../components/Button';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { DataNext } from '../../axios/crud.js';
 import { useEffect, useState } from 'react';
 
@@ -34,10 +34,16 @@ const ShowIfLoaded = ({isLoading, children}) => {
 
 function Items() {
     const navigate = useNavigate();
-    const [post, setPost] = useState([[]]);
     const [isLoading, setIsLoading] = useState(true);
+    const [post, setPost] = useState([[]]);
+    const location = useLocation();
+    const stateData = location.state;
+
+    console.log("state data", stateData);
+
     useEffect(() => {
         setPost(DataNext("Items"));
+        console.log("post in Items", post);
         setIsLoading(false)
     }, [isLoading]);
 
@@ -46,9 +52,12 @@ function Items() {
             <div id="content">
                 <h1>Items</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
-                    <TableView headers={headers} listData={post} />
+                    <TableView headers={headers} listData={post ? post : stateData["items"]} page={"items"}/>
                     <Link to="/addItem"><Button>Add Item</Button></Link>
-                    <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
+                    <Button  onClick={(e) => { 
+                        e.preventDefault();
+                        navigate(-1, {state: {state: post}}); 
+                        }}>Cancel</Button>
                 </ShowIfLoaded>
             </div>
         </>

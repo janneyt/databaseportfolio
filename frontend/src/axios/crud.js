@@ -42,7 +42,6 @@ const DataNext = (page_determiner, append, purpose, id) => {
         const header_len = headers.length
         const header_mod = headers
         const itemData = header_mod.slice(0, header_len - 4)
-        console.log("not in nottingham",id)
 
         /* Head off to itemData, which will also call functions in this file as well */
         return fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null, id);
@@ -81,13 +80,14 @@ const updateData = async (specifics) => {
 const readData = (specifics) => {
     try {
 
-        fillData(specifics).then(
+        const returnedData = fillData(specifics).then(
             (response) => {
                 data = response
-                return response
+                console.log("response in readData just now 17 nov", data)
+                return data
             }
-        )
-
+        ).catch((error) => console.log(error));
+        console.log("verify data got out", data)
 
 
         // Another placeholder
@@ -107,7 +107,7 @@ const readData = (specifics) => {
             // There's a finite number of unique keys, so although we don't want
             // the keys, we iterate over them to find the values
             keys = Object.keys(data[index]);
-
+            console.log("keys",keys);
             // filledData does not necessarily have an existing member at *index*
             filledData[index] = []
 
@@ -126,6 +126,7 @@ const readData = (specifics) => {
                 }
 
             }
+            console.log("data after filledData 17 nov", filledData[index])
             const id = filledData[index][0]
             // Placeholders for future FKs
             filledData[index].push("Game 1")
@@ -134,7 +135,7 @@ const readData = (specifics) => {
 
             // Add the buttons for the display list, anything inside the push
             // will get added to one cell in the table
-            filledData[index].push(<Link to="/editItem" state={{id: id}} ><Button>Edit Item</Button></Link>);
+            filledData[index].push(<Link to="/editItem" state={{id: id, data: data}} ><Button>Edit Item</Button></Link>);
             filledData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
 
         };

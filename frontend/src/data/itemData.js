@@ -11,7 +11,6 @@ import { ReturnedData, keys } from '../axios/crud.js';
 const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
 
 const fetchItemTableData = (item_params, append, purpose, id) => {
-    console.log("IDDDDD",id)
     const list_param = JSON.stringify(item_params)
     const append_str = JSON.stringify(append)
 
@@ -19,7 +18,7 @@ const fetchItemTableData = (item_params, append, purpose, id) => {
         append ? '{"columns":' + list_param + ', "table":"Items", "append":"' + append + '"}' : '{"columns":' + list_param + ', "table":"Items"}'
     );
     let fetchedData = ReturnedData("READ", parameters);
-
+    console.log("fetchedData just now", fetchedData);
 
     if (purpose && purpose.toLowerCase() === "edit") {
         let find = 0
@@ -35,7 +34,6 @@ const fetchItemTableData = (item_params, append, purpose, id) => {
             { type: "text", name: "gamename", label: "Game Name", value: fetchedData[find][3] },
 
         ];
-        console.log("post editFormContents", fetchedData)
         
         fetchedData = editFormContents
 

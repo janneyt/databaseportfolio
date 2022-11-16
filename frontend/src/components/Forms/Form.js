@@ -2,14 +2,16 @@ import { useState } from 'react';
 import Button from '../Button';
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
+import { useLocation, Link } from 'react-router-dom';
 
 
 import { useNavigate } from 'react-router-dom';
 
-const Form = ({ submitText="Submit", inputState}) => {
+const Form = ({ submitText="Submit", inputState, page }) => {
     
     const [inputFields, setInputFields] = useState(inputState)
-    
+    const location = useLocation();
+    const data = location.state[page];
 
     const handleFormChange = (index, e) => {
         e.preventDefault()
@@ -39,7 +41,8 @@ const Form = ({ submitText="Submit", inputState}) => {
             {formFields}
             <Button type="submit">{submitText}</Button>
             <Button onClick={() => {
-                navigate(-1);
+
+                navigate(-1, {state: {state: location.state}});
                 }}>Cancel</Button>
         </form>
     );

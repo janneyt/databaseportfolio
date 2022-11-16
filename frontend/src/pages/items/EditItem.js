@@ -12,11 +12,19 @@ const ShowIfLoaded = ({ isLoading, children }) => {
 
 function EditItems() {
     const location = useLocation();
-    let id = 0;
+    let id = location.state.id;
     const [post, setPost] = useState([{}]);
     const append = 'WHERE idItem = ' + id.toString()
     const [isLoading, setIsLoading] = useState(true);
+    const passedData = location.state.data;
 
+    // Remove soon to be updated value from the data you're returning to the page
+    for(const index = 0; index < passedData; index++){
+        if(passedData[index][0] === id){
+            const oldData = passedData[index];
+            passedData.splice(index, 1);
+        }
+    }
     useEffect(() => {
         if(location.state){
             id = location.state.id ? location.state.id : 0
