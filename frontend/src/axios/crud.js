@@ -83,11 +83,10 @@ const readData = (specifics) => {
         const returnedData = fillData(specifics).then(
             (response) => {
                 data = response
-                console.log("response in readData just now 17 nov", data)
                 return data
             }
         ).catch((error) => console.log(error));
-        console.log("verify data got out", data)
+
 
 
         // Another placeholder

@@ -34,11 +34,8 @@ function Items() {
     const location = useLocation();
     const stateData = location.state;
 
-    console.log("state data", stateData);
-
     useEffect(() => {
         setPost(DataNext("Items"));
-        console.log("post in Items", post);
         setIsLoading(false)
     }, [isLoading]);
 
