@@ -86,7 +86,7 @@ class Database:
 
         self._results.set_data(cursor.fetchall())
         self._queries = []  # Clear executed queries
-
+        return self.get_results()
 
     def add_select(self, table: str, columns: list, append=''):
         """Adds a query to the list of queries with the given
@@ -158,9 +158,9 @@ class Database:
             pair_list.append('='.join((columns[index], values[index])))
 
         # Convert list values into strings
-        set_pairs_str = ','.join(pair_list)
+        set_pairs_str = ', '.join(pair_list)
 
-        query = f'UPDATE {table} SET {set_pairs_str} WHERE {filter}{append}'
+        query = f'UPDATE {table} SET {set_pairs_str}WHERE {filter}{append}'
 
         self.add_query(query)
 

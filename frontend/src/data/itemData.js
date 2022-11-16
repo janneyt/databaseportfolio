@@ -10,14 +10,14 @@ import { ReturnedData, keys } from '../axios/crud.js';
 const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
 
 const fetchItemTableData = async (item_params, append, purpose, id) => {
-    console.log("id in fetItemTableData", id);
+
     const list_param = JSON.stringify(item_params)
     const append_str = JSON.stringify(append)
 
     let parameters = JSON.stringify(
         append ? '{"columns":' + list_param + ', "table":"Items", "append":' + append_str + '}' : '{"columns":' + list_param + ', "table":"Items"}'
     );
-    console.log("append in itemData", append);
+
     let fetchedData = await ReturnedData("READ", parameters);
 
 
@@ -35,7 +35,7 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
             { type: "text", name: "gamename", label: "Game Name", value: fetchedData[find][3] },
 
         ];
-        console.log("editFormContents", editFormContents)
+
         fetchedData = editFormContents
 
         return editFormContents

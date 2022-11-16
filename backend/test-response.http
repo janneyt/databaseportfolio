@@ -18,9 +18,9 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:5000/update_data
+POST http://localhost:60645/update_data
 Content-Type: application/json
 
 {
-    {"set_pairs":["itemname"="sword", "itemdescription"="Yet another sword"], "table":"Items", "filter":"iditem = 1"}
+    {"columns":["itemName","itemDescription"], "values":["swort","a longer bladed weapon"], "table":"Items", "filter":"iditem = 1"}
 }
