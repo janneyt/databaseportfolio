@@ -1,9 +1,11 @@
 import TableView from '../../components/TableView/TableView';
+import ShowIfLoaded from '../../components/ShowIfLoaded';
 import { headers } from '../../data/itemData';
 import Button from '../../components/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { DataNext } from '../../axios/crud.js';
 import { useEffect, useState } from 'react';
+
 
 
 /**
@@ -24,13 +26,6 @@ import { useEffect, useState } from 'react';
  * 
  * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
 */
-
-const ShowIfLoaded = ({isLoading, children}) => {
-    if(isLoading){
-        return(<p>Loading Data...</p>)
-    }
-    return <>{children}</>
-}
 
 function Items() {
     const navigate = useNavigate();
