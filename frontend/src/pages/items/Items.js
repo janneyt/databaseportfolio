@@ -13,7 +13,6 @@ import { ReturnedData } from '../../data/Axios';
 // Import React requirements
 import { Link, useNavigate } from 'react-router-dom';
 
-=======
 import { DataNext } from '../../axios/crud.js';
 import { useEffect, useState } from 'react';
 
