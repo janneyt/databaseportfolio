@@ -17,7 +17,7 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
     let parameters = JSON.stringify(
         append ? '{"columns":' + list_param + ', "table":"Items", "append":"' + append + '"}' : '{"columns":' + list_param + ', "table":"Items"}'
     );
-    let fetchedData = ReturnedData("READ", parameters);
+    let fetchedData = await ReturnedData("READ", parameters);
 
 
     if (purpose && purpose.toLowerCase() === "edit") {
