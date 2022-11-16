@@ -12,6 +12,9 @@ Example POST request:
     ---
 
     To update data:
+    {"columns": ["itemname", "itemdescription"], "values":["sword", "Yet another sword"], "table":"Items", "filter":"iditem = 1"}
+    
+    INSTEAD OF:
     {"set_pairs":["itemname=sword", itemdescription="Yet another sword"], "table":"Items", "filter":"iditem = 1"}
 
     Can send an append key:value pair to add on after the filter clause.
