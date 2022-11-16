@@ -1,8 +1,19 @@
+// Import Components
 import TableView from '../../components/TableView/TableView';
+
 import ShowIfLoaded from '../../components/ShowIfLoaded';
 import { headers } from '../../data/itemData';
+
 import Button from '../../components/Button';
+
+// Import Data requirements
+import { headers } from '../../data/itemData';
+import { ReturnedData } from '../../data/Axios';
+
+// Import React requirements
 import { Link, useNavigate } from 'react-router-dom';
+
+=======
 import { DataNext } from '../../axios/crud.js';
 import { useEffect, useState } from 'react';
 

@@ -7,7 +7,6 @@ import { ReturnedData, keys } from '../axios/crud.js';
  * TODOs left: setup an AXIOS config at the project level so the local_url is not hardcoded
  */
 
-
 const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
 
 const fetchItemTableData = (item_params, append, purpose, id) => {
@@ -61,11 +60,10 @@ const editFormContents = [
 
 ];
 
-
 const deleteFormContents = [
     { type: "hidden", name: "${idItem}" }
 ];
 
 
-
 export { headers, fetchItemTableData, addFormContents, editFormContents, deleteFormContents };
+
