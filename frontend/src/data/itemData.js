@@ -9,7 +9,7 @@ import { ReturnedData, keys } from '../axios/crud.js';
 
 const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
 
-const fetchItemTableData = (item_params, append, purpose, id) => {
+const fetchItemTableData = async (item_params, append, purpose, id) => {
     console.log("IDDDDD",id)
     const list_param = JSON.stringify(item_params)
     const append_str = JSON.stringify(append)

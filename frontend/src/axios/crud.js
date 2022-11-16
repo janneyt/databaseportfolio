@@ -4,7 +4,7 @@ import Button from '../components/Button';
 import { fetchItemTableData, headers } from '../data/itemData.js';
 
 const client = axios.create({
-    baseURL: "http://localhost:5000"
+    baseURL: "http://localhost:60645"
 });
 
 let keys = [null]
@@ -30,7 +30,7 @@ let data = [[]]
  * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
 */
 
-const DataNext = (page_determiner, append, purpose, id) => {
+const DataNext = async (page_determiner, append, purpose, id) => {
     /**
      * This is an interface to fit between Items and itemData. It's meant to make
      * all pages be able to call dataNext, which will then decide which data page to call
@@ -45,12 +45,12 @@ const DataNext = (page_determiner, append, purpose, id) => {
         console.log("not in nottingham",id)
 
         /* Head off to itemData, which will also call functions in this file as well */
-        return fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null, id);
+        return await fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null, id);
     }
 
 }
 
-const fillUpdateData = async (specifics) => {
+const fillUpdateData = (specifics) => {
 
     try {
         return client.post(
@@ -78,10 +78,10 @@ const updateData = async (specifics) => {
     }
 }
 
-const readData = (specifics) => {
+const readData = async (specifics) => {
     try {
 
-        fillData(specifics).then(
+        await fillData(specifics).then(
             (response) => {
                 data = response
                 return response
@@ -198,7 +198,7 @@ const fillData = async (specifics) => {
     }
 }
 
-const ReturnedData = (action, specifics) => {
+const ReturnedData = async (action, specifics) => {
 
     /*
         Takes the action and specifics data members and creates axios posts.
@@ -233,7 +233,7 @@ const ReturnedData = (action, specifics) => {
     // There's probably a more elegant way to do this but I don't want to break it
 
     if (action.toUpperCase() === "READ") {
-        return readData(specifics);
+        return await readData(specifics);
 
     } else if (action.toUpperCase() === "UPDATE") {
         return updateData(specifics);
