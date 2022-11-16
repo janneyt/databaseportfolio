@@ -25,8 +25,6 @@ database = Database(MySQL(app))
 @app.route('/select_data', methods=['POST'])
 def select_data():
     data = request.get_json()
-    print("JSON DATA:", data)
-    print("JSON DATA:", data)
     
     # Ensure an append is passed to the add_select method
     try:
