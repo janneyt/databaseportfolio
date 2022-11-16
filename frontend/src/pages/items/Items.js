@@ -32,16 +32,18 @@ import { useEffect, useState } from 'react';
  * 
  * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
 */
-
-let data = DataNext("Items")
+const dataPromise = DataNext("Items")
+    .then((response) => response);
 
 function Items() {
     const navigate = useNavigate();
     const [post, setPost] = useState([[]]);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        setPost(data);
-        setIsLoading(false)
+        dataPromise.then((response) => {
+            setPost(response);
+            setIsLoading(false);
+        })
     }, [isLoading]);
 
     return (
