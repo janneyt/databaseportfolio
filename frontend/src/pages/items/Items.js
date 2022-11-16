@@ -32,8 +32,6 @@ import { useEffect, useState } from 'react';
  * 
  * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
 */
-const dataPromise = () => DataNext("Items")
-.then((response) => response);
 
 function Items() {
     const navigate = useNavigate();
@@ -41,11 +39,11 @@ function Items() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        dataPromise().then((response) => {
+        DataNext("Items").then((response) => {
             setPost(response);
             setIsLoading(false);
         });
-    }, [isLoading]);
+    }, []);
 
     return (
         <>
