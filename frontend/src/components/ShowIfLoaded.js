@@ -6,7 +6,7 @@ const ShowIfLoaded = ({isLoading, children}) => {
             <>
                 <div id="loading">
                     <p>Loading...</p>
-                    <div class="lds-hourglass"></div>
+                    <div className="lds-hourglass"></div>
                 </div>
             </>
         )
