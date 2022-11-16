@@ -1,8 +1,7 @@
 import TableRow from './TableRow'
-import Button from '../../components/Button';
+import { useLocation } from 'react-router-dom';
 
 const TableView = ({headers, listData}) => {
-    console.log("list data", listData)
     const headerItems = headers.map((headers, index) => 
         <th key={index}>{headers}</th>
     );

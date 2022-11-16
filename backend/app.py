@@ -26,11 +26,14 @@ database = Database(MySQL(app))
 def select_data():
     data = request.get_json()
     print("JSON DATA:", data)
+    print("JSON DATA:", data)
+    
     # Ensure an append is passed to the add_select method
     try:
         append = f" {data['append']}"
     except:
         append = ''
+
 
     # Only pass to the add_select if the proper tables are present
     try:

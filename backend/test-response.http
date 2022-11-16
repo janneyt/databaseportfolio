@@ -1,7 +1,26 @@
 POST http://localhost:5000/select_data
-Content-Type: application/json
+content-type: application/json
 
 {
     "columns":["idItem","itemName","itemDescription"],
     "table":"Items"
+}
+
+
+###
+POST http://localhost:5000/select_data
+content-type: application/json 
+
+{
+    "columns":["idItem","itemName","itemDescription"],
+    "table":"Items",
+    "append":"WHERE idItem = 1"
+}
+
+###
+POST http://localhost:5000/update_data
+Content-Type: application/json
+
+{
+    {"set_pairs":["itemname"="sword", "itemdescription"="Yet another sword"], "table":"Items", "filter":"iditem = 1"}
 }

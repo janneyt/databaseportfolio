@@ -1,6 +1,4 @@
-import Button from '../components/Button';
-import { json, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { ReturnedData, keys } from '../axios/crud.js';
 /**
  * I had to entirely rewrite itemData to allow it to make asynchronous POST calls
  * The scoping for each item is incredibly important
@@ -9,8 +7,43 @@ import { useState } from 'react';
  * TODOs left: setup an AXIOS config at the project level so the local_url is not hardcoded
  */
 
-// Setup the headers
-const headers = ["Item ID", "Name", "Description", "Edit", "Delete"];
+const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
+
+const fetchItemTableData = (item_params, append, purpose, id) => {
+    console.log("IDDDDD",id)
+    const list_param = JSON.stringify(item_params)
+    const append_str = JSON.stringify(append)
+
+    let parameters = JSON.stringify(
+        append ? '{"columns":' + list_param + ', "table":"Items", "append":"' + append + '"}' : '{"columns":' + list_param + ', "table":"Items"}'
+    );
+    let fetchedData = ReturnedData("READ", parameters);
+
+
+    if (purpose && purpose.toLowerCase() === "edit") {
+        let find = 0
+        for(let indexing = 0; indexing < fetchedData.length; indexing++){
+            if(fetchedData[indexing][0] === id){
+                find = indexing
+            }
+        }
+        const editFormContents = [
+            // TODO: dynamically generate fetchedData's indices, instead of hardcoding
+            { type: "text", name: "itemname", label: "Name Your Item:", value: fetchedData[find][1] },
+            { type: "text", name: "itemdescription", label: "Describe Your Item", value: fetchedData[find][2] },
+            { type: "text", name: "gamename", label: "Game Name", value: fetchedData[find][3] },
+
+        ];
+        console.log("post editFormContents", fetchedData)
+        
+        fetchedData = editFormContents
+
+        return editFormContents
+    }
+
+    return fetchedData
+
+};
 
 // As in the original setup
 const addFormContents = [
@@ -31,4 +64,6 @@ const deleteFormContents = [
     { type: "hidden", name: "${idItem}" }
 ];
 
-export { headers, addFormContents, editFormContents, deleteFormContents };
+
+export { headers, fetchItemTableData, addFormContents, editFormContents, deleteFormContents };
+

@@ -1,5 +1,9 @@
 // Import Components
 import TableView from '../../components/TableView/TableView';
+
+import ShowIfLoaded from '../../components/ShowIfLoaded';
+import { headers } from '../../data/itemData';
+
 import Button from '../../components/Button';
 
 // Import Data requirements
@@ -8,48 +12,39 @@ import { ReturnedData } from '../../data/Axios';
 
 // Import React requirements
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect, componentDidMount } from 'react';
 
-/* WHEN PAGE LOADS
-* 1. A promise is created and ReturnedData function sends POST Request
-* via Axios.
-* 2. When the promise is resolved it's saved as the response.
-*
-* THE ShowIfLoaded COMPONENT
-* Experimental component that will only show contents (children)
-* if the given isLoading state is set to false. Currently it
-* will display "loading data..." until the response is received.
-*/ 
-const ShowIfLoaded = ({ isLoading, children }) => {
-    if (isLoading) {
-        return (
-            <p>Loading Data...</p>
-        )
-    }
+=======
+import { DataNext } from '../../axios/crud.js';
+import { useEffect, useState } from 'react';
 
-    return <>{children}</>
-}
 
-// Promise to get data
-const dataPromise = ReturnedData("READ", '{"columns":["idItem","itemName","itemDescription"], "table":"Items"}')
-    .then((response) => response);
 
+/**
+ * Unfortunately, implementing CRUD required a rewrite of the Items page. The steps are as follows:
+ * The old tableData variable has to be global to resolve the promises
+ * 
+ * Created a new async function (Items cannot be async or React gets mad) that calls 
+ * the axios method inside itemData.js
+ * 
+ * Use a .then method and set the response equal to a new variable
+ * Assign that variable to the global tableData variable
+ * Return the new variable
+ * 
+ * For some reason, all three of these steps must be followed to resolve the Promise
+ * and also store the value higher up
+ * 
+ * Call the new async function
+ * 
+ * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
+*/
 
 function Items() {
     const navigate = useNavigate();
-
-    // Set up use State
-    const [tableData, setTableData] = useState();
+    const [post, setPost] = useState([[]]);
     const [isLoading, setIsLoading] = useState(true);
-
-    // useEffect will re-render the affected components when any
-    // of the dependencies (isLoading in this case) changes.
-    // 
     useEffect(() => {
-        dataPromise.then((response) => {
-            setTableData(response); // Set tableData from response
-            setIsLoading(false); // Update isLoading, thus re-rendering
-        })
+        setPost(DataNext("Items"));
+        setIsLoading(false)
     }, [isLoading]);
 
     return (
@@ -57,9 +52,9 @@ function Items() {
             <div id="content">
                 <h1>Items</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
-                    <TableView headers={headers} listData={tableData} />
+                    <TableView headers={headers} listData={post} />
                     <Link to="/addItem"><Button>Add Item</Button></Link>
-                    <Button onClick={() => { navigate(-1) }}>Cancel</Button>
+                    <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>
             </div>
         </>

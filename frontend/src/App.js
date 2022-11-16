@@ -59,7 +59,6 @@ import DeleteLanguageFromCountry from './pages/countries_have_languages/DeleteLa
 import AddLanguageRuleToLanguage from './pages/languages_have_language_rules/AddLanguageRuleToLanguage';
 import LanguagesHaveLanguageRules from './pages/languages_have_language_rules/LanguagesHaveLanguageRules';
 
-
 function App() {
   return (
     <Router>
