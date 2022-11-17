@@ -16,8 +16,8 @@ function AddTranslation() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Items", submitData.current);
-        navigate("/items")
+        insertData("Translations", submitData.current);
+        navigate("/translations")
     }; 
 
     return (
