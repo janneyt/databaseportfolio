@@ -72,17 +72,22 @@ class Database:
         """Executes the list of queries given to the Database Class."""
         # Attempt connection to mysql server
         try:
-            cursor = self._mysql.connection.cursor()
+            con = self._mysql.connection
+            cursor = con.cursor()
         except Exception as error:
             self.debug("connection failure", str(error))
             raise error  # Pass error up to app.py
 
         for query_tuple in self._queries:
             query, data = query_tuple
+            print("DATA", data)
             if data != {}:
+                print("USING THE DATA GIVEN")
                 cursor.execute(query, data)
             else:
                 cursor.execute(query)
+
+        con.commit()
 
         self._results.set_data(cursor.fetchall())
         self._queries = []  # Clear executed queries
@@ -137,9 +142,12 @@ class Database:
         append = ''  # Reset append value
         for index in range(len(columns)):
             if index == 0:
-                append += f' WHERE {columns[index]} = {values[index]}'
+                append += f' WHERE {columns[index]} = \"{values[index]}\"'
             else:
-                append += f' AND {columns[index]} = {values[index]}'
+                append += f' AND {columns[index]} = \"{values[index]}\"'
+
+        columns = ["*"]
+        append = ''
 
         self.add_select(table, columns, append)
 
@@ -155,7 +163,7 @@ class Database:
 
         pair_list = []
         for index in range(len(columns)):
-            pair_list.append('='.join((columns[index], values[index])))
+            pair_list.append('='.join((columns[index], f'\"{values[index]}\"')))
 
         # Convert list values into strings
         set_pairs_str = ','.join(pair_list)
