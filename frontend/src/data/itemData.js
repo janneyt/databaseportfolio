@@ -16,6 +16,16 @@ const client = axios.create({
 });
 
 const foreignKeys = ["Games"];
+
+const countryHeaders = [
+  "Name",
+  "Size in Km",
+  "Population",
+  "Game",
+  "Edit",
+  "Delete",
+  "Languages",
+];
 const playerHeaders = ["playerName", "Edit", "Delete"];
 const gameHeaders = [
   "gameName",
@@ -54,12 +64,8 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
-    fetchedData[index1].push(
-      <p>Add game fk here</p>
-    );
-    fetchedData[index1].push(
-      <p>Add country fk here</p>
-    );
+    fetchedData[index1].push(<p>Add game fk here</p>);
+    fetchedData[index1].push(<p>Add country fk here</p>);
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
     fetchedData[index1].push(
@@ -137,7 +143,7 @@ const pullForeignKeys = (page) => {
     table: page === "Games" ? "Games" : "Players",
     columns: data,
   };
-  console.log("specifics", specifics);
+
   client
     .post("/select_data", specifics, {
       headers: {
@@ -145,7 +151,6 @@ const pullForeignKeys = (page) => {
       },
     })
     .then((response) => {
-      console.log("printing response", response.data);
       let additional = {};
       for (const item of response.data) {
         additional = {
@@ -162,10 +167,10 @@ const pullForeignKeys = (page) => {
         };
         options.push(additional);
       }
-      console.log("options in promise", options);
+
     })
     .catch((error) => console.log(error));
-  console.log("options", options);
+
   return options;
 };
 

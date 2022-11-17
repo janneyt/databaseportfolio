@@ -4,6 +4,9 @@ import Button from '../components/Button';
 import { fetchItemTableData, headers as itemHeaders} from '../data/itemData.js';
 import { CharacterHeaders, fetchCharacterTableData } from '../data/charactersData.js';
 import { fetchGameTableData, headers as GameHeaders} from '../data/gameData.js';
+import { fetchPlayerTableData, headers as PlayerHeaders } from '../data/playerData.js';
+import { fetchCountryTableData, headers as CountryHeaders } from '../data/countryData.js';
+
 
 const client = axios.create({
     baseURL: "http://localhost:60645"
@@ -50,7 +53,6 @@ const DataNext = async (page_determiner, append, purpose, id) => {
 
         /* Head off to itemData, which will also call functions in this file as well */
         const returnedData = await fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null, id);
-        console.log("returned data in crud", returnedData)
         return returnedData
     } else if(page_determiner.toLowerCase() === "characters"){
         headers = CharacterHeaders 
@@ -67,6 +69,17 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const gameData = header_mod.slice(0, header_len - 5)
 
         const returnedData = await fetchGameTableData(gameData, append ? append : null, purpose ? purpose : null, id);
+        return returnedData;
+    } else if(page_determiner.toLowerCase() === "players"){
+        headers = PlayerHeaders 
+        const header_len = headers.length
+        const header_mod = headers
+        const playerData = header_mod.slice(0, header_len - 5)
+
+        const returnedData = await fetchPlayerTableData(playerData, append ? append : null, purpose ? purpose : null, id);
+        return returnedData;
+    } else if(page_determiner.toLowerCase() === "countries"){
+         const returnedData = await fetchCountryTableData(CountryHeaders, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     }
 
