@@ -16,8 +16,8 @@ function AddPlayer() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Items", submitData.current);
-        navigate("/items")
+        insertData("Players", submitData.current);
+        navigate("/players")
     }; 
 
     return (
