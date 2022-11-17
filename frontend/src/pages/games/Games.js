@@ -32,7 +32,7 @@ function Games() {
                 <h1>Games</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
                     <TableView headers={headers} listData={post} />
-                    <Link to="/addItem"><Button>Add Item</Button></Link>
+                    <Link to="/addGame"><Button>Add Item</Button></Link>
                     <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>
             </div>
