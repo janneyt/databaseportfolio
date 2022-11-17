@@ -6,7 +6,7 @@ import FormSelect from './FormSelect';
 
 import { useNavigate } from 'react-router-dom';
 
-const Form = ({ submitText="Submit", inputState, parent_callback}) => {
+const Form = ({ submitText="Submit", inputState, onSubmit}) => {
     
     const [inputFields, setInputFields] = useState([{}])
 
@@ -19,11 +19,6 @@ const Form = ({ submitText="Submit", inputState, parent_callback}) => {
         let input = [...inputFields];
         input[index].value = e.target.value;
         setInputFields(input);
-    }
-
-    const handleSubmit = () => {
-
-        parent_callback(inputFields);
     }
 
     const formFields = inputFields.map((row, index) => {
@@ -43,7 +38,7 @@ const Form = ({ submitText="Submit", inputState, parent_callback}) => {
     const navigate = useNavigate();
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSubmit}>
             {formFields}
             <Button type="submit">{submitText}</Button>
             <Button onClick={() => {
