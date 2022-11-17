@@ -69,12 +69,12 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
     fetchedData[index1].push(
-      <Link to="/editItem" state={{ id: id }}>
+      <Link to="/editItem" state={{ id: fetchedData[index1][0] }}>
         <Button>Edit Item</Button>
       </Link>
     );
     fetchedData[index1].push(
-      <Link to="/deleteItem" state={{ id: id }}>
+      <Link to="/deleteItem" state={{ id: fetchedData[index1][0] }}>
         <Button>DeleteItem</Button>
       </Link>
     );

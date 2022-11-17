@@ -38,7 +38,7 @@ const fetchTranslationsTableData = async (item_params, append, purpose, id) => {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
     fetchedData[index1].push(
-      <Link to="/deleteTranslation" state={{ id: id }}>
+      <Link to="/deleteTranslation" state={{ id: fetchedData[index1][0]  }}>
         <Button>DeleteItem</Button>
       </Link>
     );

@@ -1,6 +1,6 @@
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
-import { ReturnedData, readData} from '../axios/crud.js';
+import { ReturnedData } from '../axios/crud.js';
 import axios from "axios";
 
 const client = axios.create({
@@ -55,12 +55,12 @@ const fetchCharacterTableData = async (item_params, append, purpose, id) => {
         // Add the buttons for the display list, anything inside the push
         // will get added to one cell in the table
         fetchedData[index1].push(
-          <Link to="/editItem" state={{ id: id }}>
+          <Link to="/editCharacter" state={{ id: fetchedData[index1][0] }}>
             <Button>Edit Item</Button>
           </Link>
         );
         fetchedData[index1].push(
-          <Link to="/deleteItem" state={{ id: id }}>
+          <Link to="/deleteCharacter" state={{ id: fetchedData[index1][0]  }}>
             <Button>DeleteItem</Button>
           </Link>
         );
