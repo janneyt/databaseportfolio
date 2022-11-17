@@ -49,8 +49,8 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
 const addFormContents = [
     { type: "text", name: "itemname", label: "Name Your Item:" },
     { type: "text", name: "itemdescription", label: "Describe Your Item:" },
-    { type: "text", name: "gamename", label: "Game Name (${Pulls game name from game id})" },
-    { type: "text", name: "playername", label: "Player Name *${Pulls player name from player id}" }
+    { type: "text", name: "idgame", label: "Game Name (${Pulls game name from game id})" },
+    { type: "text", name: "idcountry", label: "Player Name *${Pulls player name from player id}" }
 ];
 
 const editFormContents = [
