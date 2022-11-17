@@ -80,9 +80,7 @@ class Database:
 
         for query_tuple in self._queries:
             query, data = query_tuple
-            print("DATA", data)
             if data != {}:
-                print("USING THE DATA GIVEN")
                 cursor.execute(query, data)
             else:
                 cursor.execute(query)
@@ -146,9 +144,6 @@ class Database:
                 append += f' WHERE {columns[index]} = \"{values[index]}\"'
             else:
                 append += f' AND {columns[index]} = \"{values[index]}\"'
-
-        columns = ["*"]
-        append = ''
 
         self.add_select(table, columns, append)
 
