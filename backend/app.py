@@ -47,7 +47,7 @@ def select_data():
         database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
-
+    print(database.get_json())
     return database.get_json()
 
 @app.route('/delete_data', methods=['POST'])
@@ -73,7 +73,6 @@ def delete_data():
 @app.route('/update_data', methods=['POST'])
 def update_data():
     data = request.get_json()
-
     # Ensure an append is passed to the add_select method
     try:
         append = f" {data['append']}"
@@ -93,7 +92,6 @@ def update_data():
         database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
-
     return database.get_json()
 
 @app.route('/insert_data', methods=['POST'])

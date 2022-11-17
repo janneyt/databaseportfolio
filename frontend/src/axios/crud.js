@@ -80,19 +80,17 @@ const insertData = async (table, submitData, append="") => {
 
 ;}
 
-const updateData = async (page, updates, original, append) => {
+const updateData = async (page, updates, append) => {
     if(!page){
         throw new Error("Page could not be determined.")
     }
     try {
-        console.log("updates in crud", updates);
-        //database.add_update(data['table'], data['columns'], data['values'], data['filter'], append)
         const header_len = headers.length
         const header_mod = headers
-        const columns = header_mod.slice(0, header_len - 4)
+        const columns = header_mod.slice(1, header_len - 4)
         const values = [];
-        for(const index = 0; index < updates.length; index++){
-            values.push(updates["value"])
+        for(const value of updates){
+            values.push(value)
         }
         const specifics = {
             "table":page,
@@ -110,7 +108,7 @@ const updateData = async (page, updates, original, append) => {
             }
         ).then(
             (response) => { return response.data }
-        )
+        ).catch((error) => console.log(error))
     } catch {
 
     }

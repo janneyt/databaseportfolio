@@ -8,7 +8,9 @@ import { useNavigate } from 'react-router-dom';
 
 const Form = ({ submitText="Submit", inputState, onSubmit}) => {
     
-    const [inputFields, setInputFields] = useState([{}])
+    const [inputFields, setInputFields] = useState([{}]);
+    
+    const navigate = useNavigate();
 
     useEffect(() => {
         setInputFields(inputState);
@@ -25,7 +27,6 @@ const Form = ({ submitText="Submit", inputState, onSubmit}) => {
         // Check to see what type of input to place into the form
         // Currently this can be type="text" or "select"
         // Defaults to "text"
-        console.log("Row", row)
         if (row.type == "text") {
             return <FormInput key={index} inputObj={row} onChange={handleFormChange} index={index} />
         };
@@ -34,8 +35,6 @@ const Form = ({ submitText="Submit", inputState, onSubmit}) => {
             return <FormSelect inputObj = {row} />
         };
     });
-
-    const navigate = useNavigate();
 
     return (
         <form onSubmit={onSubmit}>
