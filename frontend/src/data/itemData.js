@@ -118,18 +118,15 @@ const pullForeignKeys = () => {
       console.log("printing response", response.data);
       let additional = {};
       for (const item of response.data) {
-        additional = { name: "apple", value: item.characterName };
+        additional = {value: item.characterName}
+        options.push(additional)
       }
-      options.push(additional);
-      console.log("options before return", options);
-      return additional;
+
     })
     .catch((error) => console.log(error));
+  console.log("options", options)
   return options;
 };
-
-const itemOptions = pullForeignKeys();
-console.log("itemOptions", itemOptions);
 
 // As in the original setup
 const addFormContents = [
