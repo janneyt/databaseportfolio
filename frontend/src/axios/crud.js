@@ -187,6 +187,17 @@ const updateData = async (page, updates, append, id) => {
 const deleteData = async (table, id, filter) => {
     console.log("id", id)
     console.log("filter",filter)
+
+    // This is needed to make sure deleteData is working with the right headers
+    const update_header = Array.from(headers)
+        const indexer = update_header.indexOf("Edit");
+
+        update_header.splice(indexer, 1)
+
+        const indexer1 = update_header.indexOf("Delete")
+
+        update_header.splice(indexer1, 1)
+
     // Why pass id? Because I want to make a check here that the id is valid, i.e. greater than -1.
     try{
         if(!table || ! id || id === -1){
