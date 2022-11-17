@@ -14,6 +14,7 @@ const client = axios.create({
 });
 
 const foreignKeys = ["Games"];
+const playerHeaders = ["playerName", "Edit", "Delete"];
 const gameHeaders = [
   "gameName",
   "idCountry",
@@ -100,14 +101,16 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
   return fetchedData;
 };
 
-const pullForeignKeys = () => {
+
+const pullForeignKeys = (page) => {
+  const header = page === "Games" ? gameHeaders : playerHeaders;
   let options = [];
-  const header = gameHeaders;
-  const gameData = header.slice(0, gameHeaders.length - 5);
+  const data = header === gameHeaders ? header.slice(0, gameHeaders.length - 5) : header.slice(0, playerHeaders.length - 2);
   const specifics = {
-    table: "Games",
-    columns: gameData,
+    table: page === "Games" ? "Games" : "Players",
+    columns: data,
   };
+  console.log("specifics", specifics);
   client
     .post("/select_data", specifics, {
       headers: {
@@ -118,13 +121,16 @@ const pullForeignKeys = () => {
       console.log("printing response", response.data);
       let additional = {};
       for (const item of response.data) {
-        additional = {value: item.characterName}
-        options.push(additional)
+        additional = {
+          value: item.gameName ? item.gameName : (item.characterName ? item.characterName : item.playerName),
+          label: item.gameName ? item.gameName : (item.characterName ? item.characterName : item.playerName),
+        };
+        options.push(additional);
       }
-
+      console.log("options in promise", options);
     })
     .catch((error) => console.log(error));
-  console.log("options", options)
+  console.log("options", options);
   return options;
 };
 
@@ -136,12 +142,13 @@ const addFormContents = [
     type: "select",
     name: "idgame",
     label: "Game Name (${Pulls game name from game id})",
-    options: pullForeignKeys(),
+    options: pullForeignKeys("Games"),
   },
   {
     type: "select",
     name: "idcountry",
     label: "Player Name *${Pulls player name from player id}",
+    options: pullForeignKeys("Players")
   },
 ];
 
