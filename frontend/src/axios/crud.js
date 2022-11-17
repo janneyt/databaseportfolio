@@ -273,27 +273,6 @@ const fillData = async (specifics) => {
     }
 }
 
-const pullForeignKeys = (foreignKeys) => {
-
-    let options = []
-    const header = CharacterHeaders
-    const characterData = header.slice(0, CharacterHeaders.length - 5)
-    for(const key of foreignKeys){
-        const specifics = {
-            "table":key,
-            "columns":characterData
-        }
-        readData (specifics).then(
-            (response) =>
-            options.push(response)
-        ).catch(
-            (error) =>
-            console.log(error)
-        )
-    }
-    return options;
-}
-
 const ReturnedData = async (action, specifics) => {
 
     /*
@@ -339,4 +318,4 @@ const ReturnedData = async (action, specifics) => {
 
 };
 
-export { DataNext, ReturnedData, keys, updateData, insertData, deleteData, readData, pullForeignKeys };
+export { DataNext, ReturnedData, keys, updateData, insertData, deleteData, readData };
