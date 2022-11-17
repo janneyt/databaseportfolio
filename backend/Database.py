@@ -111,7 +111,7 @@ class Database:
             else:
                 append += f' AND {columns[index]} = \"{values[index]}\"'
 
-        query = self.add_select(table, columns, append)
+        query = self.create_select(table, columns, append)
         queries.append(query)
 
         return queries
@@ -143,7 +143,7 @@ class Database:
         append = f' WHERE {filter}'
 
         # Add select to queries
-        query = self.add_select(table, columns, append)
+        query = self.create_select(table, columns, append)
         queries.append(query)
 
         return queries

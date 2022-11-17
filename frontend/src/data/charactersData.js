@@ -1,8 +1,38 @@
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { ReturnedData, readData} from '../axios/crud.js';
+import axios from "axios";
 
-const headers = ["characterName", "characterDescription", "idCountry","idPlayer", "idGame", "Edit", "Delete"];
+const client = axios.create({
+    baseURL: "http://localhost:60645",
+  });
+
+const playerHeaders = [
+    "playerName",
+    "idGame",
+    "idPlayer",
+    "Edit",
+    "Delete",
+  ];
+
+const countryHeaders = [
+    "countryName",
+    "sizeInKm",
+    "population",
+    "idGame",
+    "Edit",
+    "Delete",
+];
+  
+const headers = [
+    "characterName",
+    "characterDescription",
+    "idCountry",
+    "idPlayer",
+    "idGame",
+    "Edit",
+    "Delete"
+];
 
 const fetchCharacterTableData = async (item_params, append, purpose, id) => {
 
@@ -74,6 +104,56 @@ const fetchCharacterTableData = async (item_params, append, purpose, id) => {
 
 };
 
+const pullForeignKeys = (page) => {
+    const header = page === "Players" ? playerHeaders : countryHeaders;
+    let options = [];
+    const data = header === playerHeaders ? header.slice(0, playerHeaders.length - 4) : header.slice(0, countryHeaders.length - 5);
+    const specifics = {
+      table: page === "Players" ? "Players" : "Countries",
+      columns: data,
+    };
+    console.log("specifics", specifics);
+    client
+      .post("/select_data", specifics, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        console.log("printing response", response.data);
+        let additional = {};
+        for (const item of response.data) {
+          additional = {
+            value: item.playerName ? item.playerName : (item.countryName ? item.countryName : item.countryName),
+            label: item.playerName ? item.playerName : (item.countryName ? item.countryName : item.countryName),
+          };
+          options.push(additional);
+        }
+        console.log("options in promise", options);
+      })
+      .catch((error) => console.log(error));
+    console.log("options", options);
+    return options;
+  };
+
+const addFormContents = [
+    {type:"text", name:"charactername", label:"Name your character:", value: "${characterName}"},
+    {type:"text", name:"characterdescription", label:"Please describe your character", value: "${characterDescription}"},
+    
+    // {
+    //     type: "select",
+    //     name: "idcountry",
+    //     label: "Country Name",
+    //     options: pullForeignKeys("Countries"),
+    // },
+    // {
+    //     type: "select",
+    //     name: "idplayer",
+    //     label: "Player Name",
+    //     options: pullForeignKeys("Players"),
+    // },
+];
+
 const tableData = [
     ["Bilbo Baggins", "A reluctant hero who prefers to eat and sleep over adventuring, until adventuring takes his soul", "The Shire", "JRR Tolkien", "Fun first game!"],
     ["Another Character", "Just a lazy drunk", "Not the Shire", "JRR Tolkien", "Fun first game!"],
@@ -85,10 +165,7 @@ for (let index=0; index < tableData.length; index++) {
     tableData[index].push(<Link to="/deleteCharacter"><Button>DeleteCharacter</Button></Link>);
 }
 
-const addFormContents = [
-    {type:"text", name:"charactername", label:"Name your character:", value: "${characterName}"},
-    {type:"text", name:"characterdescription", label:"Please describe your character", value: "${characterDescription}"}
-];
+
 
 const editFormContents = [
     {type:"text", name:"charactername", label:"Name your character:", value: "${characterName}"},

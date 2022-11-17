@@ -13,10 +13,9 @@ app = Flask(__name__)
 CORS(app)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-
-app.config['MYSQL_USER'] = 'cs340_janneyt'
-app.config['MYSQL_PASSWORD'] = '5008'
-app.config['MYSQL_DB'] = 'cs340_janneyt'
+app.config['MYSQL_USER'] = 'cs340_dempsjam'
+app.config['MYSQL_PASSWORD'] = '3077'
+app.config['MYSQL_DB'] = 'cs340_dempsjam'
 
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -56,7 +55,7 @@ def delete_data():
     queries = []
 
     try:
-        queries.append(database.add_delete(data["table"], data["filters"]))
+        queries.append(database.create_delete(data["table"], data["filters"]))
     except KeyError as key:
         database.debug("KeyError", f'Key: {key} not found.')
         return str(f'Key: {key} not found.'), 405
@@ -80,7 +79,7 @@ def update_data():
         append = ''
 
     try:
-        queries = database.add_update(data['table'], data['columns'], data['values'], data['filter'], append)
+        queries = database.create_update_queries(data['table'], data['columns'], data['values'], data['filter'], append)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
@@ -106,7 +105,7 @@ def insert_data():
 
     # Only pass to the add_insert if the proper tables are present
     try:
-        queries = database.add_insert_queries(data["table"], data["columns"], data["values"], append)
+        queries = database.create_insert_queries(data["table"], data["columns"], data["values"], append)
         print("SELECT QUERIES", queries)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')

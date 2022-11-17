@@ -101,7 +101,8 @@ for (let index=0; index < tableData.length; index++) {
 
 const addFormContents = [
     {type:"text", name:"countryname", label:"Name Your Country:"},
-    {type:"text", name:"description", label:"Describe Your Country:"}
+    {type:"text", name:"sizeinkm", label:"How big is your country (in Km)?:"},
+    {type:"text", name:"population", label:"What's your country's population?:"},
 ];
 
 const editFormContents = [{}];

@@ -178,18 +178,18 @@ const pullForeignKeys = (page) => {
 const addFormContents = [
   { type: "text", name: "itemname", label: "Name Your Item:" },
   { type: "text", name: "itemdescription", label: "Describe Your Item:" },
-  {
-    type: "select",
-    name: "idgame",
-    label: "Game Name (${Pulls game name from game id})",
-    options: pullForeignKeys("Games"),
-  },
-  {
-    type: "select",
-    name: "idplayer",
-    label: "Player Name *${Pulls player name from player id}",
-    options: pullForeignKeys("Players"),
-  },
+  // {
+  //   type: "select",
+  //   name: "idgame",
+  //   label: "Game Name (${Pulls game name from game id})",
+  //   options: pullForeignKeys("Games"),
+  // },
+  // {
+  //   type: "select",
+  //   name: "idplayer",
+  //   label: "Player Name *${Pulls player name from player id}",
+  //   options: pullForeignKeys("Players"),
+  // },
 ];
 
 const editFormContents = [

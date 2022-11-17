@@ -108,7 +108,6 @@ const optionsLanguageRules = [
 const addFormContents = [
     {type:"text", name:"languagename", label:"Name Your Language:"},
     {type:"text", name:"languagedescription", label:"Describe Your Language:"},
-    {type:"text", name:"gamename", label:"Game Name (${Pulls game name from game id})"},
     {type:"select", name:"languagerules", label:"Language Rules Available", options:optionsLanguageRules }
 ];
 
