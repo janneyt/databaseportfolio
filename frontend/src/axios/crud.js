@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 import { fetchItemTableData, headers as itemHeaders} from '../data/itemData.js';
 import { CharacterHeaders, fetchCharacterTableData } from '../data/charactersData.js';
+import { fetchGameTableData, headers as GameHeaders} from '../data/gameData.js';
 
 const client = axios.create({
     baseURL: "http://localhost:60645"
@@ -59,7 +60,16 @@ const DataNext = async (page_determiner, append, purpose, id) => {
 
         const returnedData = await fetchCharacterTableData(characterData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
+    } else if(page_determiner.toLowerCase() === "games"){
+        headers = GameHeaders 
+        const header_len = headers.length
+        const header_mod = headers
+        const gameData = header_mod.slice(0, header_len - 5)
+
+        const returnedData = await fetchGameTableData(gameData, append ? append : null, purpose ? purpose : null, id);
+        return returnedData;
     }
+
 
 }
 
