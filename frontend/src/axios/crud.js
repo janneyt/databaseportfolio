@@ -52,6 +52,34 @@ const DataNext = async (page_determiner, append, purpose, id) => {
 
 }
 
+const insertData = async (table, submitData, append="") => {
+    try {
+        const specifics = {
+            "table":table,
+            "columns":submitData["columns"],
+            "values":submitData["values"],
+            "append":append
+        }
+        
+        return client.post(
+            '/insert_data',
+            specifics,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        ).then(
+            (response) => { return response.data }
+        )
+
+    } catch {
+
+    }
+
+
+;}
+
 const updateData = async (page, updates, original, append) => {
     if(!page){
         throw new Error("Page could not be determined.")
@@ -175,6 +203,7 @@ const readData = async (specifics) => {
 
 
 
+
 // Axios being saved to state causes infinted rerenders.
 const fillData = async (specifics) => {
     /**
@@ -253,4 +282,4 @@ const ReturnedData = async (action, specifics) => {
 
 };
 
-export { DataNext, ReturnedData, keys, updateData };
+export { DataNext, ReturnedData, keys, updateData, insertData };
