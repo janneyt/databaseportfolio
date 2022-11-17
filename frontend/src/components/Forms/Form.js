@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Button from '../Button';
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
 
 
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 
-const Form = ({ submitText="Submit", inputState, onSubmit}) => {
+const Form = ({ submitText="Submit", inputState, onSubmit, refDict={}}) => {
     
     const [inputFields, setInputFields] = useState([{}]);
     
@@ -28,6 +28,7 @@ const Form = ({ submitText="Submit", inputState, onSubmit}) => {
         // Currently this can be type="text" or "select"
         // Defaults to "text"
         if (row.type == "text") {
+            row['ref'] = (ele) => {refDict.current[row.name] = ele};
             return <FormInput key={index} inputObj={row} onChange={handleFormChange} index={index} />
         };
 
