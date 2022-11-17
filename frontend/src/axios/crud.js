@@ -209,16 +209,7 @@ const readData = async (specifics) => {
 
             }
             const id = filledData[index][0]
-            // Placeholders for future FKs
-            // Have to parameterize this via calling the foreign key array I'm creating
-            filledData[index].push("Game 1")
-            filledData[index].push("The Shire")
-
-
-            // Add the buttons for the display list, anything inside the push
-            // will get added to one cell in the table
-            filledData[index].push(<Link to="/editItem" state={{id: id}} ><Button>Edit Item</Button></Link>);
-            filledData[index].push(<Link to="/deleteItem" state={{id: id}}><Button>DeleteItem</Button></Link>);
+            
 
         };
 
