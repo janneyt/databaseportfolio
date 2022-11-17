@@ -6,7 +6,8 @@ import { CharacterHeaders, fetchCharacterTableData } from '../data/charactersDat
 import { fetchGameTableData, headers as GameHeaders} from '../data/gameData.js';
 import { fetchPlayerTableData, headers as PlayerHeaders } from '../data/playerData.js';
 import { fetchCountryTableData, headers as CountryHeaders } from '../data/countryData.js';
-
+import { fetchLanguageTableData, headers as LanguageHeaders } from '../data/languageData.js';
+import { fetchTranslationsTableData, headers as TranslationsHeaders } from '../data/translationData.js';
 
 const client = axios.create({
     baseURL: "http://localhost:60645"
@@ -79,7 +80,27 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const returnedData = await fetchPlayerTableData(playerData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     } else if(page_determiner.toLowerCase() === "countries"){
-         const returnedData = await fetchCountryTableData(CountryHeaders, append ? append : null, purpose ? purpose : null, id);
+        headers = CountryHeaders
+        const header_len = headers.length
+        const header_mod = headers
+        const countryData = header_mod.slice(0, header_len - 2)
+         const returnedData = await fetchCountryTableData(countryData, append ? append : null, purpose ? purpose : null, id);
+        return returnedData;
+    } else if(page_determiner.toLowerCase() === "languages"){
+        headers = LanguageHeaders
+        const header_len = headers.length
+        const header_mod = headers
+        const languageData = header_mod.slice(0, header_len - 3)
+         const returnedData = await fetchLanguageTableData(languageData, append ? append : null, purpose ? purpose : null, id);
+        return returnedData;
+    } else if(page_determiner.toLowerCase() === "translationoutputs"){
+        headers = TranslationsHeaders
+        const header_len = headers.length
+        const header_mod = headers
+        const languageData = header_mod.slice(0, header_len - 2)
+        const returnedData = await fetchTranslationsTableData(languageData, append ? append : null, purpose ? purpose : null, id);
+        
+        
         return returnedData;
     }
 
@@ -184,7 +205,6 @@ const readData = async (specifics) => {
         )
 
 
-
         // Another placeholder
         const filledData = [[]];
 
@@ -205,7 +225,6 @@ const readData = async (specifics) => {
 
             // filledData does not necessarily have an existing member at *index*
             filledData[index] = []
-
             // This is where I iterate over the keys and place the values in filledData
             for (let element = 0; element < keys.length; element++) {
 
@@ -267,7 +286,7 @@ const fillData = async (specifics) => {
      */
     
     try {
-        console.log("specifics for showing data", specifics);
+
         const response = await client.post(
             '/select_data',
             specifics,

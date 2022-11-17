@@ -24,7 +24,7 @@ function Countries() {
         <h1>Countries</h1>
         <ShowIfLoaded isLoading={isLoading}>
           <TableView headers={headers} listData={post} />
-          <Link to="/addItem">
+          <Link to="/addCountry">
             <Button>Add Country</Button>
           </Link>
           <Button
