@@ -121,7 +121,7 @@ def insert_data():
         database.debug("failed execute", str(error))
         return str(error), 405
 
-    return make_response(database.get_json(), 204)
+    return database.get_json()
 
 
 
