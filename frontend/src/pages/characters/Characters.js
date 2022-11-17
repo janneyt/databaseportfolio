@@ -53,7 +53,7 @@ function Characters() {
                 <h1>Characters</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
                     <TableView headers={CharacterHeaders} listData={post} />
-                    <Link to="/addItem"><Button>Add Character</Button></Link>
+                    <Link to="/addCharacter"><Button>Add Character</Button></Link>
                     <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>
             </div>
