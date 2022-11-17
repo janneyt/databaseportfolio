@@ -146,7 +146,7 @@ const addFormContents = [
   },
   {
     type: "select",
-    name: "idcountry",
+    name: "idplayer",
     label: "Player Name *${Pulls player name from player id}",
     options: pullForeignKeys("Players")
   },
