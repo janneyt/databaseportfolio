@@ -23,11 +23,8 @@ function AddItem() {
     useEffect(() => {
 
         DataNext("characters").then((response) => {
-            console.log("calling characters", response);
             setPost(response);
         });
-
-        console.log("SUBMITDATA", submitData);
     }, [submitData]);
 
     return (

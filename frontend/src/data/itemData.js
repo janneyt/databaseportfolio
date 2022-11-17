@@ -115,21 +115,21 @@ const pullForeignKeys = () => {
       },
     })
     .then((response) => {
-        console.log("printing response", response.data);
-        let additional = {};
-        for(const item of response.data){
-            additional = {"name":"apple","value":"apple"}
-        }
-        options.push(additional)
-        return additional;}
-        )
+      console.log("printing response", response.data);
+      let additional = {};
+      for (const item of response.data) {
+        additional = { name: "apple", value: item.characterName };
+      }
+      options.push(additional);
+      console.log("options before return", options);
+      return additional;
+    })
     .catch((error) => console.log(error));
-
-  
+  return options;
 };
 
-const itemOptions = pullForeignKeys(foreignKeys);
-console.log("itemOptions",itemOptions)
+const itemOptions = pullForeignKeys();
+console.log("itemOptions", itemOptions);
 
 // As in the original setup
 const addFormContents = [
@@ -139,7 +139,7 @@ const addFormContents = [
     type: "select",
     name: "idgame",
     label: "Game Name (${Pulls game name from game id})",
-    options: itemOptions,
+    options: pullForeignKeys(),
   },
   {
     type: "select",

@@ -5,6 +5,12 @@ import { SearchBar } from '../../components/SearchBar';
 
 import { Link, useNavigate } from 'react-router-dom';
 
+import ShowIfLoaded from '../../components/ShowIfLoaded';
+
+
+import { DataNext } from '../../axios/crud.js';
+import { useEffect, useState } from 'react';
+
 function Games() {
 
     const navigate = useNavigate();
