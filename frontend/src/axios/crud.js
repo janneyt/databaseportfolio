@@ -50,7 +50,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         headers = itemHeaders
         const header_len = headers.length
         const header_mod = headers
-        const itemData = header_mod.slice(0, header_len - 4)
+        const itemData = header_mod.slice(0, header_len - 2)
         
 
         /* Head off to itemData, which will also call functions in this file as well */
@@ -60,7 +60,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         headers = CharacterHeaders 
         const header_len = headers.length
         const header_mod = headers
-        const characterData = header_mod.slice(0, header_len - 5)
+        const characterData = header_mod.slice(0, header_len - 2)
 
         const returnedData = await fetchCharacterTableData(characterData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
@@ -68,7 +68,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         headers = GameHeaders 
         const header_len = headers.length
         const header_mod = headers
-        const gameData = header_mod.slice(0, header_len - 5)
+        const gameData = header_mod.slice(0, header_len - 2)
 
         const returnedData = await fetchGameTableData(gameData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
@@ -91,7 +91,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         headers = LanguageHeaders
         const header_len = headers.length
         const header_mod = headers
-        const languageData = header_mod.slice(0, header_len - 3)
+        const languageData = header_mod.slice(0, header_len - 2)
          const returnedData = await fetchLanguageTableData(languageData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     } else if(page_determiner.toLowerCase() === "translationoutputs"){

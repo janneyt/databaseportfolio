@@ -39,8 +39,6 @@ const headers = [
   "idItem",
   "itemName",
   "itemDescription",
-  "Game",
-  "Country",
   "Edit",
   "Delete",
 ];
@@ -64,8 +62,8 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
-    fetchedData[index1].push(<p>Add game fk here</p>);
-    fetchedData[index1].push(<p>Add country fk here</p>);
+    //fetchedData[index1].push(<p>Add game fk here</p>);
+    //fetchedData[index1].push(<p>Add country fk here</p>);
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
     fetchedData[index1].push(

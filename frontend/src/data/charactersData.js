@@ -25,11 +25,9 @@ const countryHeaders = [
 ];
   
 const headers = [
+    "idCharacter",
     "characterName",
     "characterDescription",
-    "idCountry",
-    "idPlayer",
-    "idGame",
     "Edit",
     "Delete"
 ];
@@ -49,9 +47,9 @@ const fetchCharacterTableData = async (item_params, append, purpose, id) => {
         // Add the buttons for the display list, anything inside the push
         // will get added to one cell in the table
     
-        fetchedData[index1].push(<p>Add countries fk here</p>);
-        fetchedData[index1].push(<p>Add players fk here</p>);
-        fetchedData[index1].push(<p>Add languages fk here</p>);
+        //fetchedData[index1].push(<p>Add countries fk here</p>);
+        //fetchedData[index1].push(<p>Add players fk here</p>);
+        //fetchedData[index1].push(<p>Add languages fk here</p>);
         // Add the buttons for the display list, anything inside the push
         // will get added to one cell in the table
         fetchedData[index1].push(

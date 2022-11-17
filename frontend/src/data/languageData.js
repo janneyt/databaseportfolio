@@ -2,7 +2,7 @@ import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { ReturnedData } from "../axios/crud.js";
 
-const headers = ["languageName", "languageDescription", "Game", "Edit", "Delete"];
+const headers = ["languageName", "languageDescription", "Edit", "Delete"];
 
 const fetchLanguageTableData = async (item_params, append, purpose, id) => {
     const list_param = JSON.stringify(item_params);
