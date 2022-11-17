@@ -22,9 +22,6 @@ function AddItem() {
 
     useEffect(() => {
 
-        DataNext("characters").then((response) => {
-            setPost(response);
-        });
     }, [submitData]);
 
     return (
