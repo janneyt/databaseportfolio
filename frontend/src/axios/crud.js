@@ -8,6 +8,7 @@ import { fetchPlayerTableData, headers as PlayerHeaders } from '../data/playerDa
 import { fetchCountryTableData, headers as CountryHeaders } from '../data/countryData.js';
 import { fetchLanguageTableData, headers as LanguageHeaders } from '../data/languageData.js';
 import { fetchTranslationsTableData, headers as TranslationsHeaders } from '../data/translationData.js';
+import { fetchCHITableData, headers as CharacterItemHeaders } from '../data/charactersItemsData.js';
 
 const client = axios.create({
     baseURL: "http://localhost:60645"
@@ -101,6 +102,13 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const returnedData = await fetchTranslationsTableData(languageData, append ? append : null, purpose ? purpose : null, id);
         
         
+        return returnedData;
+    } else if(page_determiner.toLowerCase() === "characters_has_items"){
+        headers = CharacterItemHeaders
+        const header_len = headers.length
+        const header_mod = headers
+        const charLangData = header_mod.slice(0, header_len - 2)
+        const returnedData = await fetchCHITableData(charLangData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     }
 
