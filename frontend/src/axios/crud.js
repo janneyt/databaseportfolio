@@ -143,24 +143,31 @@ const insertData = async (table, submitData, append="") => {
 
 ;}
 
-const updateData = async (page, updates, append) => {
+const updateData = async (page, updates, append, id) => {
     if(!page){
         throw new Error("Page could not be determined.")
     }
     try {
-        const header_len = itemHeaders.length
-        const header_mod = itemHeaders
-        const columns = header_mod.slice(1, header_len - 4)
-        const values = [];
+        const update_header = Array.from(headers)
+        const indexer = update_header.indexOf("Edit");
+
+        update_header.splice(indexer, 1)
+
+        const indexer1 = update_header.indexOf("Delete")
+
+        update_header.splice(indexer1, 1)
+        
+        const values = [Number(id)];
         for(const value of updates){
-            values.push(value)
+            values.push("'"+value+"'")
         }
-        const specifics = {
+        const specifics = JSON.stringify( {
             "table":page,
-            "columns":columns,
+            "columns":update_header,
             "values": values,
             "filter": append
-        }
+        })
+        console.log(specifics)
         return client.post(
             '/update_data',
             specifics,
@@ -178,7 +185,8 @@ const updateData = async (page, updates, append) => {
 }
 
 const deleteData = async (table, id, filter) => {
-
+    console.log("id", id)
+    console.log("filter",filter)
     // Why pass id? Because I want to make a check here that the id is valid, i.e. greater than -1.
     try{
         if(!table || ! id || id === -1){
@@ -352,7 +360,7 @@ const ReturnedData = async (action, specifics) => {
         return await readData(specifics);
 
     } else if (action.toUpperCase() === "UPDATE") {
-        return updateData(specifics);
+        return updateData(specifics, );
 
 
     }

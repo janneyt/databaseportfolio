@@ -134,7 +134,7 @@ class Database:
         # Convert list values into strings
         set_pairs_str = ', '.join(pair_list)
 
-        query = f'UPDATE {table} SET {set_pairs_str}WHERE {filter}{append}'
+        query = f'UPDATE {table} SET {set_pairs_str} WHERE {filter}{append}'
         queries.append((query, pair_list))
 
         # BUILD SELECT to RETURN data UPDATED

@@ -18,7 +18,6 @@ function DeleteItem() {
 
   useEffect(() => {
     DataNext("Items", append, "delete", id).then((response) => {
-      console.log("setting post", response);
       setPost(response);
 
       return response;

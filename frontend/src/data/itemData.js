@@ -99,12 +99,7 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
         label: "Describe Your Item",
         value: fetchedData[find][2],
       },
-      {
-        type: "text",
-        name: "gamename",
-        label: "Game Name",
-        value: fetchedData[find][3],
-      },
+
     ];
 
     fetchedData = editFormContents;
@@ -202,13 +197,7 @@ const editFormContents = [
     name: "itemdescription",
     label: "Describe Your Item",
     value: "${itemDescription}",
-  },
-  {
-    type: "text",
-    name: "gamename",
-    label: "Game Name (${Pulls game name from game id})",
-    value: "${gameName}",
-  },
+  }
 ];
 
 const deleteFormContents = [{ type: "hidden", name: "${idItem}" }];

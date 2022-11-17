@@ -13,7 +13,7 @@ function EditItems() {
     const [post, setPost] = useState([{}]);
     const [isLoading, setIsLoading] = useState(true);
     const [updates, setUpdates] = useState('')
-    const [append, setAppend] = useState('WHERE idItem = '+ id.toString());
+    const [append, setAppend] = useState(' WHERE idItem = '+ id.toString());
     const [updateAppend, setUpdateAppend] = useState(' idItem = '+id.toString());
 
     useEffect(() => {        
@@ -40,7 +40,7 @@ function EditItems() {
             updates.push(item.value)
         }
         setIsLoading(true);
-        updateData("Items", updates, updateAppend).then((response) => 
+        updateData("Items", updates, updateAppend, id).then((response) => 
             
         setIsLoading(false)
         ).catch((error) => error);
