@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
-import { fetchItemTableData, headers } from '../data/itemData.js';
+import { fetchItemTableData, headers as itemHeaders} from '../data/itemData.js';
+import { CharacterHeaders, fetchCharacterTableData } from '../data/charactersData.js';
 
 const client = axios.create({
     baseURL: "http://localhost:60645"
@@ -10,6 +11,8 @@ const client = axios.create({
 let keys = [null]
 
 let data = [[]]
+
+let headers = [];
 
 /**
  * Unfortunately, implementing CRUD required a rewrite of the Items page. The steps are as follows:
@@ -35,10 +38,10 @@ const DataNext = async (page_determiner, append, purpose, id) => {
      * This is an interface to fit between Items and itemData. It's meant to make
      * all pages be able to call dataNext, which will then decide which data page to call
      */
-
     if (!page_determiner) {
         throw new Error("Please provide the page name for your data transfer");
     } else if (page_determiner.toLowerCase() === "items") {
+        headers = itemHeaders
         const header_len = headers.length
         const header_mod = headers
         const itemData = header_mod.slice(0, header_len - 4)
@@ -48,6 +51,14 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const returnedData = await fetchItemTableData(itemData, append ? append : null, purpose ? purpose : null, id);
         console.log("returned data in crud", returnedData)
         return returnedData
+    } else if(page_determiner.toLowerCase() === "characters"){
+        headers = CharacterHeaders 
+        const header_len = headers.length
+        const header_mod = headers
+        const characterData = header_mod.slice(0, header_len - 5)
+
+        const returnedData = await fetchCharacterTableData(characterData, append ? append : null, purpose ? purpose : null, id);
+        return returnedData;
     }
 
 }
@@ -85,8 +96,8 @@ const updateData = async (page, updates, append) => {
         throw new Error("Page could not be determined.")
     }
     try {
-        const header_len = headers.length
-        const header_mod = headers
+        const header_len = itemHeaders.length
+        const header_mod = itemHeaders
         const columns = header_mod.slice(1, header_len - 4)
         const values = [];
         for(const value of updates){
@@ -111,6 +122,31 @@ const updateData = async (page, updates, append) => {
         ).catch((error) => console.log(error))
     } catch {
 
+    }
+}
+
+const deleteData = async (table, id, filter) => {
+
+    // Why pass id? Because I want to make a check here that the id is valid, i.e. greater than -1.
+    try{
+        if(!table || ! id || id === -1){
+            throw new Error("Could not delete due to missing information, try again.")
+        }
+        const specifics = {
+            "table": table,
+            filters: filter
+        };
+        return client.post(
+            '/delete_data',
+            specifics,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -164,6 +200,7 @@ const readData = async (specifics) => {
             }
             const id = filledData[index][0]
             // Placeholders for future FKs
+            // Have to parameterize this via calling the foreign key array I'm creating
             filledData[index].push("Game 1")
             filledData[index].push("The Shire")
 
@@ -171,7 +208,7 @@ const readData = async (specifics) => {
             // Add the buttons for the display list, anything inside the push
             // will get added to one cell in the table
             filledData[index].push(<Link to="/editItem" state={{id: id}} ><Button>Edit Item</Button></Link>);
-            filledData[index].push(<Link to="/deleteItem"><Button>DeleteItem</Button></Link>);
+            filledData[index].push(<Link to="/deleteItem" state={{id: id}}><Button>DeleteItem</Button></Link>);
 
         };
 
@@ -216,6 +253,7 @@ const fillData = async (specifics) => {
      */
     
     try {
+        console.log("specifics for showing data", specifics);
         const response = await client.post(
             '/select_data',
             specifics,
@@ -233,6 +271,27 @@ const fillData = async (specifics) => {
         data = [[]];
         return error;
     }
+}
+
+const pullForeignKeys = (foreignKeys) => {
+
+    let options = []
+    const header = CharacterHeaders
+    const characterData = header.slice(0, CharacterHeaders.length - 5)
+    for(const key of foreignKeys){
+        const specifics = {
+            "table":key,
+            "columns":characterData
+        }
+        readData (specifics).then(
+            (response) =>
+            options.push(response)
+        ).catch(
+            (error) =>
+            console.log(error)
+        )
+    }
+    return options;
 }
 
 const ReturnedData = async (action, specifics) => {
@@ -280,4 +339,4 @@ const ReturnedData = async (action, specifics) => {
 
 };
 
-export { DataNext, ReturnedData, keys, updateData, insertData };
+export { DataNext, ReturnedData, keys, updateData, insertData, deleteData, readData, pullForeignKeys };

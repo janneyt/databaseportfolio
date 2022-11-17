@@ -106,6 +106,7 @@ class Database:
 
         # Append query
         query = f'SELECT {columns_str} FROM {table}{append}'
+        print(query)
         self.add_query(query)
 
     def add_insert(self, table: str, columns: list, values: list, append=''):

@@ -27,12 +27,12 @@ const Form = ({ submitText="Submit", inputState, onSubmit, refDict={}}) => {
         // Check to see what type of input to place into the form
         // Currently this can be type="text" or "select"
         // Defaults to "text"
-        if (row.type == "text") {
+        if (row.type === "text") {
             row['ref'] = (ele) => {refDict.current[row.name] = ele};
             return <FormInput key={index} inputObj={row} onChange={handleFormChange} index={index} />
         };
 
-        if (row.type == "select") {
+        if (row.type === "select") {
             return <FormSelect inputObj = {row} />
         };
     });

@@ -47,7 +47,7 @@ def select_data():
         database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
-    print(database.get_json())
+
     return database.get_json()
 
 @app.route('/delete_data', methods=['POST'])

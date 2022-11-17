@@ -1,4 +1,5 @@
-import { ReturnedData, keys } from '../axios/crud.js';
+import { ReturnedData, pullForeignKeys} from '../axios/crud.js';
+
 /**
  * I had to entirely rewrite itemData to allow it to make asynchronous POST calls
  * The scoping for each item is incredibly important
@@ -7,6 +8,7 @@ import { ReturnedData, keys } from '../axios/crud.js';
  * TODOs left: setup an AXIOS config at the project level so the local_url is not hardcoded
  */
 
+const foreignKeys = ["Characters"];
 const headers = ["idItem", "itemName", "itemDescription", "Game", "Country", "Edit", "Delete"];
 
 const fetchItemTableData = async (item_params, append, purpose, id) => {
@@ -40,17 +42,32 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
 
         return editFormContents
     }
+    else if (purpose && purpose.toLowerCase() === "delete") {
+
+        const deleteFormContents = [
+            // TODO: dynamically generate fetchedData's indices, instead of hardcoding
+            
+            { type: "text", name: fetchedData[0][1], value: fetchedData[0][1], disabled:true}
+            
+        ];
+
+        fetchedData = deleteFormContents
+
+        return deleteFormContents
+    }
 
     return fetchedData
 
 };
 
+const itemOptions = pullForeignKeys(foreignKeys);
+
 // As in the original setup
 const addFormContents = [
     { type: "text", name: "itemname", label: "Name Your Item:" },
     { type: "text", name: "itemdescription", label: "Describe Your Item:" },
-    { type: "text", name: "idgame", label: "Game Name (${Pulls game name from game id})" },
-    { type: "text", name: "idcountry", label: "Player Name *${Pulls player name from player id}" }
+    { type: "select", name: "idgame", label: "Game Name (${Pulls game name from game id})",  options :itemOptions},
+    { type: "select", name: "idcountry", label: "Player Name *${Pulls player name from player id}" }
 ];
 
 const editFormContents = [
