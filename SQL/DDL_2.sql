@@ -46,18 +46,18 @@ CREATE TABLE IF NOT EXISTS `Items` (
   `itemName` VARCHAR(120) NOT NULL,
   `itemDescription` VARCHAR(255) NOT NULL,
   `idGame` INT NOT NULL,
-  `idCountry` INT NOT NULL,
+  `idPlayer` INT NOT NULL,
   PRIMARY KEY (`idItem`),
   INDEX `fk_Items_Games1_idx` (`idGame` ASC) VISIBLE,
-  INDEX `fk_Items_Countries1_idx` (`idCountry` ASC) VISIBLE,
+  INDEX `fk_Items_Players1_idx` (`idPlayer` ASC) VISIBLE,
   CONSTRAINT `fk_Items_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_Items_Countries1`
-    FOREIGN KEY (`idCountry`)
-    REFERENCES `Countries` (`idCountry`)
+  CONSTRAINT `fk_Items_Players1`
+    FOREIGN KEY (`idPlayer`)
+    REFERENCES `Players` (`idPlayer`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
