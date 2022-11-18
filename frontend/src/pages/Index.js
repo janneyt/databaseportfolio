@@ -4,18 +4,22 @@ import Button from '../components/Button';
 function Index() {
     return(
         <div id="contents">
-            <h1>Index Page</h1>
-            <p>Note that the submit buttons are not yet inplemented. </p>
-            <p>The following pages will be part of the main navigation:</p>
-            <Link to="/characters"><Button>Characters</Button></Link>
-            <Link to="/countries"><Button>Countries</Button></Link>
-            <Link to="/games"><Button>Games</Button></Link>
-            <Link to="/items"><Button>Items</Button></Link>
-            <Link to="/languages"><Button>Languages</Button></Link>
-            <Link to="/players"><Button>Players</Button></Link>
-            <Link to="/translations"><Button>Translations</Button></Link>
+            <nav>
+                <Link to="/characters"><Button>Characters</Button></Link>
+                <Link to="/countries"><Button>Countries</Button></Link>
+                <Link to="/games"><Button>Games</Button></Link>
+                <Link to="/items"><Button>Items</Button></Link>
+                <Link to="/languages"><Button>Languages</Button></Link>
+                <Link to="/players"><Button>Players</Button></Link>
+                <Link to="/translations"><Button>Translations</Button></Link>
+            </nav>
+            
+            <h1>Welcome</h1>
+            <p>The following pages are our intersection tables. We had a bug that gave us issues implementing the regular non-intersection tables. So these are still a WIP.
+            </p>
 
-            <p>The following are likely to be condensed into other pages, but just working out functionality:</p>
+            <p>The main links implemented are above. We had to remake a lot of our code, so we had difficulties getting everything to work and expand to every item.
+            </p>
             <Link to="/CharactersHaveItems"><Button>CharactersHaveItems</Button></Link>
             <Link to="/CharactersHaveLanguages"><Button>Characters Have Languages</Button></Link>
             <Link to="/CountriesHaveLanguages"><Button>Countries Have Languages</Button></Link>
