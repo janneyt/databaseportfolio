@@ -2,7 +2,7 @@ import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { ReturnedData } from "../axios/crud.js";
 
-const headers = ["languageName", "languageDescription", "Edit", "Delete"];
+const headers = ["idLanguage", "languageName", "languageDescription", "Edit", "Delete"];
 
 const fetchLanguageTableData = async (item_params, append, purpose, id) => {
     const list_param = JSON.stringify(item_params);
@@ -24,17 +24,18 @@ const fetchLanguageTableData = async (item_params, append, purpose, id) => {
       // will get added to one cell in the table
       fetchedData[index1].push(
         <Link to="/editLanguage" state={{ id: fetchedData[index1][0]  }}>
-          <Button>Edit Country</Button>
+          <Button>Edit Language</Button>
         </Link>
       );
       fetchedData[index1].push(
         <Link to="/deleteLanguage" state={{ id: fetchedData[index1][0]  }}>
-          <Button>Delete Country</Button>
+          <Button>Delete Language</Button>
         </Link>
       );
     }
   
     if (purpose && purpose.toLowerCase() === "edit") {
+      console.log("fetchedData", fetchedData);
       let find = 0;
       for (let indexing = 0; indexing < fetchedData.length; indexing++) {
         if (fetchedData[indexing][0] === id) {
@@ -45,22 +46,22 @@ const fetchLanguageTableData = async (item_params, append, purpose, id) => {
         // TODO: dynamically generate fetchedData's indices, instead of hardcoding
         {
           type: "text",
-          name: "itemname",
-          label: "Name Your Item:",
+          name: "languagename",
+          label: "Name Your Language:",
           value: fetchedData[find][1],
         },
         {
           type: "text",
-          name: "itemdescription",
-          label: "Describe Your Item",
+          name: "languagedescription",
+          label: "Describe Your Language",
           value: fetchedData[find][2],
         },
-        {
-          type: "text",
-          name: "gamename",
-          label: "Game Name",
-          value: fetchedData[find][3],
-        },
+        // {
+        //   type: "text",
+        //   name: "gamename",
+        //   label: "Game Name",
+        //   value: fetchedData[find][3],
+        // },
       ];
   
       fetchedData = editFormContents;
