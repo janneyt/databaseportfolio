@@ -48,9 +48,8 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         throw new Error("Please provide the page name for your data transfer");
     } else if (page_determiner.toLowerCase() === "items") {
         headers = itemHeaders
-        const header_len = headers.length
         const header_mod = headers
-        const itemData = header_mod.slice(0, header_len - 2)
+        const itemData = header_mod.slice(0, headers.length - 2)
         
 
         /* Head off to itemData, which will also call functions in this file as well */
@@ -58,56 +57,49 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         return returnedData
     } else if(page_determiner.toLowerCase() === "characters"){
         headers = CharacterHeaders 
-        const header_len = headers.length
         const header_mod = headers
-        const characterData = header_mod.slice(0, header_len - 2)
+        const characterData = header_mod.slice(0, headers.length - 2)
 
         const returnedData = await fetchCharacterTableData(characterData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     } else if(page_determiner.toLowerCase() === "games"){
-        headers = GameHeaders 
-        const header_len = headers.length
+        headers = GameHeaders
         const header_mod = headers
-        const gameData = header_mod.slice(0, header_len - 2)
+        const gameData = header_mod.slice(0, headers.length - 2)
 
         const returnedData = await fetchGameTableData(gameData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     } else if(page_determiner.toLowerCase() === "players"){
         headers = PlayerHeaders 
-        const header_len = headers.length
         const header_mod = headers
-        const playerData = header_mod.slice(0, header_len - 2)
+        const playerData = header_mod.slice(0, headers.length - 2)
 
         const returnedData = await fetchPlayerTableData(playerData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     } else if(page_determiner.toLowerCase() === "countries"){
         headers = CountryHeaders
-        const header_len = headers.length
         const header_mod = headers
-        const countryData = header_mod.slice(0, header_len - 2)
+        const countryData = header_mod.slice(0, headers.length - 2)
          const returnedData = await fetchCountryTableData(countryData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     } else if(page_determiner.toLowerCase() === "languages"){
         headers = LanguageHeaders
-        const header_len = headers.length
         const header_mod = headers
-        const languageData = header_mod.slice(0, header_len - 2)
+        const languageData = header_mod.slice(0, headers.length - 2)
          const returnedData = await fetchLanguageTableData(languageData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     } else if(page_determiner.toLowerCase() === "translationoutputs"){
         headers = TranslationsHeaders
-        const header_len = headers.length
         const header_mod = headers
-        const languageData = header_mod.slice(0, header_len - 2)
+        const languageData = header_mod.slice(0, headers.length - 2)
         const returnedData = await fetchTranslationsTableData(languageData, append ? append : null, purpose ? purpose : null, id);
         
         
         return returnedData;
     } else if(page_determiner.toLowerCase() === "characters_has_items"){
         headers = CharacterItemHeaders
-        const header_len = headers.length
         const header_mod = headers
-        const charLangData = header_mod.slice(0, header_len - 2)
+        const charLangData = header_mod.slice(0, headers.length - 2)
         const returnedData = await fetchCHITableData(charLangData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     }
