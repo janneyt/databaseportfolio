@@ -76,7 +76,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         headers = PlayerHeaders 
         const header_len = headers.length
         const header_mod = headers
-        const playerData = header_mod.slice(0, header_len - 5)
+        const playerData = header_mod.slice(0, header_len - 2)
 
         const returnedData = await fetchPlayerTableData(playerData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
