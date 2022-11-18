@@ -2,7 +2,7 @@ import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { ReturnedData } from "../axios/crud.js";
 
-const headers = ["playerName", "Edit", "Delete"];
+const headers = ["idPlayer", "playerName", "Edit", "Delete"];
 
 const tableData = [
     ["JRR Tolkien"],
@@ -29,13 +29,13 @@ const fetchPlayerTableData = async (item_params, append, purpose, id) => {
       // Add the buttons for the display list, anything inside the push
       // will get added to one cell in the table
       fetchedData[index1].push(
-        <Link to="/editItem" state={{ id: fetchedData[index1][0]  }}>
-          <Button>Edit Item</Button>
+        <Link to="/editPlayer" state={{ id: fetchedData[index1][0]  }}>
+          <Button>Edit Player</Button>
         </Link>
       );
       fetchedData[index1].push(
-        <Link to="/deleteItem" state={{ id: fetchedData[index1][0]  }}>
-          <Button>DeleteItem</Button>
+        <Link to="/deletePlayer" state={{ id: fetchedData[index1][0]  }}>
+          <Button>Delete Player</Button>
         </Link>
       );
     }
@@ -51,22 +51,22 @@ const fetchPlayerTableData = async (item_params, append, purpose, id) => {
         // TODO: dynamically generate fetchedData's indices, instead of hardcoding
         {
           type: "text",
-          name: "itemname",
-          label: "Name Your Item:",
+          name: "playername",
+          label: "Name Your Player:",
           value: fetchedData[find][1],
         },
-        {
-          type: "text",
-          name: "itemdescription",
-          label: "Describe Your Item",
-          value: fetchedData[find][2],
-        },
-        {
-          type: "text",
-          name: "gamename",
-          label: "Game Name",
-          value: fetchedData[find][3],
-        },
+        // {
+        //   type: "text",
+        //   name: "itemdescription",
+        //   label: "Describe Your Item",
+        //   value: fetchedData[find][2],
+        // },
+        // {
+        //   type: "text",
+        //   name: "gamename",
+        //   label: "Game Name",
+        //   value: fetchedData[find][3],
+        // },
       ];
   
       fetchedData = editFormContents;
