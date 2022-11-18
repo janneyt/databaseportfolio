@@ -1,4 +1,3 @@
-from Data import Data
 from flask_mysqldb import MySQL
 
 class Database:
@@ -7,7 +6,6 @@ class Database:
         """Initialize variables, need to give a MySQL
         object with app data given as the sql_object."""
         self._mysql = sql_object
-        self._results = Data()
         self._debug = False
 
     def debug(self, reason: str, msg: str):
