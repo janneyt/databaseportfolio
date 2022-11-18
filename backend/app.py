@@ -5,6 +5,8 @@ from Database import Database
 import os
 from flask_cors import CORS
 
+from flask import jsonify
+
 
 # Configuration
 app = Flask(__name__)
@@ -32,39 +34,37 @@ def select_data():
     except:
         append = ''
 
-
+    queries = []
     # Only pass to the add_select if the proper tables are present
     try:
-        database.add_select(data["table"], data["columns"], append)
+        queries.append(database.create_select(data["table"], data["columns"], append))
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
 
-    # Attempt to execute queries given to database
     try:
-        database.execute()
+        results = database.execute(queries)
     except Exception as error:
-        database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
 
-    return database.get_json()
+    return jsonify(results)
 
 @app.route('/delete_data', methods=['POST'])
 def delete_data():
     data = request.get_json()
+    queries = []
 
     try:
-        database.add_delete(data["table"], data["filters"])
+        queries.append(database.add_delete(data["table"], data["filters"]))
     except KeyError as key:
         database.debug("KeyError", f'Key: {key} not found.')
         return str(f'Key: {key} not found.'), 405
 
     # Attempt to execute queries given to database
     try:
-        database.execute()
+        results = database.execute(queries)
     except Exception as error:
-        database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute",str(error))
         return str(error), 405
 
@@ -80,19 +80,19 @@ def update_data():
         append = ''
 
     try:
-        database.add_update(data['table'], data['columns'], data['values'], data['filter'], append)
+        queries = database.add_update(data['table'], data['columns'], data['values'], data['filter'], append)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
  
     # Attempt to execute queries given to database
     try:
-        database.execute()
+        results = database.execute(queries)
     except Exception as error:
-        database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
-    return database.get_json()
+
+    return jsonify(results)
 
 @app.route('/insert_data', methods=['POST'])
 def insert_data():
@@ -106,20 +106,20 @@ def insert_data():
 
     # Only pass to the add_insert if the proper tables are present
     try:
-        database.add_insert(data["table"], data["columns"], data["values"], append)
+        queries = database.add_insert_queries(data["table"], data["columns"], data["values"], append)
+        print("SELECT QUERIES", queries)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
 
     # Attempt to execute queries given to database
     try:
-        database.execute()
+        results = database.execute(queries)
     except Exception as error:
-        database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
 
-    return database.get_json()
+    return jsonify(results)
 
 
 

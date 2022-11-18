@@ -7,9 +7,8 @@ class Database:
         """Initialize variables, need to give a MySQL
         object with app data given as the sql_object."""
         self._mysql = sql_object
-        self._queries = queries
         self._results = Data()
-        self._debug = True
+        self._debug = False
 
     def debug(self, reason: str, msg: str):
         """Method that prints a message to the command line
@@ -36,39 +35,7 @@ class Database:
 
         return input
 
-    def add_query(self, query: str, data = {}):
-        """Adds a manual query to the list of queries
-        to execute. More complicated queries may need
-        to use this method. The insert data can be used
-        to pass values and protect against injection attacks."""
-        self._queries.append((query, data))
-        self.debug("Added Query", query)
-
-    def remove_query(self, index: int):
-        """Removes the query at a given index from
-        the list of queries."""
-        self.debug("remove query", self._queries[index])
-        self._queries.pop(index)
-
-    def delete_queries(self):
-        """Deletes all queries from Database object."""
-        self._queries = []
-        self.debug("delete queries", f"Current queries: {self._queries}")
-
-    def get_queries(self):
-        """Returns the list of current queries."""
-        return self._queries
-
-    def get_results(self):
-        """Returns the results for the last list of queries
-        that were run. Returns a Data Object."""
-        return self._results
-
-    def get_json(self):
-        """Returns the results in JSON format."""
-        return self._results.convert_to_json()
-
-    def execute(self):
+    def execute(self, queries):
         """Executes the list of queries given to the Database Class."""
         # Attempt connection to mysql server
         try:
@@ -78,20 +45,19 @@ class Database:
             self.debug("connection failure", str(error))
             raise error  # Pass error up to app.py
 
-        for query_tuple in self._queries:
-            query, data = query_tuple
+        for query, data in queries:
+            print("QUERY: ", query)
             if data != {}:
                 cursor.execute(query, data)
             else:
                 cursor.execute(query)
 
+        results = cursor.fetchall()
         con.commit()
+        
+        return results
 
-        self._results.set_data(cursor.fetchall())
-        self._queries = []  # Clear executed queries
-        return self.get_results()
-
-    def add_select(self, table: str, columns: list, append=''):
+    def create_select(self, table: str, columns: list, append=''):
         """Adds a query to the list of queries with the given
         columns, table, and optional append (for things like WHERE)
         in case they are needed."""
@@ -104,13 +70,16 @@ class Database:
 
         # Append query
         query = f'SELECT {columns_str} FROM {table}{append}'
-        print("query:",query)
-        self.add_query(query)
 
-    def add_insert(self, table: str, columns: list, values: list, append=''):
+        return query, {}
+        
+        
+    def create_insert_queries(self, table: str, columns: list, values: list, append=''):
         """Adds an insert query to the current list of queries given
         a table, columns, and values to insert. The append parameter
         given will be added on to the end of the query."""
+
+        queries = []
 
         # Ensure proper table case
         table = self.update_case(table)
@@ -119,7 +88,7 @@ class Database:
         for index in range(len(columns)):
             insert_dict[columns[index]] = values[index]
 
-        self.debug("Prepare insert dict", insert_dict)
+        self.debug("Prepare insert dict", str(insert_dict))
 
         prepare_values = []
         for column in columns:
@@ -132,8 +101,7 @@ class Database:
 
         # Build Insert query
         query = f'INSERT INTO {table} ({columns_str}) VALUES ({values_str}){append}'
-
-        self.add_query(query, insert_dict)
+        queries.append((query, insert_dict))
 
         # Build append search to get only the item
         # added back from the SQL table
@@ -145,14 +113,18 @@ class Database:
             else:
                 append += f' AND {columns[index]} = \"{values[index]}\"'
 
-        self.add_select(table, columns, append)
+        query = self.add_select(table, columns, append)
+        queries.append(query)
+
+        return queries
 
 
-
-    def add_update(self, table: str, columns: list, values: list, filter='', append=''):
+    def create_update_queries(self, table: str, columns: list, values: list, filter='', append=''):
         """Adds an UPDATE query to the current list of queries given
         a table, a string of set_pairs to update, a filter, and an optional
         append string."""
+
+        queries = []
 
         # Ensure proper table case
         table = self.update_case(table)
@@ -165,8 +137,7 @@ class Database:
         set_pairs_str = ', '.join(pair_list)
 
         query = f'UPDATE {table} SET {set_pairs_str}WHERE {filter}{append}'
-
-        self.add_query(query)
+        queries.append((query, pair_list))
 
         # BUILD SELECT to RETURN data UPDATED
         # -----------------------------------
@@ -174,9 +145,12 @@ class Database:
         append = f' WHERE {filter}'
 
         # Add select to queries
-        self.add_select(table, columns, append)
+        query = self.add_select(table, columns, append)
+        queries.append(query)
 
-    def add_delete(self, table, filter):
+        return queries
+
+    def create_delete(self, table, filter):
         """Adds a DELETE query to the current list of queries given
         a table and a filter."""
 
@@ -185,4 +159,4 @@ class Database:
 
         query = f'DELETE FROM {table} WHERE {filter}'
 
-        self.add_query(query)
+        return query, {}
