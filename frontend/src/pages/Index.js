@@ -5,7 +5,6 @@ function Index() {
     return(
         <div id="contents">
             <h1>Index Page</h1>
-
             <p>Note that the submit buttons are not yet inplemented. </p>
             <p>The following pages will be part of the main navigation:</p>
             <Link to="/characters"><Button>Characters</Button></Link>
@@ -23,7 +22,7 @@ function Index() {
             <Link to="/languageRules"><Button>Language Rules</Button></Link>
             <Link to="/LanguagesHaveLanguageRules"><Button>Languages Have Language Rules</Button></Link>
 
-            <h2>The following is a list of individual pages:</h2>
+            {/* <h2>The following is a list of individual pages:</h2>
 
             <h2>Characters</h2>
             <Link to="/addCharacter">Add Character</Link><br></br>
@@ -89,7 +88,7 @@ function Index() {
 
             <h2>Languages Have Language Rules</h2>
             <Link to="/addLanguageRuleToLanguage">Add Language Rule to Language</Link><br></br>
-            <Link to="/LanguagesHaveLanguageRules">Languages Have Language Rules</Link><br></br>
+            <Link to="/LanguagesHaveLanguageRules">Languages Have Language Rules</Link><br></br> */}
 
         </div>
     )
