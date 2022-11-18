@@ -73,7 +73,7 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
     );
     fetchedData[index1].push(
       <Link to="/deleteItem" state={{ id: fetchedData[index1][0] }}>
-        <Button>DeleteItem</Button>
+        <Button>Delete Item</Button>
       </Link>
     );
   }
