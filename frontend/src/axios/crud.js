@@ -1,6 +1,13 @@
+// Axios
 import axios from "axios";
+
+// React
 import { Link } from 'react-router-dom';
+
+// Components
 import Button from '../components/Button';
+
+// Data Imports
 import { fetchItemTableData, headers as itemHeaders} from '../data/itemData.js';
 import { CharacterHeaders, fetchCharacterTableData } from '../data/charactersData.js';
 import { fetchGameTableData, headers as GameHeaders} from '../data/gameData.js';
@@ -10,6 +17,7 @@ import { fetchLanguageTableData, headers as LanguageHeaders } from '../data/lang
 import { fetchTranslationsTableData, headers as TranslationsHeaders } from '../data/translationData.js';
 import { fetchCHITableData, headers as CharacterItemHeaders } from '../data/charactersItemsData.js';
 
+// Create an axios client to use for all requests
 const client = axios.create({
     baseURL: "http://flip3.engr.oregonstate.edu:60645"
 });
@@ -46,7 +54,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
      */
     if (!page_determiner) {
         throw new Error("Please provide the page name for your data transfer");
-        
+
     } else if (page_determiner.toLowerCase() === "items") {
         headers = itemHeaders
         const header_mod = headers
@@ -103,8 +111,6 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const returnedData = await fetchCHITableData(charLangData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
     }
-
-
 }
 
 const insertData = async (table, submitData, append="") => {
@@ -115,7 +121,6 @@ const insertData = async (table, submitData, append="") => {
             "values":submitData["values"],
             "append":append
         }
-        
         return client.post(
             '/insert_data',
             specifics,
