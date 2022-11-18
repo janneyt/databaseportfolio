@@ -135,8 +135,8 @@ const pullForeignKeys = (page) => {
   };
 
 const addFormContents = [
-    {type:"text", name:"charactername", label:"Name your character:", value: "${characterName}"},
-    {type:"text", name:"characterdescription", label:"Please describe your character", value: "${characterDescription}"},
+    {type:"text", name:"charactername", label:"Name your character:"},
+    {type:"text", name:"characterdescription", label:"Please describe your character"},
     
     // {
     //     type: "select",
