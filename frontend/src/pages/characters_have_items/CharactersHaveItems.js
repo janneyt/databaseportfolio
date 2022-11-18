@@ -1,5 +1,5 @@
 import TableView from '../../components/TableView/TableView';
-import {headers, tableData} from '../../data/charactersItemsData';
+import {headers, fetchCHITableData} from '../../data/charactersItemsData';
 import Button from '../../components/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import ShowIfLoaded from '../../components/ShowIfLoaded';
@@ -12,7 +12,7 @@ function CharactersHaveItems() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        DataNext("TranslationOutputs").then((response) => {
+        DataNext("Characters_has_Items").then((response) => {
             setPost(response);
             setIsLoading(false);
         });
