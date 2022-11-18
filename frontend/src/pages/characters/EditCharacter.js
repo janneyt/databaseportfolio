@@ -1,11 +1,16 @@
-import Form from '../../components/Forms/Form';
-import { useNavigate, useLocation } from 'react-router-dom';
+// Axios
 import { DataNext, updateData } from '../../axios/crud.js';
-import { useEffect, useState, useRef } from 'react';
-import { prepareEditData } from '../../functions/submitFunctions.js';
-import ShowIfLoaded from '../../components/ShowIfLoaded';
 
-import { editFormContents } from '../../data/charactersData';
+// React
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+
+// Functions
+import { prepareEditData } from '../../functions/submitFunctions.js';
+
+// Components
+import Form from '../../components/Forms/Form';
+import ShowIfLoaded from '../../components/ShowIfLoaded';
 
 function EditCharacters() {
     const location = useLocation();
