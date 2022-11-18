@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS `Items` (
   `idItem` INT NOT NULL AUTO_INCREMENT,
   `itemName` VARCHAR(120) NOT NULL,
   `itemDescription` VARCHAR(255) NOT NULL,
-  `category` VARCHAR(120) NULL,
   `idGame` INT NOT NULL,
   PRIMARY KEY (`idItem`),
   INDEX `fk_Items_Games1_idx` (`idGame` ASC) VISIBLE,
@@ -363,9 +362,9 @@ COMMIT;
 -- -----------------------------------------------------
 INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (1, 'Forgotten Language', 'No one knows this language', 1);
 INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (2, 'English', 'Language of the teamakers', 2);
-INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (3, 'English', 'Language of the fisher people', 3);
-INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (4, 'English', 'Language of the unified Han', 2);
-INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (5, 'English', 'Language of the sheep gazers', 3);
+INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (3, 'Ignok', 'Language of the fisher people', 3);
+INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (4, 'Chinese', 'Language of the unified Han', 2);
+INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `idGame`) VALUES (5, 'Welsh', 'Language of the sheep gazers', 3);
 
 
 COMMIT;
