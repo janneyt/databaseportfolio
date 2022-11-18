@@ -19,6 +19,32 @@ const fetchGameTableData = async (item_params, append, purpose, id) => {
     );
   
     let fetchedData = await ReturnedData("READ", parameters);
+    
+    for (let index1 = 0; index1 < fetchedData.length; index1++) {
+        // Add the buttons for the display list, anything inside the push
+        // will get added to one cell in the table
+        fetchedData[index1].push(
+          <p>Add country fk here</p>
+        );
+        fetchedData[index1].push(
+          <p>Add players fk here</p>
+        );
+        fetchedData[index1].push(
+            <p>Add languages fk here</p>
+          );
+        // Add the buttons for the display list, anything inside the push
+        // will get added to one cell in the table
+        fetchedData[index1].push(
+          <Link to="/editItem" state={{ id: id }}>
+            <Button>Edit Item</Button>
+          </Link>
+        );
+        fetchedData[index1].push(
+          <Link to="/deleteItem" state={{ id: id }}>
+            <Button>DeleteItem</Button>
+          </Link>
+        );
+      }
   
     if (purpose && purpose.toLowerCase() === "edit") {
       let find = 0;

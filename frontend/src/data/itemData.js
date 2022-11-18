@@ -1,5 +1,7 @@
 import { ReturnedData } from "../axios/crud.js";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
 /**
  * I had to entirely rewrite itemData to allow it to make asynchronous POST calls
@@ -48,6 +50,29 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
   );
 
   let fetchedData = await ReturnedData("READ", parameters);
+
+  for (let index1 = 0; index1 < fetchedData.length; index1++) {
+    // Add the buttons for the display list, anything inside the push
+    // will get added to one cell in the table
+    fetchedData[index1].push(
+      <p>Add game fk here</p>
+    );
+    fetchedData[index1].push(
+      <p>Add country fk here</p>
+    );
+    // Add the buttons for the display list, anything inside the push
+    // will get added to one cell in the table
+    fetchedData[index1].push(
+      <Link to="/editItem" state={{ id: id }}>
+        <Button>Edit Item</Button>
+      </Link>
+    );
+    fetchedData[index1].push(
+      <Link to="/deleteItem" state={{ id: id }}>
+        <Button>DeleteItem</Button>
+      </Link>
+    );
+  }
 
   if (purpose && purpose.toLowerCase() === "edit") {
     let find = 0;
@@ -101,11 +126,13 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
   return fetchedData;
 };
 
-
 const pullForeignKeys = (page) => {
   const header = page === "Games" ? gameHeaders : playerHeaders;
   let options = [];
-  const data = header === gameHeaders ? header.slice(0, gameHeaders.length - 5) : header.slice(0, playerHeaders.length - 2);
+  const data =
+    header === gameHeaders
+      ? header.slice(0, gameHeaders.length - 5)
+      : header.slice(0, playerHeaders.length - 2);
   const specifics = {
     table: page === "Games" ? "Games" : "Players",
     columns: data,
@@ -122,8 +149,16 @@ const pullForeignKeys = (page) => {
       let additional = {};
       for (const item of response.data) {
         additional = {
-          value: item.gameName ? item.gameName : (item.characterName ? item.characterName : item.playerName),
-          label: item.gameName ? item.gameName : (item.characterName ? item.characterName : item.playerName),
+          value: item.gameName
+            ? item.gameName
+            : item.characterName
+            ? item.characterName
+            : item.playerName,
+          label: item.gameName
+            ? item.gameName
+            : item.characterName
+            ? item.characterName
+            : item.playerName,
         };
         options.push(additional);
       }
@@ -148,7 +183,7 @@ const addFormContents = [
     type: "select",
     name: "idplayer",
     label: "Player Name *${Pulls player name from player id}",
-    options: pullForeignKeys("Players")
+    options: pullForeignKeys("Players"),
   },
 ];
 
