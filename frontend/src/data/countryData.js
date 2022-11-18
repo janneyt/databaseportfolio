@@ -23,12 +23,12 @@ const fetchCountryTableData = async (item_params, append, purpose, id) => {
       // Add the buttons for the display list, anything inside the push
       // will get added to one cell in the table
       fetchedData[index1].push(
-        <Link to="/editItem" state={{ id: fetchedData[index1][0]  }}>
+        <Link to="/editCountry" state={{ id: fetchedData[index1][0]  }}>
           <Button>Edit Country</Button>
         </Link>
       );
       fetchedData[index1].push(
-        <Link to="/deleteItem" state={{ id: fetchedData[index1][0] }}>
+        <Link to="/deleteCountry" state={{ id: fetchedData[index1][0] }}>
           <Button>Delete Country</Button>
         </Link>
       );
@@ -45,20 +45,20 @@ const fetchCountryTableData = async (item_params, append, purpose, id) => {
         // TODO: dynamically generate fetchedData's indices, instead of hardcoding
         {
           type: "text",
-          name: "itemname",
+          name: "countryname",
           label: "Name Your Item:",
           value: fetchedData[find][1],
         },
         {
           type: "text",
-          name: "itemdescription",
-          label: "Describe Your Item",
+          name: "sizeinkm",
+          label: "What is your country's size:",
           value: fetchedData[find][2],
         },
         {
           type: "text",
-          name: "gamename",
-          label: "Game Name",
+          name: "population",
+          label: "What is your country's population:",
           value: fetchedData[find][3],
         },
       ];

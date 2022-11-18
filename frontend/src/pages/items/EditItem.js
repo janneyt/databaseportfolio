@@ -9,20 +9,20 @@ import ShowIfLoaded from '../../components/ShowIfLoaded';
 function EditItems() {
     const location = useLocation();
     const navigate = useNavigate();
-    const [id, setId] = useState(location.state ? location.state.id : 0);
+
+    const dataRef = useRef({});
+    const submitData = useRef({"columns":[], "values": []});
+    const id = useRef(location.state ? location.state.id:0);
+
+    const getDataAppend = 'WHERE idItem = ' + id.current.toString();
+    const updateFilter = 'idItem = ' + id.current.toString();
+
     const [post, setPost] = useState([{}]);
     const [isLoading, setIsLoading] = useState(true);
-    const [append, setAppend] = useState('WHERE idItem = '+location.state.id.toString());
-    const [appendUpdate, setAppendUpdate] = useState("idItem = "+location.state.id.toString());
-
-
-    // const [updates, setUpdates] = useState('')
-    // const [append, setAppend] = useState(' WHERE idItem = '+ id.toString());
-    // const [updateAppend, setUpdateAppend] = useState(' idItem = '+id.toString());
 
     useEffect(() => {        
         console.log("LOCATION", location)
-        DataNext("Items", append, "edit", id).then(
+        DataNext("Items", getDataAppend, "edit", id.current).then(
             (response) => {
                 setPost(response); 
                 return response}
@@ -30,33 +30,20 @@ function EditItems() {
         setIsLoading(false)
     }, []);
 
-    const dataRef = useRef({});
-    const submitData = useRef({"columns":[], "values": []});
-    
-
-    const updateForm = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         prepareEditData(dataRef, submitData);
-        const form = e.target
-        const updates = [];
-        // for (const item of form) {
-        //     if (item.nodeName == "INPUT")
-
-        //     updates.push(item.value)
-        // }
-        setIsLoading(true);
-        updateData("Items", submitData, appendUpdate, id).then((response) => 
-        setIsLoading(false)
-        ).catch((error) => error);
+        updateData("Items", submitData, updateFilter, id.current).catch((error) => error);
         navigate("/items");
     }
+
     return (
         <>
             <div className="content">
 
                 <h1>Edit Item Page</h1>
                 <ShowIfLoaded isLoading={isLoading}>
-                    <Form submitText="Save" inputState={post} onSubmit={updateForm} refDict={dataRef}/>
+                    <Form submitText="Save" inputState={post} onSubmit={onSubmit} refDict={dataRef}/>
                 </ShowIfLoaded>
             </div>
         </>

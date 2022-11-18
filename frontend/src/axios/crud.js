@@ -11,7 +11,7 @@ import { fetchTranslationsTableData, headers as TranslationsHeaders } from '../d
 import { fetchCHITableData, headers as CharacterItemHeaders } from '../data/charactersItemsData.js';
 
 const client = axios.create({
-    baseURL: "http://localhost:60645"
+    baseURL: "http://flip3.engr.oregonstate.edu:60645"
 });
 
 let keys = [null]
@@ -148,21 +148,10 @@ const updateData = async (page, updates, append, id) => {
         throw new Error("Page could not be determined.")
     }
     try {
-
+        // Debug log
         console.log("UPDATES", updates)
-        // const update_header = Array.from(headers)
-        // const indexer = update_header.indexOf("Edit");
 
-        // update_header.splice(indexer, 1)
-
-        // const indexer1 = update_header.indexOf("Delete")
-
-        // update_header.splice(indexer1, 1)
-        
-        // const values = [];
-        // for(const value of updates["values"]){
-        //     values.push("'"+value+"'")
-        // }
+        // Create specifics, or JSON table format
         const specifics = JSON.stringify( {
             "table":page,
             "columns": updates.current["columns"],
