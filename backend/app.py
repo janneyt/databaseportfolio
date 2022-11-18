@@ -33,14 +33,14 @@ def select_data():
     except:
         append = ''
 
-    queries = []
-    # Only pass to the add_select if the proper tables are present
+    # Only build queries if expected dictionary keys are found
     try:
-        queries.append(database.create_select(data["table"], data["columns"], append))
+        queries = database.create_select(data["table"], data["columns"], append)
     except KeyError as key:
-        database.debug("KeyError:", f'Key: {key} not found.')
+        database.debug("KeyError: ", f'{key} not found.')
         return str(f'KeyError: {key} not found.'), 405
 
+    # Attempts to execute queries to database
     try:
         results = database.execute(queries)
     except Exception as error:
@@ -52,10 +52,9 @@ def select_data():
 @app.route('/delete_data', methods=['POST'])
 def delete_data():
     data = request.get_json()
-    queries = []
 
     try:
-        queries.append(database.create_delete(data["table"], data["filters"]))
+        queries = database.create_delete(data["table"], data["filters"])
     except KeyError as key:
         database.debug("KeyError", f'Key: {key} not found.')
         return str(f'Key: {key} not found.'), 405
