@@ -110,12 +110,12 @@ const fetchGameTableData = async (item_params, append, purpose, id) => {
     // will get added to one cell in the table
     fetchedData[index1].push(
       <Link to="/editGame" state={{ id: fetchedData[index1][0]  }}>
-        <Button>Edit Item</Button>
+        <Button>Edit Game</Button>
       </Link>
     );
     fetchedData[index1].push(
       <Link to="/deleteGame" state={{ id: fetchedData[index1][0] }}>
-        <Button>DeleteItem</Button>
+        <Button>Delete Game</Button>
       </Link>
     );
   }
