@@ -85,11 +85,11 @@ const fetchCharacterTableData = async (item_params, append, purpose, id) => {
         return editFormContents
     }
     else if (purpose && purpose.toLowerCase() === "delete") {
-
+        console.log("FETCHED DATA", fetchedData);
         const deleteFormContents = [
             // TODO: dynamically generate fetchedData's indices, instead of hardcoding
             
-            { type: "text", name: fetchedData[0][1], value: fetchedData[0][1], disabled:true}
+            { type: "text", name: fetchedData[0][1], value: fetchedData[0][1], disabled:true }
             
         ];
 
