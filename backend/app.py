@@ -72,6 +72,7 @@ def delete_data():
 @app.route('/update_data', methods=['POST'])
 def update_data():
     data = request.get_json()
+    print(data)
     # Ensure an append is passed to the add_select method
     try:
         append = f" {data['append']}"

@@ -14,6 +14,7 @@ const headers = [
 ];
 const playerHeaders = ["playerName", "Edit", "Delete"];
 const gameHeaders = [
+  "idGame",
   "gameName",
   "idCountry",
   "idPlayer",
@@ -97,6 +98,7 @@ const fetchGameTableData = async (item_params, append, purpose, id) => {
   );
 
   let fetchedData = await ReturnedData("READ", parameters);
+  console.log("fetched data", fetchedData);
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
@@ -107,12 +109,12 @@ const fetchGameTableData = async (item_params, append, purpose, id) => {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
     fetchedData[index1].push(
-      <Link to="/editItem" state={{ id: fetchedData[index1][0]  }}>
+      <Link to="/editGame" state={{ id: fetchedData[index1][0]  }}>
         <Button>Edit Item</Button>
       </Link>
     );
     fetchedData[index1].push(
-      <Link to="/deleteItem" state={{ id: fetchedData[index1][0] }}>
+      <Link to="/deleteGame" state={{ id: fetchedData[index1][0] }}>
         <Button>DeleteItem</Button>
       </Link>
     );
