@@ -23,12 +23,12 @@ const fetchLanguageTableData = async (item_params, append, purpose, id) => {
       // Add the buttons for the display list, anything inside the push
       // will get added to one cell in the table
       fetchedData[index1].push(
-        <Link to="/editLanguage" state={{ id: id }}>
+        <Link to="/editLanguage" state={{ id: fetchedData[index1][0]  }}>
           <Button>Edit Country</Button>
         </Link>
       );
       fetchedData[index1].push(
-        <Link to="/deleteLanguage" state={{ id: id }}>
+        <Link to="/deleteLanguage" state={{ id: fetchedData[index1][0]  }}>
           <Button>Delete Country</Button>
         </Link>
       );
