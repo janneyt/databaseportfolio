@@ -14,6 +14,7 @@ function AddLanguage() {
 
     const prepareAddData = (e) => {
         e.preventDefault();
+        console.log("DATAREF", dataRef);
         prepareFormData(dataRef, submitData);
         insertData("Languages", submitData.current);
         navigate("/languages")
