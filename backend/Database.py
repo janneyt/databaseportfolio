@@ -43,8 +43,10 @@ class Database:
             self.debug("connection failure", str(error))
             raise error  # Pass error up to app.py
 
-        for query, data in queries:
+        for query_tuple in queries:
+            query, data = query_tuple
             print("QUERY: ", query)
+            print("DATA", data)
             if data != {}:
                 cursor.execute(query, data)
             else:
@@ -135,7 +137,7 @@ class Database:
         set_pairs_str = ', '.join(pair_list)
 
         query = f'UPDATE {table} SET {set_pairs_str} WHERE {filter}{append}'
-        queries.append((query, pair_list))
+        queries.append((query, {}))
 
         # BUILD SELECT to RETURN data UPDATED
         # -----------------------------------
