@@ -7,16 +7,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 function DeleteCharacters() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const dataRef = useRef({});
+  const id = useRef(location.state ? location.state.id:-1);
+
+  const getDataAppend = 'WHERE idCharacter = ' + id.current.toString();
+  const updateFilter = 'idCharacter = ' + id.current.toString();
+
   const [post, setPost] = useState([{}]);
-
-  const [id, setId] = useState(location.state ? location.state.id : -1);
-  // One append to display the data, one to delete
-  const [append, setAppend] = useState("WHERE idCharacter = " + id.toString());
-  const [filter, setFilter] = useState(" idCharacter = " + id.toString());
-
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    DataNext("Items", append, "delete", id).then((response) => {
+    DataNext("Characters", getDataAppend, "delete", id).then((response) => {
       console.log("setting post", response);
       setPost(response);
 
@@ -25,18 +27,11 @@ function DeleteCharacters() {
     setIsLoading(false);
   }, []);
 
-  const dataRef = useRef({});
-  const submitData = useRef({ columns: [], values: [] });
-
   const deleteForm = (e) => {
     e.preventDefault();
-
+    console.log("DATAREF", dataRef)
     setIsLoading(true);
-    deleteData("Characters", id, filter)
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((error) => error);
+    deleteData("Characters", id, updateFilter).catch((error) => error);
     navigate("/characters");
   };
 
