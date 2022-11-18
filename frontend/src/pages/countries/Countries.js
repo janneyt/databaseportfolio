@@ -27,13 +27,9 @@ function Countries() {
           <Link to="/addCountry">
             <Button>Add Country</Button>
           </Link>
-          <Button
-            onClick={() => {
+          <Button onClick={() => {
               navigate(-1);
-            }}
-          >
-            Cancel
-          </Button>
+            }}>Cancel</Button>
         </ShowIfLoaded>
       </div>
     </>
