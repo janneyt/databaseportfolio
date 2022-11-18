@@ -11,6 +11,16 @@ const prepareFormData = (dataRef, submitData) => {
     submitData.current["values"].push("1");
 }
 
+const prepareEditData = (dataRef, submitData) => {
+    for (const item in dataRef.current) {
+        if (dataRef.current[item].value !== "undefined") {
+            submitData.current["columns"].push(dataRef.current[item].name);
+            submitData.current["values"].push(dataRef.current[item].value)
+        }
+    }
+    console.log(submitData);
+}
+
 const prepareGameFormData = (dataRef, submitData) => {
     for (const item in dataRef.current) {
         if (dataRef.current[item].value !== "undefined") {
@@ -20,4 +30,4 @@ const prepareGameFormData = (dataRef, submitData) => {
     }
 }
 
-export { prepareFormData, prepareGameFormData };
+export { prepareFormData, prepareGameFormData, prepareEditData };

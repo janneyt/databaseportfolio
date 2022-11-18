@@ -148,23 +148,25 @@ const updateData = async (page, updates, append, id) => {
         throw new Error("Page could not be determined.")
     }
     try {
-        const update_header = Array.from(headers)
-        const indexer = update_header.indexOf("Edit");
 
-        update_header.splice(indexer, 1)
+        console.log("UPDATES", updates)
+        // const update_header = Array.from(headers)
+        // const indexer = update_header.indexOf("Edit");
 
-        const indexer1 = update_header.indexOf("Delete")
+        // update_header.splice(indexer, 1)
 
-        update_header.splice(indexer1, 1)
+        // const indexer1 = update_header.indexOf("Delete")
+
+        // update_header.splice(indexer1, 1)
         
-        const values = [Number(id)];
-        for(const value of updates){
-            values.push("'"+value+"'")
-        }
+        // const values = [];
+        // for(const value of updates["values"]){
+        //     values.push("'"+value+"'")
+        // }
         const specifics = JSON.stringify( {
             "table":page,
-            "columns":update_header,
-            "values": values,
+            "columns": updates.current["columns"],
+            "values": updates.current["values"],
             "filter": append
         })
         console.log(specifics)

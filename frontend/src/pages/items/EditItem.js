@@ -2,7 +2,7 @@ import Form from '../../components/Forms/Form';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { DataNext, updateData } from '../../axios/crud.js';
 import { useEffect, useState, useRef } from 'react';
-import { prepareFormData } from '../../functions/submitFunctions.js';
+import { prepareEditData } from '../../functions/submitFunctions.js';
 import ShowIfLoaded from '../../components/ShowIfLoaded';
 
 
@@ -12,11 +12,16 @@ function EditItems() {
     const [id, setId] = useState(location.state ? location.state.id : 0);
     const [post, setPost] = useState([{}]);
     const [isLoading, setIsLoading] = useState(true);
-    const [updates, setUpdates] = useState('')
-    const [append, setAppend] = useState(' WHERE idItem = '+ id.toString());
-    const [updateAppend, setUpdateAppend] = useState(' idItem = '+id.toString());
+    const [append, setAppend] = useState('WHERE idItem = '+location.state.id.toString());
+    const [appendUpdate, setAppendUpdate] = useState("idItem = "+location.state.id.toString());
+
+
+    // const [updates, setUpdates] = useState('')
+    // const [append, setAppend] = useState(' WHERE idItem = '+ id.toString());
+    // const [updateAppend, setUpdateAppend] = useState(' idItem = '+id.toString());
 
     useEffect(() => {        
+        console.log("LOCATION", location)
         DataNext("Items", append, "edit", id).then(
             (response) => {
                 setPost(response); 
@@ -31,17 +36,16 @@ function EditItems() {
 
     const updateForm = (e) => {
         e.preventDefault();
-        prepareFormData(dataRef, submitData);
+        prepareEditData(dataRef, submitData);
         const form = e.target
         const updates = [];
-        for (const item of form) {
-            if (item.nodeName == "INPUT")
+        // for (const item of form) {
+        //     if (item.nodeName == "INPUT")
 
-            updates.push(item.value)
-        }
+        //     updates.push(item.value)
+        // }
         setIsLoading(true);
-        updateData("Items", updates, updateAppend, id).then((response) => 
-            
+        updateData("Items", submitData, appendUpdate, id).then((response) => 
         setIsLoading(false)
         ).catch((error) => error);
         navigate("/items");
