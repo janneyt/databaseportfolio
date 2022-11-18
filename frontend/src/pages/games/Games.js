@@ -30,6 +30,7 @@ function Games() {
         <>
             <div id="content">
                 <h1>Games</h1>
+                <p>We are currently changing our implementation of our games. Please don't delete the first entry () in this table.</p>
                 <ShowIfLoaded isLoading = {isLoading}>
                     <TableView headers={headers} listData={post} />
                     <Link to="/addGame"><Button>Add Item</Button></Link>
