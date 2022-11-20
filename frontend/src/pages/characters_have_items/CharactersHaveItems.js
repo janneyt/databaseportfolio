@@ -13,9 +13,11 @@ function CharactersHaveItems() {
 
     useEffect(() => {
         DataNext("Characters_has_Items").then((response) => {
+
             setPost(response);
             console.log("Character have items post", post);
             setIsLoading(false);
+            return response
         });
     }, []);
 
@@ -25,7 +27,7 @@ function CharactersHaveItems() {
                 <h1>Characters Have Items</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
                     <TableView headers={headers} listData={post} />
-                    <Link to="/addCharactersHaveItems"><Button>Add Translation</Button></Link>
+                    <Link to="/addItemToCharacter"><Button>Add Item to Character</Button></Link>
                     <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>
             </div>

@@ -109,7 +109,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const header_mod = headers
         const charLangData = header_mod.slice(0, headers.length - 2)
         const returnedData = await fetchCHITableData(charLangData, append ? append : null, purpose ? purpose : null, id);
-        console.log("returnedData in crud.js 112", returnedData)
+
         return returnedData;
     }
 }
@@ -223,7 +223,7 @@ const readData = async (specifics, tables) => {
             }
         )
 
-        console.log("filled data", data)
+
         // Another placeholder
         const filledData = [[]];
 
@@ -247,8 +247,7 @@ const readData = async (specifics, tables) => {
             // This is where I iterate over the keys and place the values in filledData
             for (let element = 0; element < keys.length; element++) {
 
-                console.log("headers 246 crud.js", headers)
-                console.log("keys 247 crud.js", keys)
+
                 
                 // Put the filled Data in the right spot in the header
                 for (let header_element = 0; header_element < headers.length; header_element++) {
@@ -265,7 +264,7 @@ const readData = async (specifics, tables) => {
             
 
         };
-        console.log("filledData processed 262 crud.js", filledData)
+
         return filledData
     }
 
@@ -307,7 +306,7 @@ const fillData = async (specifics) => {
      */
     
     try {
-        console.log("specifics in fill data", specifics)
+
         const response = await client.post(
             '/select_data',
             specifics,
