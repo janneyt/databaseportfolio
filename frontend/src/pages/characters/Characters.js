@@ -44,6 +44,7 @@ function Characters() {
             console.log(response);
             setPost(response);
             setIsLoading(false);
+            return response;
         });
     }, []);
 

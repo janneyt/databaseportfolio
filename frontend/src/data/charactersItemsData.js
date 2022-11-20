@@ -6,6 +6,8 @@ import { ReturnedData } from "../axios/crud.js";
 const headers = ["idItem", "idCharacter", "Add Item", "Delete Item"];
 
 const fetchCHITableData = async (item_params, append, purpose, id) => {
+  console.log("item params", item_params)
+  console.log("append", append)
   const list_param = JSON.stringify(item_params);
   const append_str = JSON.stringify(append);
   // First grab the items/ character pairs that are available
@@ -18,11 +20,17 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
           "}"
       : '{"columns":' + list_param + ', "table":"Characters_has_Items"}'
   );
-
+  console.log("calling ReturnedData")
   let fetchedData = await ReturnedData("READ", parameters);
+  console.log("fetchedData", fetchedData)
 
+  // Set a timeout due to database backup
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Get the character ids based on the ids returned from the earlier query
+    if(!fetchedData[index1][0] || !fetchedData[index1][1]){
+      fetchedData.slice(index1,1)
+      continue
+    }
     let append_str1 =
       '"WHERE idCharacter = ' 
     append_str1 = append_str1.concat(fetchedData[index1][0]
@@ -48,7 +56,8 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
         append_str2 +
         "}"
     );
-
+    console.log(append_str1)
+    console.log(append_str2)
     let fetchedData2 = await ReturnedData("READINTERSECT", character_param, ["characterName"]);
     let fetchedData3 = await ReturnedData("READINTERSECT", item_param, ["itemName"]);
     const character_id = fetchedData[index1][1]

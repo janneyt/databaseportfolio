@@ -36,6 +36,7 @@ def select_data():
     # Only build queries if expected dictionary keys are found
     try:
         queries = database.create_select(data["table"], data["columns"], append)
+        print("in select data", queries)
     except KeyError as key:
         database.debug("KeyError: ", f'{key} not found.')
         return str(f'KeyError: {key} not found.'), 405
@@ -43,6 +44,7 @@ def select_data():
     # Attempts to execute queries to database
     try:
         results = database.execute(queries)
+        print("results in select_data", results)
     except Exception as error:
         database.debug("failed execute", str(error))
         return str(error), 405

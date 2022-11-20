@@ -211,6 +211,7 @@ const deleteData = async (table, id, filter) => {
 }
 
 const readData = async (specifics, tables) => {
+    const old_headers = headers
     if(tables){
         headers = tables
     }
@@ -264,7 +265,8 @@ const readData = async (specifics, tables) => {
             
 
         };
-
+        headers = old_headers
+        console.log("headers", headers)
         return filledData
     }
 
@@ -306,7 +308,7 @@ const fillData = async (specifics) => {
      */
     
     try {
-
+        console.log("specifics in Fill Data", specifics)
         const response = await client.post(
             '/select_data',
             specifics,
@@ -316,7 +318,7 @@ const fillData = async (specifics) => {
                 }
             }
         );
-
+        console.log("responsein fillData", data)
         data = response.data;
         
         return response.data;

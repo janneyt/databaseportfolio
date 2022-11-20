@@ -1,38 +1,49 @@
-import TableView from '../../components/TableView/TableView';
-import {headers, fetchCHITableData} from '../../data/charactersItemsData';
-import Button from '../../components/Button';
-import { Link, useNavigate } from 'react-router-dom';
-import ShowIfLoaded from '../../components/ShowIfLoaded';
-import { DataNext } from '../../axios/crud.js';
-import { useEffect, useState } from 'react';
+import TableView from "../../components/TableView/TableView";
+import { headers, fetchCHITableData } from "../../data/charactersItemsData";
+import Button from "../../components/Button";
+import { Link, useNavigate } from "react-router-dom";
+import ShowIfLoaded from "../../components/ShowIfLoaded";
+import { DataNext } from "../../axios/crud.js";
+import { useEffect, useState } from "react";
 
 function CharactersHaveItems() {
-    const [post, setPost] = useState([[]]);
-    const [isLoading, setIsLoading] = useState(true);
-    const navigate = useNavigate();
+  const [post, setPost] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        DataNext("Characters_has_Items").then((response) => {
+  const navigate = useNavigate();
 
-            setPost(response);
-            console.log("Character have items post", post);
-            setIsLoading(false);
-            return response
-        });
-    }, []);
+  useEffect(() => {
+   
+      DataNext("Characters_has_Items").then((response) => {
+        console.log("response in read", response);
+        setPost(response);
+        setIsLoading(false);
+        return response;
+      });
 
-    return(
-        <>
-            <div id="content">
-                <h1>Characters Have Items</h1>
-                <ShowIfLoaded isLoading = {isLoading}>
-                    <TableView headers={headers} listData={post} />
-                    <Link to="/addItemToCharacter"><Button>Add Item to Character</Button></Link>
-                    <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
-                </ShowIfLoaded>
-            </div>
-        </>
-    )
+  }, []);
+
+
+  return (
+    <>
+      <div id="content">
+        <h1>Characters Have Items</h1>
+        <ShowIfLoaded isLoading={isLoading}>
+          <TableView headers={headers} listData={post} />
+          <Link to="/addItemToCharacter">
+            <Button>Add Item to Character</Button>
+          </Link>
+          <Button
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            Cancel
+          </Button>
+        </ShowIfLoaded>
+      </div>
+    </>
+  );
 }
 
 export default CharactersHaveItems;
