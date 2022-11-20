@@ -19,7 +19,7 @@ import { fetchCHITableData, headers as CharacterItemHeaders } from '../data/char
 
 // Create an axios client to use for all requests
 const client = axios.create({
-    baseURL: "http://flip3.engr.oregonstate.edu:60645"
+    baseURL: "http://localhost:60645"
 });
 
 let keys = [null]
@@ -109,6 +109,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const header_mod = headers
         const charLangData = header_mod.slice(0, headers.length - 2)
         const returnedData = await fetchCHITableData(charLangData, append ? append : null, purpose ? purpose : null, id);
+        console.log("returnedData in crud.js 112", returnedData)
         return returnedData;
     }
 }
@@ -209,7 +210,10 @@ const deleteData = async (table, id, filter) => {
     }
 }
 
-const readData = async (specifics) => {
+const readData = async (specifics, tables) => {
+    if(tables){
+        headers = tables
+    }
     try {
 
         await fillData(specifics).then(
@@ -219,7 +223,7 @@ const readData = async (specifics) => {
             }
         )
 
-
+        console.log("filled data", data)
         // Another placeholder
         const filledData = [[]];
 
@@ -243,7 +247,9 @@ const readData = async (specifics) => {
             // This is where I iterate over the keys and place the values in filledData
             for (let element = 0; element < keys.length; element++) {
 
-
+                console.log("headers 246 crud.js", headers)
+                console.log("keys 247 crud.js", keys)
+                
                 // Put the filled Data in the right spot in the header
                 for (let header_element = 0; header_element < headers.length; header_element++) {
 
@@ -259,7 +265,7 @@ const readData = async (specifics) => {
             
 
         };
-
+        console.log("filledData processed 262 crud.js", filledData)
         return filledData
     }
 
@@ -301,7 +307,7 @@ const fillData = async (specifics) => {
      */
     
     try {
-
+        console.log("specifics in fill data", specifics)
         const response = await client.post(
             '/select_data',
             specifics,
@@ -313,6 +319,7 @@ const fillData = async (specifics) => {
         );
 
         data = response.data;
+        
         return response.data;
     } catch (error) {
         console.log(error);
@@ -321,7 +328,7 @@ const fillData = async (specifics) => {
     }
 }
 
-const ReturnedData = async (action, specifics) => {
+const ReturnedData = async (action, specifics, tables) => {
 
     /*
         Takes the action and specifics data members and creates axios posts.
@@ -362,6 +369,9 @@ const ReturnedData = async (action, specifics) => {
         return updateData(specifics, );
 
 
+    } else if(action.toUpperCase() === "READINTERSECT"){
+        // We have to change the headers as the intersection tables need to read from two different tables
+        return await readData(specifics, tables)
     }
 
 };

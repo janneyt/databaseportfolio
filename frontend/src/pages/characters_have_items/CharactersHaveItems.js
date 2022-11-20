@@ -14,6 +14,7 @@ function CharactersHaveItems() {
     useEffect(() => {
         DataNext("Characters_has_Items").then((response) => {
             setPost(response);
+            console.log("Character have items post", post);
             setIsLoading(false);
         });
     }, []);
