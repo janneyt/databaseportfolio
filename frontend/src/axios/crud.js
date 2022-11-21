@@ -240,7 +240,7 @@ const deleteData = async (table, id, filter) => {
 
 const readData = async (specifics, tables) => {
     console.log("SPECIFICS", specifics)
-    const old_headers = headers
+    let old_headers = headers
     if(tables){
         headers = tables
     }
