@@ -48,18 +48,17 @@ class Database:
         # Data is passed as {} where columns and values
         # are keys and values respectively
         for query_tuple in queries:
-            print("query tuples", query_tuple)
             query, data = query_tuple
-            print("query: ", query)
+            print("query",query)
+
             print(cursor.execute(query, data))
-
-
 
         # Get results before commit and close of connection
         results = cursor.fetchall()
-        print(results)
+
         # Commit changes and close connection
         con.commit()
+        print("results", results)
         return results
 
     def create_select(self, table: str, columns: list, append=''):
@@ -70,7 +69,6 @@ class Database:
 
         # Ensure proper table case
         table = self.update_case(table)
-        print(table)
 
         # Build string of columns from columns list
         columns_str = ", ".join(columns)

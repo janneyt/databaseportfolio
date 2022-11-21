@@ -71,7 +71,7 @@ def delete_data():
 @app.route('/update_data', methods=['POST'])
 def update_data():
     data = request.get_json()
-    print(data)
+
     # Ensure an append is passed to the add_select method
     try:
         append = f" {data['append']}"
@@ -80,6 +80,7 @@ def update_data():
 
     try:
         queries = database.create_update_queries(data['table'], data['columns'], data['values'], data['filter'], append)
+
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405

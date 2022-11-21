@@ -212,7 +212,6 @@ const DataNext = async (page_determiner, append, purpose, id) => {
     const countryLangData = header_mod.slice(0, headers.length - 2);
 
     // Debug headers
-    console.log("country lang data debug", countryLangData);
     const returnedData = await fetchCoHLTableData(
       countryLangData,
       append ? append : null,
@@ -272,7 +271,7 @@ const updateData = async (page, updates, append, id) => {
       values: updates.current["values"],
       filter: append,
     });
-    console.log(specifics);
+    console.log("SPECIFICS for edit",specifics);
     return client
       .post("/update_data", specifics, {
         headers: {
@@ -334,9 +333,6 @@ const readData = async (specifics, tables) => {
       return response;
     });
 
-    console.log("Data returned into filledData", data);
-    console.log("headers after data returned", headers);
-
     // Weird asynchronous bug requires resetting headers so first select for intersection table succeeds.
     if (tables) {
       old_headers = headers;
@@ -363,11 +359,6 @@ const readData = async (specifics, tables) => {
       filledData[index] = [];
       // This is where I iterate over the keys and place the values in filledData
       for (let element = 0; element < keys.length; element++) {
-        // Debug filled Data going into for loop
-        console.log("data at index", data[index]);
-
-        // Debug keys
-        console.log("keys at this point: ", keys);
 
         // Put the filled Data in the right spot in the header
         for (
@@ -375,21 +366,10 @@ const readData = async (specifics, tables) => {
           header_element < headers.length;
           header_element++
         ) {
-          // Debug if keys and headers have the same header name
-          console.log("keys at element", keys[element]);
-          console.log("headers at header_element", headers[header_element]);
 
           if (keys[element] === headers[header_element]) {
-            // Prove data is here
-            console.log("data at key and element", data[index][keys[element]]);
 
             filledData[index][header_element] = data[index][keys[element]];
-
-            // Debug filledData for assignment issues
-            console.log(
-              "filledData index header_element",
-              filledData[index][header_element]
-            );
           }
         }
       }
@@ -398,10 +378,10 @@ const readData = async (specifics, tables) => {
 
     // Debug the headers switching back to their original state
     headers = old_headers;
-    console.log("headers", headers);
+
 
     // Debug filledData
-    console.log("filledData", filledData);
+
     return filledData;
   } catch (error) {
     /**
@@ -443,13 +423,11 @@ const fillData = async (specifics) => {
    */
 
   try {
-    console.log("specifics in Fill Data", specifics);
     const response = await client.post("/select_data", specifics, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    console.log("response in fillData", data);
     data = response.data;
 
     return response.data;
@@ -500,7 +478,6 @@ const ReturnedData = async (action, specifics, tables) => {
     return updateData(specifics);
   } else if (action.toUpperCase() === "READINTERSECT") {
     // We have to change the headers as the intersection tables need to read from two different tables
-    console.log("Entering readData for intersection tables");
     return await readData(specifics, tables);
   }
 };

@@ -74,8 +74,8 @@ const fetchCharacterTableData = async (item_params, append, purpose, id) => {
         }
         const editFormContents = [
             // TODO: dynamically generate fetchedData's indices, instead of hardcoding
-            { type: "text", name: "charactername", label: "Name Your Character:", value: fetchedData[find][1] },
-            { type: "text", name: "characterdescription", label: "Describe Your Character", value: fetchedData[find][2] },
+            { type: "text", name: "characterName", label: "Name Your Character:", value: fetchedData[find][1] },
+            { type: "text", name: "characterDescription", label: "Describe Your Character", value: fetchedData[find][2] },
             // { type: "text", name: "gamename", label: "Game Name", value: fetchedData[find][3] },
 
         ];
