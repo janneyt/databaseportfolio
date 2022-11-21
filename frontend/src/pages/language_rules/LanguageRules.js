@@ -1,19 +1,35 @@
 import TableView from '../../components/TableView/TableView';
-import {headers, tableData} from '../../data/languageData';
+import {headers } from '../../data/languageRuleData';
 import Button from '../../components/Button';
 import { useNavigate, Link } from 'react-router-dom';
+import ShowIfLoaded from '../../components/ShowIfLoaded';
+import { DataNext } from '../../axios/crud.js';
+import { useEffect, useState } from 'react';
+
 
 function LanguageRules() {
-
     const navigate = useNavigate();
+    const [post, setPost] = useState([[]]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        DataNext("LanguageRules").then((response) => {
+            setPost(response);
+            setIsLoading(false);
+        });
+    }, []);
 
     return(
-        <div id="content">
-            <h1>Language Rules</h1>
-            <TableView headers={headers} listData={tableData} />
-            <Link to="/addLanguageRule"><Button>Add Language</Button></Link>
-            <Button onClick={() => navigate(-1)}>Cancel</Button>
-        </div>
+        <>
+            <div id="content">
+                <h1>Rules for creating a language</h1>
+                <ShowIfLoaded isLoading = {isLoading}>
+                    <TableView headers={headers} listData={post} />
+                    <Link to="/addLanguageRule"><Button>Add Language Rule</Button></Link>
+                    <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
+                </ShowIfLoaded>
+            </div>
+        </>
     )
 }
 

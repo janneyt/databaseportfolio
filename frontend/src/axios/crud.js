@@ -11,6 +11,7 @@ import Button from '../components/Button';
 import { fetchItemTableData, headers as itemHeaders} from '../data/itemData.js';
 import { CharacterHeaders, fetchCharacterTableData } from '../data/charactersData.js';
 import { fetchGameTableData, headers as GameHeaders} from '../data/gameData.js';
+import { fetchLanguageRuleTableData, headers as LanguageRuleHeaders} from '../data/languageRuleData.js';
 import { fetchPlayerTableData, headers as PlayerHeaders } from '../data/playerData.js';
 import { fetchCountryTableData, headers as CountryHeaders } from '../data/countryData.js';
 import { fetchLanguageTableData, headers as LanguageHeaders } from '../data/languageData.js';
@@ -70,6 +71,13 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const header_mod = headers
         const characterData = header_mod.slice(0, headers.length - 2)
         const returnedData = await fetchCharacterTableData(characterData, append ? append : null, purpose ? purpose : null, id);
+        return returnedData;
+
+    } else if(page_determiner.toLowerCase() === "languagerules") {
+        headers = LanguageRuleHeaders 
+        const header_mod = headers
+        const languageRuleData = header_mod.slice(0, headers.length - 2)
+        const returnedData = await fetchLanguageRuleTableData(languageRuleData, append ? append : null, purpose ? purpose : null, id);
         return returnedData;
 
     } else if(page_determiner.toLowerCase() === "games") {
