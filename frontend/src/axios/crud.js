@@ -17,6 +17,8 @@ import { fetchLanguageTableData, headers as LanguageHeaders } from '../data/lang
 import { fetchTranslationsTableData, headers as TranslationsHeaders } from '../data/translationData.js';
 import { fetchCHITableData, headers as CharacterItemHeaders } from '../data/charactersItemsData.js';
 import { fetchCHLTableData, headers as CharacterLanguageHeaders } from '../data/charactersLanguagesData.js';
+import { fetchCoHLTableData, headers as CountryLanguageHeaders } from '../data/countriesLanguagesData.js';
+
 
 // Create an axios client to use for all requests
 const client = axios.create({
@@ -119,6 +121,16 @@ const DataNext = async (page_determiner, append, purpose, id) => {
         const returnedData = await fetchCHLTableData(charLangData, append ? append : null, purpose ? purpose : null, id);
 
         return returnedData;
+    } else if(page_determiner.toLowerCase() === "countries_has_languages") {
+        headers = CountryLanguageHeaders
+        const header_mod = headers
+        const countryLangData = header_mod.slice(0, headers.length - 2)
+
+        // Debug headers
+        console.log("country lang data debug",countryLangData)
+        const returnedData = await fetchCoHLTableData(countryLangData, append ? append : null, purpose ? purpose : null, id);
+
+        return returnedData;
     }
 }
 
@@ -219,10 +231,12 @@ const deleteData = async (table, id, filter) => {
 }
 
 const readData = async (specifics, tables) => {
+    console.log("SPECIFICS", specifics)
     const old_headers = headers
     if(tables){
         headers = tables
     }
+
     try {
 
         await fillData(specifics).then(
@@ -232,7 +246,14 @@ const readData = async (specifics, tables) => {
             }
         )
 
+        console.log("Data returned into filledData", data);
+        console.log("headers after data returned", headers);
 
+        // Weird asynchronous bug requires resetting headers so first select for intersection table succeeds.
+        if(tables){
+            old_headers = headers;
+            headers = tables;
+        }
         // Another placeholder
         const filledData = [[]];
 
@@ -256,14 +277,29 @@ const readData = async (specifics, tables) => {
             // This is where I iterate over the keys and place the values in filledData
             for (let element = 0; element < keys.length; element++) {
 
+                // Debug filled Data going into for loop
+                console.log("data at index", data[index])
 
+                // Debug keys
+                console.log("keys at this point: ", keys)
                 
                 // Put the filled Data in the right spot in the header
                 for (let header_element = 0; header_element < headers.length; header_element++) {
 
+                    // Debug if keys and headers have the same header name
+                    console.log("keys at element", keys[element])
+                    console.log("headers at header_element", headers[header_element])
+
                     if (keys[element] === headers[header_element]) {
 
+                        // Prove data is here
+                        console.log("data at key and element", data[index][keys[element]])
+                        
+
                         filledData[index][header_element] = data[index][keys[element]]
+                        
+                        // Debug filledData for assignment issues
+                        console.log("filledData index header_element", filledData[index][header_element])
 
                     }
                 }
@@ -273,8 +309,13 @@ const readData = async (specifics, tables) => {
             
 
         };
+
+        // Debug the headers switching back to their original state
         headers = old_headers
         console.log("headers", headers)
+
+        // Debug filledData
+        console.log("filledData", filledData)
         return filledData
     }
 
@@ -326,7 +367,7 @@ const fillData = async (specifics) => {
                 }
             }
         );
-        console.log("responsein fillData", data)
+        console.log("response in fillData", data)
         data = response.data;
         
         return response.data;
@@ -380,6 +421,7 @@ const ReturnedData = async (action, specifics, tables) => {
 
     } else if(action.toUpperCase() === "READINTERSECT"){
         // We have to change the headers as the intersection tables need to read from two different tables
+        console.log("Entering readData for intersection tables")
         return await readData(specifics, tables)
     }
 
