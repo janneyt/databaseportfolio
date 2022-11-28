@@ -89,13 +89,13 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
       // TODO: dynamically generate fetchedData's indices, instead of hardcoding
       {
         type: "text",
-        name: "itemname",
+        name: "itemName",
         label: "Name Your Item:",
         value: fetchedData[find][1],
       },
       {
         type: "text",
-        name: "itemdescription",
+        name: "itemDescription",
         label: "Describe Your Item",
         value: fetchedData[find][2],
       },
@@ -169,8 +169,8 @@ const pullForeignKeys = (page) => {
 
 // As in the original setup
 const addFormContents = [
-  { type: "text", name: "itemname", label: "Name Your Item:" },
-  { type: "text", name: "itemdescription", label: "Describe Your Item:" },
+  { type: "text", name: "itemnName", label: "Name Your Item:" },
+  { type: "text", name: "itemDescription", label: "Describe Your Item:" },
   // {
   //   type: "select",
   //   name: "idgame",
@@ -188,13 +188,13 @@ const addFormContents = [
 const editFormContents = [
   {
     type: "text",
-    name: "itemname",
+    name: "itemName",
     label: "Name Your Item:",
     value: "${itemName}",
   },
   {
     type: "text",
-    name: "itemdescription",
+    name: "itemDescription",
     label: "Describe Your Item",
     value: "${itemDescription}",
   }

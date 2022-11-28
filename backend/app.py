@@ -80,19 +80,19 @@ def update_data():
 
     try:
         queries = database.create_update_queries(data['table'], data['columns'], data['values'], data['filter'], append)
-
+        print("queries after creating in app.py", queries)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
  
     # Attempt to execute queries given to database
     try:
-        results = database.execute(queries)
+        result = database.execute(queries)
     except Exception as error:
         database.debug("failed execute", str(error))
         return str(error), 405
-
-    return jsonify(results)
+    print("results about to be send", jsonify(result))
+    return jsonify(result)
 
 @app.route('/insert_data', methods=['POST'])
 def insert_data():

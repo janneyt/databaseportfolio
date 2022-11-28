@@ -76,6 +76,7 @@ class Database:
         # Append query
         query = f'SELECT {columns_str} FROM {table}{append}'
         queries.append((query, {}))
+
         return queries
         
         
@@ -145,10 +146,11 @@ class Database:
         query = f'UPDATE {table} SET {set_pairs_str} WHERE {filter}{append}'
         queries.append((query, {}))
 
+
         # Build and append SELECT for return data
         append = f' WHERE {filter}'
         query = self.create_select(table, columns, append)
-        queries.append(query)
+        queries.append(query[0])
 
         return queries
 
