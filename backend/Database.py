@@ -49,16 +49,14 @@ class Database:
         # are keys and values respectively
         for query_tuple in queries:
             query, data = query_tuple
-            print("query",query)
 
-            print(cursor.execute(query, data))
+            cursor.execute(query, data)
 
         # Get results before commit and close of connection
         results = cursor.fetchall()
 
         # Commit changes and close connection
         con.commit()
-        print("results", results)
         return results
 
     def create_select(self, table: str, columns: list, append=''):
