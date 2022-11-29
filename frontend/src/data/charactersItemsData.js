@@ -89,13 +89,13 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
       // TODO: dynamically generate fetchedData's indices, instead of hardcoding
       {
         type: "text",
-        name: "itemname",
+        name: "itemName",
         label: "Name Your Item:",
         value: fetchedData[find][1],
       },
       {
         type: "text",
-        name: "itemdescription",
+        name: "itemDescription",
         label: "Describe Your Item",
         value: fetchedData[find][2],
       },
@@ -168,10 +168,14 @@ const createAddFormContents = (names) => {
 const addFormContents = [
   {
     type: "select",
-    name: "items",
+    name: "idItem",
     label: "What item are you giving this character?",
     options: "placeholder",
   },
+  {
+    type: "hidden",
+    name: "idCharacter"
+  }
 ];
 
 const nullableItems = [{ value: "null", label: "Null" }];

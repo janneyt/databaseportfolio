@@ -27,6 +27,11 @@ function AddItemToCharacter() {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [addForm, setAddForm] = useState(addFormContents);
+  const character_id = location.state && location.state.id ? location.state.id : -1
+  const character =
+    location.state && location.state.character
+      ? location.state.character
+      : null;
 
   useEffect(() => {
     DataNext("Items").then((response) => {
@@ -43,7 +48,10 @@ function AddItemToCharacter() {
 
   const prepareAddData = (e) => {
     e.preventDefault();
-    prepareFormData(dataRef, submitData);
+    console.log("dataRef", dataRef)
+    prepareFormData(dataRef, submitData, true);
+    submitData.current.values[submitData.current.columns.indexOf("idCharacter")] = character_id.toString();
+    console.log("submit data in add item to character", submitData)
     insertData("Characters_has_Items", submitData.current);
     navigate("/CharactersHaveItems");
   };
@@ -53,9 +61,7 @@ function AddItemToCharacter() {
         <h1>Add Item to Character</h1>
         <h3>
           Character:{" "}
-          {location.state && location.state.character
-            ? location.state.character
-            : ""}
+          {character}
         </h3>
         <Form
           submitText="Save"

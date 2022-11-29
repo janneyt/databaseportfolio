@@ -169,7 +169,7 @@ const pullForeignKeys = (page) => {
 
 // As in the original setup
 const addFormContents = [
-  { type: "text", name: "itemnName", label: "Name Your Item:" },
+  { type: "text", name: "itemName", label: "Name Your Item:" },
   { type: "text", name: "itemDescription", label: "Describe Your Item:" },
   // {
   //   type: "select",

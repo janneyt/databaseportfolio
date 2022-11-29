@@ -9,7 +9,7 @@ const FormInput = ({inputObj, onChange, index, ref}) => {
                 id={inputObj.name} name={inputObj.name} 
                 value={inputObj.value || ""}
                 disabled={inputObj.disabled || false}
-                onChange={(e) => onChange(index, e)} />
+                onChange={(e) => {console.log("e in forminput", e); onChange(index, e)}} />
         </div>
     );
 };

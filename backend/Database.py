@@ -49,7 +49,6 @@ class Database:
         # are keys and values respectively
         for query_tuple in queries:
             query, data = query_tuple
-
             cursor.execute(query, data)
 
         # Get results before commit and close of connection

@@ -16,6 +16,16 @@ const Form = ({ submitText="Submit", inputState, onSubmit, refDict={}}) => {
         setInputFields(inputState);
     }, [inputState]);
     
+    // Why two nearly identical handleFormChange functions? Because ReactSelect passes e.target automatically
+
+    const handleFormChangeSelects = (index, obj) => {
+        console.log("obj incoming", obj)
+        let input = [...inputFields];
+        input[index].value = obj.value;
+        console.log("input[index].value in handleFormChangeSelects", input[index].value)
+        setInputFields(input);
+    }
+
     const handleFormChange = (index, e) => {
         e.preventDefault()
         let input = [...inputFields];
@@ -33,8 +43,14 @@ const Form = ({ submitText="Submit", inputState, onSubmit, refDict={}}) => {
         };
 
         if (row.type === "select") {
-            return <FormSelect inputObj = {row} />
+            row['ref'] = (ele) => {refDict.current[row.name] = ele};
+            return <FormSelect key={index} inputObj={row} onChange={handleFormChangeSelects} index={index} />
         };
+        if (row.type === "hidden") {
+            row['ref'] = (ele) => {refDict.current[row.name] = ele};
+            row['disabled'] = true;
+            return <FormInput key={index} inputObj={row} onChange={handleFormChange} index={index} />
+        }
     });
 
     return (
