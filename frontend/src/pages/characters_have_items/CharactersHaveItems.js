@@ -13,16 +13,15 @@ function CharactersHaveItems() {
   const navigate = useNavigate();
 
   useEffect(() => {
-   
-      DataNext("Characters_has_Items").then((response) => {
-        console.log("response in read", response);
-        setPost(response);
+    DataNext("Characters_has_Items").then((response) => {
+      console.log("response in read", response);
+      setPost(response);
+      if (response[0] !== []) {
         setIsLoading(false);
-        return response;
-      });
-
+      }
+      return response;
+    });
   }, []);
-
 
   return (
     <>

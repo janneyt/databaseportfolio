@@ -135,9 +135,9 @@ const fetchCHLTableData = async (Language_params, append, purpose, id) => {
   
 
 const bilboLanguages = [{value:"elvish", label:"Elvish"},
-{value:"westron", label:"Westron"},
-{value:"sylvanelvish", label:"Sylvan Elvish"},
-{value:"None", label:"Null"}
+{value:1, label:"Westron"},
+{value:2, label:"Sylvan Elvish"},
+{value:"null", label:"Null"}
 ];
 
 // Currently reusing the same Select, this is temporary anyway.
@@ -153,7 +153,7 @@ for (let index=0; index < tableData.length; index++) {
 }
 
 const addFormContents = [
-    {type:"select", name:"languages", label:"What language should this character know?", options:bilboLanguages }
+    {type:"select", name:"idLanguage", label:"What language should this character know?", options:bilboLanguages }
 ];
 
 const deleteFormContents = [

@@ -26,17 +26,18 @@ function AddItemToCharacter() {
   const submitData = useRef({ columns: [], values: [] });
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [addForm, setAddForm] = useState(addFormContents)
-  
+  const [addForm, setAddForm] = useState(addFormContents);
 
   useEffect(() => {
     DataNext("Items").then((response) => {
       setItems(response);
       addFormContents[0].options = createAddFormContents(response);
-      setAddForm(addFormContents)
+      setAddForm(addFormContents);
       console.log(addForm);
-      setIsLoading(false);
-      return response
+      if (response[0] !== []) {
+        setIsLoading(false);
+      }
+      return response;
     });
   }, [setAddForm]);
 
@@ -50,7 +51,12 @@ function AddItemToCharacter() {
     <div className="content">
       <ShowIfLoaded isLoading={isLoading}>
         <h1>Add Item to Character</h1>
-        <h3>Character: {location.state.character}</h3>
+        <h3>
+          Character:{" "}
+          {location.state && location.state.character
+            ? location.state.character
+            : ""}
+        </h3>
         <Form
           submitText="Save"
           inputState={addForm}

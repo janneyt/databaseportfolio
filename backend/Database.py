@@ -161,6 +161,6 @@ class Database:
         table = self.update_case(table)
 
         query = f'DELETE FROM {table} WHERE {filter}'
-        queries.append(query, {})
+        queries.append((query, {}))
 
         return queries

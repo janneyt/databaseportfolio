@@ -7,8 +7,8 @@ const prepareFormData = (dataRef, submitData) => {
     }
 
     // Temporary while we set the games update
-    submitData.current["columns"].push("idGame");
-    submitData.current["values"].push("1");
+    /*submitData.current["columns"].push("idGame");
+    submitData.current["values"].push("1");*/
 }
 
 const prepareEditData = (dataRef, submitData) => {

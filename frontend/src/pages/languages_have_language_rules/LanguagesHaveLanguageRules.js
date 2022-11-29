@@ -14,11 +14,13 @@ function LanguagesHaveLanguageRules() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        setIsLoading(true);
         DataNext("languageslanguagerules").then((response) => {
           setPost(response);
           setIsLoading(false);
           return response;
         });
+
       }, []);
 
     return(
@@ -27,7 +29,7 @@ function LanguagesHaveLanguageRules() {
           <h1>Languages Have Language Rules</h1>
           <ShowIfLoaded isLoading={isLoading}>
             <TableView headers={headers} listData={post} />
-            <Link to="/addRuleToLanguage">
+            <Link to="/addLanguageRuleToLanguage">
               <Button>Add Rule to Language</Button>
             </Link>
             <Button
