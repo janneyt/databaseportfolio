@@ -104,7 +104,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
       purpose ? purpose : null,
       id
     );
-    console.log("items in dataNext", returnedData);
+
     return returnedData;
   } else if (page_determiner.toLowerCase() === "characters") {
     headers = CharacterHeaders;
@@ -116,7 +116,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
       purpose ? purpose : null,
       id
     );
-    console.log("characters in dataNext", returnedData);
+
     return returnedData;
   } else if (page_determiner.toLowerCase() === "languagerules") {
     headers = LanguageRuleHeaders;
@@ -323,6 +323,12 @@ const deleteData = async (table, id, filter) => {
 
 const readData = async (specifics, tables) => {
   console.log("SPECIFICS", specifics);
+
+  // When loading many tables, the headers have to change
+  // Debug headers
+  console.log("headers at start of Read Data", headers);
+  
+
   let old_headers = headers;
   if (tables) {
     headers = tables;
@@ -334,11 +340,15 @@ const readData = async (specifics, tables) => {
       return response;
     });
 
+
+
     // Weird asynchronous bug requires resetting headers so first select for intersection table succeeds.
     if (tables) {
       old_headers = headers;
       headers = tables;
-    }
+    } 
+
+
     // Another placeholder
     const filledData = [[]];
 
@@ -360,6 +370,8 @@ const readData = async (specifics, tables) => {
       filledData[index] = [];
       // This is where I iterate over the keys and place the values in filledData
       for (let element = 0; element < keys.length; element++) {
+
+
         // Put the filled Data in the right spot in the header
         for (
           let header_element = 0;
@@ -377,7 +389,6 @@ const readData = async (specifics, tables) => {
     // Debug the headers switching back to their original state
     headers = old_headers;
 
-    // Debug filledData
 
     return filledData;
   } catch (error) {

@@ -29,37 +29,38 @@ function AddItemToCharacter() {
   const [isLoading, setIsLoading] = useState(true);
   const [addForm, setAddForm] = useState(addFormContents);
   const character_id =
-    location.state && location.state.character_id ? location.state.character_id : -1;
+    location.state && location.state.character_id
+      ? location.state.character_id
+      : -1;
   const character =
     location.state && location.state.character
       ? location.state.character
       : null;
 
   useEffect(() => {
-    
     const items = DataNext("Items").then((response) => {
-      console.log("response in items", response);
       setItems(response);
       addFormContents[1].options = createAddFormContents(response);
-      console.log("add form contents", addFormContents[1]);
-      //setAddForm(addFormContents);
-
+      //setAddForm(addFormContents)
       return response;
     });
     const characters = DataNext("Characters").then((response) => {
+      if(response[0] )
       setCharacters(response);
       addFormContents[0].options = createAddFormContents(response);
-      console.log("add form contents", addFormContents[0]);
-      //setAddForm(addFormContents);
-      if (response[0].length > 0 && response[0] !== []) {
-        setIsLoading(false);
-      }
+      //setAddForm(addFormContents)
       return response;
     });
     Promise.allSettled([characters, items])
       .then((values) => {
-        console.log("Values in allSettled", values)
-        setAddForm(addFormContents);
+
+        // Race condition bug fixed where React's multiple posts were causing undefined behavior.
+        if(values[0].value[0][0] && !values[0].value[0][0].$$typeof){
+          
+          setAddForm(addFormContents);
+          setIsLoading(false);
+        }
+
         return values;
       })
       .catch((error) => console.log(error));

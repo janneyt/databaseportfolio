@@ -56,9 +56,7 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
           "}"
       : '{"columns":' + list_param + ', "table":"Items"}'
   );
-
   let fetchedData = await ReturnedData("READ", parameters);
-
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table

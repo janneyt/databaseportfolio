@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { ReturnedData } from "../axios/crud.js";
 
+
 const headers = ["idItem", "idCharacter", "Add Item", "Delete Item"];
 
-const fetchCHITableData = async (item_params, append, purpose, id) => {
+const fetchCHITableData = async (item_params, append, purpose, id, tables) => {
 
   const list_param = JSON.stringify(item_params);
   const append_str = JSON.stringify(append);
@@ -28,6 +29,12 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Weed out undefined or missing data
     if(!fetchedData[index1][0] || !fetchedData[index1][1]){
+      fetchedData.slice(index1,1)
+      continue
+    }
+
+    // IDs less than 1 are invalid
+    if(fetchedData[index1][0] < 1 || fetchedData[index1][1] < 1){
       fetchedData.slice(index1,1)
       continue
     }
@@ -68,10 +75,10 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
     console.log("item_param", item_param)
 
     let fetchedData2 = await ReturnedData("READINTERSECT", character_param, ["characterName"]);
-    console.log("fetchedData2 should be characters",fetchedData2)
+
     
     let fetchedData3 = await ReturnedData("READINTERSECT", item_param, ["itemName"]);
-    console.log("fetchedData3 should be items", fetchedData3)
+
     const character_id = fetchedData[index1][1]
     const item_id = fetchedData[index1][0]
     fetchedData[index1][1] = fetchedData2[0][0];
@@ -173,7 +180,6 @@ for (let index = 0; index < tableData.length; index++) {
 }
 
 const createAddFormContents = (names) => {
-  console.log("names in createAddFormContents", names);
   const options = []
   for(const name of names){
     options.push({ value: name[0].toString(), label: name[1] })
@@ -182,7 +188,6 @@ const createAddFormContents = (names) => {
 }
 
 const createEditFormContents = (names) => {
-  console.log("names in createAddFormContents", names);
   const options = []
   for(const name of names){
     options.push({ value: name[0].toString(), label: name[1] })
