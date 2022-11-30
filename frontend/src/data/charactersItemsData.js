@@ -183,14 +183,17 @@ const createAddFormContents = (names) => {
 const addFormContents = [
   {
     type: "select",
+    name: "idCharacter",
+    label: "What character are you assigning an item?",
+    options: "placeholder",
+  },
+  {
+    type: "select",
     name: "idItem",
     label: "What item are you giving this character?",
     options: "placeholder",
   },
-  {
-    type: "hidden",
-    name: "idCharacter"
-  }
+
 ];
 
 const nullableItems = [{ value: "null", label: "Null" }];

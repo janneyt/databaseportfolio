@@ -104,6 +104,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
       purpose ? purpose : null,
       id
     );
+    console.log("items in dataNext", returnedData)
     return returnedData;
   } else if (page_determiner.toLowerCase() === "characters") {
     headers = CharacterHeaders;
@@ -115,6 +116,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
       purpose ? purpose : null,
       id
     );
+    console.log("characters in dataNext", returnedData)
     return returnedData;
   } else if (page_determiner.toLowerCase() === "languagerules") {
     headers = LanguageRuleHeaders;
