@@ -21,18 +21,22 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
   );
 
   let fetchedData = await ReturnedData("READ", parameters);
+
+  // Debug returned data
   console.log("fetchedData", fetchedData)
-  // Set a timeout due to database backup
+
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
-    // Get the character ids based on the ids returned from the earlier query
+    // Weed out undefined or missing data
     if(!fetchedData[index1][0] || !fetchedData[index1][1]){
       fetchedData.slice(index1,1)
       continue
     }
+
+    // fetchedData[index1][1] is for characters
     let append_str1 =
       '"WHERE idCharacter = ' 
-    append_str1 = append_str1.concat(fetchedData[index1][0]
-        ? fetchedData[index1][0].toString()
+    append_str1 = append_str1.concat(fetchedData[index1][1]
+        ? fetchedData[index1][1].toString()
         : "-1");
     append_str1 = append_str1.concat('"')
     let character_param = JSON.stringify(
@@ -42,9 +46,14 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
         "}"
     );
 
+    // Debug character_param
+    console.log("character_param", character_param)
+
+
+    // fetchedData[index1][0] is for items
     let append_str2 = '"WHERE idItem = ' 
-    append_str2 = append_str2.concat(fetchedData[index1][1]
-        ? fetchedData[index1][1].toString()
+    append_str2 = append_str2.concat(fetchedData[index1][0]
+        ? fetchedData[index1][0].toString()
         : "-1")
 
     append_str2 = append_str2.concat('"')
@@ -55,8 +64,14 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
         "}"
     );
 
+    // Debug item_param
+    console.log("item_param", item_param)
+
     let fetchedData2 = await ReturnedData("READINTERSECT", character_param, ["characterName"]);
+    console.log("fetchedData2 should be characters",fetchedData2)
+    
     let fetchedData3 = await ReturnedData("READINTERSECT", item_param, ["itemName"]);
+    console.log("fetchedData3 should be items", fetchedData3)
     const character_id = fetchedData[index1][1]
     fetchedData[index1][1] = fetchedData2[0][0];
     fetchedData[index1][0] = fetchedData3[0][0];
