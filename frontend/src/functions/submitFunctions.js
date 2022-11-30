@@ -1,10 +1,14 @@
 const prepareFormData = (dataRef, submitData, gameNotRequired) => {
   console.log("prepareFormData dataRef", dataRef.current);
   for (const item in dataRef.current) {
-    if (dataRef.current[item].value !== "undefined") {
+    if(typeof dataRef.current[item] === "string"){
+      submitData.current["columns"].push(item);
+      submitData.current["values"].push(dataRef.current[item]);
+    } else if (dataRef.current[item].value !== "undefined") {
       submitData.current["columns"].push(dataRef.current[item].name);
       submitData.current["values"].push(dataRef.current[item].value);
     }
+    
   }
 
   if (!gameNotRequired) {

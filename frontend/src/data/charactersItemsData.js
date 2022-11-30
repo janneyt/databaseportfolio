@@ -21,7 +21,7 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
   );
 
   let fetchedData = await ReturnedData("READ", parameters);
-
+  console.log("fetchedData", fetchedData)
   // Set a timeout due to database backup
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Get the character ids based on the ids returned from the earlier query
@@ -157,10 +157,10 @@ for (let index = 0; index < tableData.length; index++) {
 }
 
 const createAddFormContents = (names) => {
-  console.log(names);
+  console.log("names in createAddFormContents", names);
   const options = []
   for(const name of names){
-    options.push({ value: name[1], label: name[1] })
+    options.push({ value: name[0].toString(), label: name[1] })
   }
   return options
 }

@@ -1,6 +1,8 @@
 import Select from "react-select";
 
-const FormSelect = ({ inputObj, onChange, index, ref }) => {
+const FormSelect = ({ inputObj, onChange, index }) => {
+  const inputvalue = inputObj.value;
+
   return (
     <div className="select">
       <label htmlFor={inputObj.name}>{inputObj.label}</label>
@@ -9,9 +11,11 @@ const FormSelect = ({ inputObj, onChange, index, ref }) => {
         ref={inputObj.ref}
         options={inputObj.options}
         id={inputObj.name}
-        value={inputObj.value || ""}
+        value={{ label: inputObj.value, inputvalue }}
         disabled={inputObj.disabled || false}
-        onChange={(e) => {onChange(index, e)}}
+        onChange={(objvalue, objname, e) => {
+          onChange(index, objvalue, objname);
+        }}
       />
     </div>
   );

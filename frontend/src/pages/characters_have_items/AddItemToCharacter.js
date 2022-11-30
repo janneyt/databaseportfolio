@@ -38,7 +38,6 @@ function AddItemToCharacter() {
       setItems(response);
       addFormContents[0].options = createAddFormContents(response);
       setAddForm(addFormContents);
-      console.log(addForm);
       if (response[0] !== []) {
         setIsLoading(false);
       }
@@ -48,10 +47,11 @@ function AddItemToCharacter() {
 
   const prepareAddData = (e) => {
     e.preventDefault();
-    console.log("dataRef", dataRef)
+    console.log("dataRef", dataRef.current)
+    console.log("dataRef idCharacter", dataRef.current.idCharacter)
     prepareFormData(dataRef, submitData, true);
     submitData.current.values[submitData.current.columns.indexOf("idCharacter")] = character_id.toString();
-    console.log("submit data in add item to character", submitData)
+    console.log("submitData", submitData)
     insertData("Characters_has_Items", submitData.current);
     navigate("/CharactersHaveItems");
   };
