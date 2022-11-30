@@ -73,6 +73,7 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
     let fetchedData3 = await ReturnedData("READINTERSECT", item_param, ["itemName"]);
     console.log("fetchedData3 should be items", fetchedData3)
     const character_id = fetchedData[index1][1]
+    const item_id = fetchedData[index1][0]
     fetchedData[index1][1] = fetchedData2[0][0];
     fetchedData[index1][0] = fetchedData3[0][0];
     const item_name = fetchedData[index1][0]
@@ -80,8 +81,8 @@ const fetchCHITableData = async (item_params, append, purpose, id) => {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
     fetchedData[index1].push(
-      <Link to="/addItemToCharacter" state={{ character : character_name, id : character_id }}>
-        <Button>Add Item to Character</Button>
+      <Link to="/editItemToCharacter" state={{ character : character_name, character_id : character_id, item_id : item_id }}>
+        <Button>Edit Item to Character</Button>
       </Link>
     );
 
@@ -180,6 +181,15 @@ const createAddFormContents = (names) => {
   return options
 }
 
+const createEditFormContents = (names) => {
+  console.log("names in createAddFormContents", names);
+  const options = []
+  for(const name of names){
+    options.push({ value: name[0].toString(), label: name[1] })
+  }
+  return options
+}
+
 const addFormContents = [
   {
     type: "select",
@@ -187,6 +197,16 @@ const addFormContents = [
     label: "What character are you assigning an item?",
     options: "placeholder",
   },
+  {
+    type: "select",
+    name: "idItem",
+    label: "What item are you giving this character?",
+    options: "placeholder",
+  },
+
+];
+
+const editFormContents = [
   {
     type: "select",
     name: "idItem",
@@ -212,7 +232,9 @@ export {
   headers,
   tableData,
   addFormContents,
+  editFormContents,
   deleteFormContents,
   fetchCHITableData,
   createAddFormContents,
+  createEditFormContents
 };

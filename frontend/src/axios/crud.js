@@ -104,7 +104,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
       purpose ? purpose : null,
       id
     );
-    console.log("items in dataNext", returnedData)
+    console.log("items in dataNext", returnedData);
     return returnedData;
   } else if (page_determiner.toLowerCase() === "characters") {
     headers = CharacterHeaders;
@@ -116,7 +116,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
       purpose ? purpose : null,
       id
     );
-    console.log("characters in dataNext", returnedData)
+    console.log("characters in dataNext", returnedData);
     return returnedData;
   } else if (page_determiner.toLowerCase() === "languagerules") {
     headers = LanguageRuleHeaders;
@@ -265,15 +265,14 @@ const updateData = async (page, updates, append, id) => {
   try {
     // Debug log
     console.log("UPDATES", updates);
-
-    // Create specifics, or JSON table format
     const specifics = JSON.stringify({
-      table: page,
-      columns: updates.current["columns"],
-      values: updates.current["values"],
-      filter: append,
-    });
-    console.log("SPECIFICS for edit",specifics);
+        table: page,
+        columns: updates.current["columns"],
+        values: updates.current["values"],
+        filter: append});
+    
+
+    console.log("SPECIFICS for edit", specifics);
     return client
       .post("/update_data", specifics, {
         headers: {
@@ -361,16 +360,13 @@ const readData = async (specifics, tables) => {
       filledData[index] = [];
       // This is where I iterate over the keys and place the values in filledData
       for (let element = 0; element < keys.length; element++) {
-
         // Put the filled Data in the right spot in the header
         for (
           let header_element = 0;
           header_element < headers.length;
           header_element++
         ) {
-
           if (keys[element] === headers[header_element]) {
-
             filledData[index][header_element] = data[index][keys[element]];
           }
         }
@@ -380,7 +376,6 @@ const readData = async (specifics, tables) => {
 
     // Debug the headers switching back to their original state
     headers = old_headers;
-
 
     // Debug filledData
 

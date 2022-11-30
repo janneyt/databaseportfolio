@@ -11,23 +11,25 @@ import { prepareFormData } from "../../functions/submitFunctions.js";
 
 // Data
 import {
-  addFormContents,
-  createAddFormContents,
+  editFormContents,
+  createEditFormContents,
 } from "../../data/charactersItemsData";
 
 import { DataNext } from "../../axios/crud.js";
 
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 
-function AddItemToCharacter() {
+function EditItemToCharacter() {
   const location = useLocation();
   const navigate = useNavigate();
   const dataRef = useRef({});
   const submitData = useRef({ columns: [], values: [] });
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [addForm, setAddForm] = useState(addFormContents);
-  const character_id = location.state && location.state.id ? location.state.id : -1
+  const [EditForm, setEditForm] = useState(editFormContents);
+  const character_id = location.state && location.state.character_id ? location.state.character_id : -1
+  console.log("LocATION", location)
+  const item_id = location.state && location.state.item_id ? location.state.item_id : -1
   const character =
     location.state && location.state.character
       ? location.state.character
@@ -36,20 +38,21 @@ function AddItemToCharacter() {
   useEffect(() => {
     DataNext("Items").then((response) => {
       setItems(response);
-      addFormContents[0].options = createAddFormContents(response);
-      setAddForm(addFormContents);
+      editFormContents[0].options = createEditFormContents(response);
+      setEditForm(editFormContents);
       if (response[0] !== []) {
         setIsLoading(false);
       }
       return response;
     });
-  }, [setAddForm]);
+  }, [setEditForm]);
 
   const prepareAddData = (e) => {
     e.preventDefault();
     prepareFormData(dataRef, submitData, true);
     submitData.current.values[submitData.current.columns.indexOf("idCharacter")] = character_id.toString();
-    insertData("Characters_has_Items", submitData.current);
+    const append = `idCharacter = ${character_id.toString()} and idItem = ${item_id.toString()}`
+    updateData("Characters_has_Items", submitData, append);
     navigate("/CharactersHaveItems");
   };
   return (
@@ -62,7 +65,7 @@ function AddItemToCharacter() {
         </h3>
         <Form
           submitText="Save"
-          inputState={addForm}
+          inputState={EditForm}
           onSubmit={prepareAddData}
           refDict={dataRef}
         />
@@ -71,4 +74,4 @@ function AddItemToCharacter() {
   );
 }
 
-export default AddItemToCharacter;
+export default EditItemToCharacter;

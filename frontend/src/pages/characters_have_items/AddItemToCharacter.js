@@ -29,7 +29,7 @@ function AddItemToCharacter() {
   const [isLoading, setIsLoading] = useState(true);
   const [addForm, setAddForm] = useState(addFormContents);
   const character_id =
-    location.state && location.state.id ? location.state.id : -1;
+    location.state && location.state.character_id ? location.state.character_id : -1;
   const character =
     location.state && location.state.character
       ? location.state.character
