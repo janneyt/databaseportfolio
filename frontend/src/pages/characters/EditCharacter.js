@@ -1,5 +1,6 @@
 // Axios
-import { DataNext, updateData } from '../../axios/crud.js';
+import { DataNext } from '../../axios/DataNext.js';
+import { updateData } from '../../axios/crud.js';
 
 // React
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -29,7 +30,7 @@ function EditCharacters() {
 
     useEffect(() => {        
         console.log("LOCATION", location)
-        DataNext("Characters", getDataAppend, "edit", id.current).then(
+        DataNext("Characters", id.current, getDataAppend, "edit").then(
             (response) => {
                 setPost(response); 
                 return response}

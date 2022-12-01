@@ -1,6 +1,7 @@
 import Form from '../../components/Forms/Form';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { DataNext, updateData } from '../../axios/crud.js';
+import { DataNext } from '../../axios/DataNext.js';
+import { updateData } from '../../axios/crud.js';
 import { useEffect, useState, useRef } from 'react';
 import { prepareEditData } from '../../functions/submitFunctions.js';
 import ShowIfLoaded from '../../components/ShowIfLoaded';

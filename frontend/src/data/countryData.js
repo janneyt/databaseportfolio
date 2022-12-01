@@ -34,6 +34,7 @@ const fetchCountryTableData = async (item_params, append, purpose, id, headers=n
       );
     }
   
+    console.log("PURPOSE", purpose)
     if (purpose && purpose.toLowerCase() === "edit") {
       let find = 0;
       for (let indexing = 0; indexing < fetchedData.length; indexing++) {

@@ -2,7 +2,8 @@ import Form from "../../components/Forms/Form";
 import { addFormContents, createAddFormContents } from "../../data/charactersLanguagesData";
 import { useLocation, useNavigate } from "react-router-dom";
 import { prepareFormData } from "../../functions/submitFunctions.js";
-import { insertData, DataNext } from "../../axios/crud.js";
+import { DataNext } from '../../axios/DataNext.js';
+import { insertData } from "../../axios/crud.js";
 import { useState, useEffect, useRef } from "react";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 
