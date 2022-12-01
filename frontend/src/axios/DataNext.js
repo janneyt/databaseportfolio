@@ -69,13 +69,16 @@ const headerDict = {
 * Function: DataNext
 * Description: An interface func that passes the given parameters
 * to downstream functions when getting data from the backend/database.
-* Will call the definitions of 
+* Will call the definitions of the proper fetch function and get
+* the proper headers.
 * Params:
 *     page: The page you are requesting data for (i.e. "Items", "Games").
-*       id: The id # of the data row you want to pass for use in downstream functions
-*           (i.e. 1 will select the second row of data to use for say an edit page)
+*           (i.e. 1 will select the second row of data to use for say an
+*           edit page)
 *   append: The append value to pass for some backend SQL append statements
 *  purpose: The use for your data (i.e. "READ", "EDIT", "DELETE", "UPDATE")
+*       id: The id # of the data row you want to pass for use in 
+*           downstream functions
 *
 */
 const DataNext = async (page, append = null, purpose = "READ", id = null, offset = 2) => {
