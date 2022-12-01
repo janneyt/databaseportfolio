@@ -10,7 +10,7 @@ const headers = [
   "Delete Language",
 ];
 
-const fetchCHLTableData = async (Language_params, append, purpose, id) => {
+const fetchCHLTableData = async (Language_params, append, purpose, id, headers=null) => {
   const list_param = JSON.stringify(Language_params);
   const append_str = JSON.stringify(append);
   // First grab the Languages/ character pairs that are available
@@ -24,7 +24,7 @@ const fetchCHLTableData = async (Language_params, append, purpose, id) => {
       : '{"columns":' + list_param + ', "table":"Characters_has_Languages"}'
   );
 
-  let fetchedData = await ReturnedData("READ", parameters);
+  let fetchedData = await ReturnedData("READ", parameters, headers);
 
   // Debug data returned
   console.log("fetchedData", fetchedData);

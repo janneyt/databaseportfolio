@@ -5,7 +5,7 @@ import { ReturnedData } from "../axios/crud.js";
 
 const headers = ["idLanguage", "idCountry", "Add Language", "Delete Language"];
 
-const fetchCoHLTableData = async (language_params, append, purpose, id) => {
+const fetchCoHLTableData = async (language_params, append, purpose, id, headers=null) => {
 
     const list_param = JSON.stringify(language_params);
     const append_str = JSON.stringify(append);
@@ -20,7 +20,7 @@ const fetchCoHLTableData = async (language_params, append, purpose, id) => {
         : '{"columns":' + list_param + ', "table":"Countries_has_Languages"}'
     );
   
-    let fetchedData = await ReturnedData("READ", parameters);
+    let fetchedData = await ReturnedData("READ", parameters, headers);
 
     // Debug data returned
     console.log("fetchedData", fetchedData)
