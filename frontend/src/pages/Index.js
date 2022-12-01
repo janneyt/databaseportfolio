@@ -11,7 +11,7 @@ function Index() {
                 <Link to="/items"><Button>Items</Button></Link>
                 <Link to="/languages"><Button>Languages</Button></Link>
                 <Link to="/players"><Button>Players</Button></Link>
-                <Link to="/translations"><Button>Translations</Button></Link>
+                {/* <Link to="/translations"><Button>Translations</Button></Link> */}
             </nav>
             
             <h1>Welcome</h1>
@@ -23,8 +23,8 @@ function Index() {
             <Link to="/CharactersHaveItems"><Button>CharactersHaveItems</Button></Link>
             <Link to="/CharactersHaveLanguages"><Button>Characters Have Languages</Button></Link>
             <Link to="/CountriesHaveLanguages"><Button>Countries Have Languages</Button></Link>
-            <Link to="/languageRules"><Button>Language Rules</Button></Link>
-            <Link to="/LanguagesHaveLanguageRules"><Button>Languages Have Language Rules</Button></Link>
+            {/* <Link to="/languageRules"><Button>Language Rules</Button></Link>
+            <Link to="/LanguagesHaveLanguageRules"><Button>Languages Have Language Rules</Button></Link> */}
 
             {/* <h2>The following is a list of individual pages:</h2>
 
