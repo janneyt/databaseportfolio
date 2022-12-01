@@ -3,7 +3,7 @@ import {headers } from '../../data/languageRuleData';
 import Button from '../../components/Button';
 import { useNavigate, Link } from 'react-router-dom';
 import ShowIfLoaded from '../../components/ShowIfLoaded';
-import { DataNext } from '../../axios/crud.js';
+import { DataNext } from '../../axios/DataNext.js';
 import { useEffect, useState } from 'react';
 
 
