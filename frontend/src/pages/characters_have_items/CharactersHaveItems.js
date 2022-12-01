@@ -13,14 +13,17 @@ function CharactersHaveItems() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Set a timer to make sure the promises all complete
+    const timer = setTimeout(() => console.log('Initial timeout!'), 1000);
     DataNext("Characters_has_Items").then((response) => {
-      console.log("response in read", response);
       setPost(response);
-      if (response[0] !== []) {
+      if (response[0].length > 0 && response[0] !== []) {
         setIsLoading(false);
       }
       return response;
     });
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (

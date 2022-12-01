@@ -11,75 +11,61 @@ import { prepareFormData } from "../../functions/submitFunctions.js";
 
 // Data
 import {
-  addFormContents,
-  createAddFormContents,
+  editFormContents,
+  createEditFormContents,
 } from "../../data/charactersItemsData";
 
 import { DataNext } from "../../axios/crud.js";
 
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 
-function AddItemToCharacter() {
+function EditItemToCharacter() {
   const location = useLocation();
   const navigate = useNavigate();
   const dataRef = useRef({});
   const submitData = useRef({ columns: [], values: [] });
   const [items, setItems] = useState([]);
-  const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [addForm, setAddForm] = useState(addFormContents);
-  const character_id =
-    location.state && location.state.character_id
-      ? location.state.character_id
-      : -1;
+  const [EditForm, setEditForm] = useState(editFormContents);
+  const character_id = location.state && location.state.character_id ? location.state.character_id : -1
+  console.log("LocATION", location)
+  const item_id = location.state && location.state.item_id ? location.state.item_id : -1
   const character =
     location.state && location.state.character
       ? location.state.character
       : null;
 
   useEffect(() => {
-    const items = DataNext("Items").then((response) => {
+    DataNext("Items").then((response) => {
       setItems(response);
-      addFormContents[1].options = createAddFormContents(response);
-      //setAddForm(addFormContents)
+      editFormContents[0].options = createEditFormContents(response);
+      setEditForm(editFormContents);
+      if (response[0] !== []) {
+        setIsLoading(false);
+      }
       return response;
     });
-    const characters = DataNext("Characters").then((response) => {
-      if(response[0] )
-      setCharacters(response);
-      addFormContents[0].options = createAddFormContents(response);
-      //setAddForm(addFormContents)
-      return response;
-    });
-    Promise.allSettled([characters, items])
-      .then((values) => {
-
-        // Race condition bug fixed where React's multiple posts were causing undefined behavior.
-        if(values[0].value[0][0] && !values[0].value[0][0].$$typeof){
-          
-          setAddForm(addFormContents);
-          setIsLoading(false);
-        }
-
-        return values;
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  }, [setEditForm]);
 
   const prepareAddData = (e) => {
     e.preventDefault();
     prepareFormData(dataRef, submitData, true);
-    insertData("Characters_has_Items", submitData.current);
+    submitData.current.values[submitData.current.columns.indexOf("idCharacter")] = character_id.toString();
+    const append = `idCharacter = ${character_id.toString()} and idItem = ${item_id.toString()}`
+    updateData("Characters_has_Items", submitData, append);
     navigate("/CharactersHaveItems");
   };
   return (
     <div className="content">
       <ShowIfLoaded isLoading={isLoading}>
         <h1>Add Item to Character</h1>
-        <h3>Character: {character}</h3>
+        <h3>
+          Character:{" "}
+          {character}
+        </h3>
         <Form
           submitText="Save"
-          inputState={addForm}
+          inputState={EditForm}
           onSubmit={prepareAddData}
           refDict={dataRef}
         />
@@ -88,4 +74,4 @@ function AddItemToCharacter() {
   );
 }
 
-export default AddItemToCharacter;
+export default EditItemToCharacter;

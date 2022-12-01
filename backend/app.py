@@ -80,7 +80,7 @@ def update_data():
 
     try:
         queries = database.create_update_queries(data['table'], data['columns'], data['values'], data['filter'], append)
-
+        print("queries", queries)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405

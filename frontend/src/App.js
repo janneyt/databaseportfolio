@@ -45,6 +45,7 @@ import Translations from './pages/translations/Translations';
 import DeleteTranslation from './pages/translations/DeleteTranslation';
 
 import AddItemToCharacter from './pages/characters_have_items/AddItemToCharacter';
+import EditItemToCharacter from './pages/characters_have_items/EditItemToCharacter';
 import CharactersHaveItems from './pages/characters_have_items/CharactersHaveItems';
 import DeleteItemFromCharacter from './pages/characters_have_items/DeleteItemFromCharacter';
 
@@ -106,6 +107,7 @@ function App() {
         <Route path="/translations" element={<Translations />} />
 
         <Route path="/addItemToCharacter" element={<AddItemToCharacter />} />
+        <Route path="/editItemToCharacter" element={<EditItemToCharacter />} />
         <Route path="/deleteItemFromCharacter" element={<DeleteItemFromCharacter />} />
         <Route path="/charactersHaveItems" element={<CharactersHaveItems />} />
 

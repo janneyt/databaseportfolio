@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { ReturnedData } from "../axios/crud.js";
 
+
 const headers = ["idItem", "idCharacter", "Add Item", "Delete Item"];
 
 const fetchCHITableData = async (item_params, append, purpose, id, headers=null) => {
@@ -28,6 +29,12 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Weed out undefined or missing data
     if(!fetchedData[index1][0] || !fetchedData[index1][1]){
+      fetchedData.slice(index1,1)
+      continue
+    }
+
+    // IDs less than 1 are invalid
+    if(fetchedData[index1][0] < 1 || fetchedData[index1][1] < 1){
       fetchedData.slice(index1,1)
       continue
     }
@@ -68,11 +75,12 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
     console.log("item_param", item_param)
 
     let fetchedData2 = await ReturnedData("READINTERSECT", character_param, ["characterName"]);
-    console.log("fetchedData2 should be characters",fetchedData2)
+
     
     let fetchedData3 = await ReturnedData("READINTERSECT", item_param, ["itemName"]);
-    console.log("fetchedData3 should be items", fetchedData3)
+
     const character_id = fetchedData[index1][1]
+    const item_id = fetchedData[index1][0]
     fetchedData[index1][1] = fetchedData2[0][0];
     fetchedData[index1][0] = fetchedData3[0][0];
     const item_name = fetchedData[index1][0]
@@ -80,8 +88,8 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
     fetchedData[index1].push(
-      <Link to="/addItemToCharacter" state={{ character : character_name, id : character_id }}>
-        <Button>Add Item to Character</Button>
+      <Link to="/editItemToCharacter" state={{ character : character_name, character_id : character_id, item_id : item_id }}>
+        <Button>Edit Item to Character</Button>
       </Link>
     );
 
@@ -172,7 +180,14 @@ for (let index = 0; index < tableData.length; index++) {
 }
 
 const createAddFormContents = (names) => {
-  console.log("names in createAddFormContents", names);
+  const options = []
+  for(const name of names){
+    options.push({ value: name[0].toString(), label: name[1] })
+  }
+  return options
+}
+
+const createEditFormContents = (names) => {
   const options = []
   for(const name of names){
     options.push({ value: name[0].toString(), label: name[1] })
@@ -183,14 +198,27 @@ const createAddFormContents = (names) => {
 const addFormContents = [
   {
     type: "select",
+    name: "idCharacter",
+    label: "What character are you assigning an item?",
+    options: "placeholder",
+  },
+  {
+    type: "select",
     name: "idItem",
     label: "What item are you giving this character?",
     options: "placeholder",
   },
+
+];
+
+const editFormContents = [
   {
-    type: "hidden",
-    name: "idCharacter"
-  }
+    type: "select",
+    name: "idItem",
+    label: "What item are you giving this character?",
+    options: "placeholder",
+  },
+
 ];
 
 const nullableItems = [{ value: "null", label: "Null" }];
@@ -209,7 +237,9 @@ export {
   headers,
   tableData,
   addFormContents,
+  editFormContents,
   deleteFormContents,
   fetchCHITableData,
   createAddFormContents,
+  createEditFormContents
 };

@@ -104,6 +104,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
       purpose ? purpose : null,
       id
     );
+
     return returnedData;
   } else if (page_determiner.toLowerCase() === "characters") {
     headers = CharacterHeaders;
@@ -115,6 +116,7 @@ const DataNext = async (page_determiner, append, purpose, id) => {
       purpose ? purpose : null,
       id
     );
+
     return returnedData;
   } else if (page_determiner.toLowerCase() === "languagerules") {
     headers = LanguageRuleHeaders;
@@ -263,15 +265,14 @@ const updateData = async (page, updates, append, id) => {
   try {
     // Debug log
     console.log("UPDATES", updates);
-
-    // Create specifics, or JSON table format
     const specifics = JSON.stringify({
-      table: page,
-      columns: updates.current["columns"],
-      values: updates.current["values"],
-      filter: append,
-    });
-    console.log("SPECIFICS for edit",specifics);
+        table: page,
+        columns: updates.current["columns"],
+        values: updates.current["values"],
+        filter: append});
+    
+
+    console.log("SPECIFICS for edit", specifics);
     return client
       .post("/update_data", specifics, {
         headers: {
@@ -322,6 +323,12 @@ const deleteData = async (table, id, filter) => {
 
 const readData = async (specifics, tables, offset=2) => {
   console.log("SPECIFICS", specifics);
+
+  // When loading many tables, the headers have to change
+  // Debug headers
+  console.log("headers at start of Read Data", headers);
+  
+
   let old_headers = headers;
   if (tables) {
     headers = tables;
@@ -331,6 +338,8 @@ const readData = async (specifics, tables, offset=2) => {
     await fillData(specifics).then((response) => {
       data = response;
     });
+
+
 
     // Weird asynchronous bug requires resetting headers so first select for intersection table succeeds.
     if (tables) {
@@ -369,15 +378,14 @@ const readData = async (specifics, tables, offset=2) => {
       // This is where I iterate over the keys and place the values in filledData
       for (let element = 0; element < keys.length; element++) {
 
+
         // Put the filled Data in the right spot in the header
         for (
           let header_element = 0;
           header_element < headers.length;
           header_element++
         ) {
-
           if (keys[element] === headers[header_element]) {
-
             filledData[index][header_element] = data[index][keys[element]];
           }
         }
@@ -388,8 +396,6 @@ const readData = async (specifics, tables, offset=2) => {
     // Debug the headers switching back to their original state
     headers = old_headers;
 
-
-    // Debug filledData
 
     console.log("Filled Data",filledData);
     return filledData;
