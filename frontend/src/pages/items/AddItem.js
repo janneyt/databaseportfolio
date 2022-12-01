@@ -5,8 +5,6 @@ import { prepareFormData } from '../../functions/submitFunctions.js';
 import { insertData } from '../../axios/crud.js';
 import { useNavigate } from 'react-router-dom';
 
-import { DataNext } from "../../axios/crud.js";
-
 function AddItem() {
     const [post, setPost] = useState([{}]);
     const foreign_keys = ["characters_has_items"]

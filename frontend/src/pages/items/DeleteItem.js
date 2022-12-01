@@ -1,7 +1,8 @@
 import Form from "../../components/Forms/Form";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 import { useEffect, useState, useRef } from "react";
-import { DataNext, deleteData } from "../../axios/crud.js";
+import { DataNext } from '../../axios/DataNext.js';
+import { deleteData } from "../../axios/crud.js";
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function DeleteItem() {
