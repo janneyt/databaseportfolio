@@ -1,3 +1,4 @@
+// Import fetch functions
 import { fetchCharacterTableData } from "../data/charactersData";
 import { fetchCHITableData } from "../data/charactersItemsData";
 import { fetchCHLTableData } from "../data/charactersLanguagesData";
@@ -10,8 +11,6 @@ import { fetchLanguageRuleTableData } from "../data/languageRuleData";
 import { fetchLLRTableData } from "../data/languagesLanguageRulesData";
 import { fetchPlayerTableData } from "../data/playerData";
 import { fetchTranslationsTableData } from "../data/translationData";
-
-import { readData, ReturnedData } from '../axios/crud';
 
 
 // Import the header defenitions for each page
