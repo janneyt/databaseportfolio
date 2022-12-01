@@ -347,6 +347,8 @@ const readData = async (specifics, tables, offset=2) => {
       headers = tables;
     }
     
+    console.log("DATA", data);
+    console.log("HEADERS", headers);
     // Map the array of dicts to an array of arrays
     const filledData = data.map((obj) => {
       let item_array = [];
@@ -357,10 +359,11 @@ const readData = async (specifics, tables, offset=2) => {
       return item_array;
     });
 
+    console.log("FILLED DATA", filledData);
     return filledData;
     
     // I iterated over the length of the data returned from the server
-    // Note: we don't want to stringify this, but it is a JSON object
+    // Note: we don't want to stringify this, but it is a  JSON object
     // Thus, we have to cram the object into an array for use in React
     // I'm going to iterate over the values of the returned data and save
     // it into the placeholder array
