@@ -77,7 +77,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Characters` ;
 
 CREATE TABLE IF NOT EXISTS `Characters` (
-  `idCharacter` INT NOT NULL,
+  `idCharacter` INT NOT NULL AUTO_INCREMENT,
   `characterName` VARCHAR(45) NOT NULL,
   `characterDescription` VARCHAR(255) NOT NULL,
   `idPlayer` INT NULL,
@@ -124,22 +124,6 @@ CREATE TABLE IF NOT EXISTS `Languages` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `LanguageRules`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `LanguageRules` ;
-
-CREATE TABLE IF NOT EXISTS `LanguageRules` (
-  `idLanguageRule` INT NOT NULL,
-  `ruleName` VARCHAR(120) NOT NULL,
-  `definition` VARCHAR(255) NOT NULL,
-  `variableList` VARCHAR(255) NULL,
-  `LanguageRulescol` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idLanguageRule`))
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `Countries_has_Languages`
 -- -----------------------------------------------------
@@ -162,7 +146,6 @@ CREATE TABLE IF NOT EXISTS `Countries_has_Languages` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `Characters_has_Languages`
@@ -187,84 +170,6 @@ CREATE TABLE IF NOT EXISTS `Characters_has_Languages` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `Languages_has_LanguageRules`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Languages_has_LanguageRules` ;
-
-CREATE TABLE IF NOT EXISTS `Languages_has_LanguageRules` (
-  `idLanguage` INT NOT NULL,
-  `idLanguageRule` INT NOT NULL,
-  INDEX `fk_Languages_has_LanguageRules_LanguageRules1_idx` (`idLanguageRule` ASC) VISIBLE,
-  INDEX `fk_Languages_has_LanguageRules_Languages1_idx` (`idLanguage` ASC) VISIBLE,
-  PRIMARY KEY (`idLanguage`, `idLanguageRule`),
-  CONSTRAINT `fk_Languages_has_LanguageRules_Languages1`
-    FOREIGN KEY (`idLanguage`)
-    REFERENCES `Languages` (`idLanguage`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Languages_has_LanguageRules_LanguageRules1`
-    FOREIGN KEY (`idLanguageRule`)
-    REFERENCES `LanguageRules` (`idLanguageRule`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `TranslationInputs`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `TranslationInputs` ;
-
-CREATE TABLE IF NOT EXISTS `TranslationInputs` (
-  `idTranslationInput` INT NOT NULL,
-  `inputContents` VARCHAR(255) NULL,
-  PRIMARY KEY (`idTranslationInput`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `TranslationOutputs`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `TranslationOutputs` ;
-
-CREATE TABLE IF NOT EXISTS `TranslationOutputs` (
-  `idTranslationOutput` INT NOT NULL,
-  `outputContents` VARCHAR(255) NULL,
-  PRIMARY KEY (`idTranslationOutput`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Languages_has_TranslationOutputs`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `Languages_has_TranslationOutputs` ;
-
-CREATE TABLE IF NOT EXISTS `Languages_has_TranslationOutputs` (
-  `idLanguage` INT NOT NULL,
-  `idTranslationOutput` INT NOT NULL,
-  `idTranslationInput` INT NOT NULL,
-  PRIMARY KEY (`idLanguage`, `idTranslationOutput`, `idTranslationInput`),
-  INDEX `fk_Languages_has_TranslationOutputs_TranslationOutputs1_idx` (`idTranslationOutput` ASC) VISIBLE,
-  INDEX `fk_Languages_has_TranslationOutputs_Languages1_idx` (`idLanguage` ASC) VISIBLE,
-  INDEX `fk_Languages_has_TranslationOutputs_TranslationInputs1_idx` (`idTranslationInput` ASC) VISIBLE,
-  CONSTRAINT `fk_Languages_has_TranslationOutputs_Languages1`
-    FOREIGN KEY (`idLanguage`)
-    REFERENCES `Languages` (`idLanguage`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Languages_has_TranslationOutputs_TranslationOutputs1`
-    FOREIGN KEY (`idTranslationOutput`)
-    REFERENCES `TranslationOutputs` (`idTranslationOutput`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Languages_has_TranslationOutputs_TranslationInputs1`
-    FOREIGN KEY (`idTranslationInput`)
-    REFERENCES `TranslationInputs` (`idTranslationInput`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `Characters_has_Items`
@@ -369,37 +274,6 @@ INSERT INTO `Languages` (`idLanguage`, `languageName`, `languageDescription`, `i
 
 COMMIT;
 
--- -----------------------------------------------------
--- Data for table `TranslationOutputs`
--- -----------------------------------------------------
-
-INSERT INTO `TranslationOutputs` (`idTranslationOutput`, `OutputContents`) VALUES (1, 'eno');
-INSERT INTO `TranslationOutputs` (`idTranslationOutput`, `OutputContents`) VALUES (2, 'tewo');
-INSERT INTO `TranslationOutputs` (`idTranslationOutput`, `OutputContents`) VALUES (3, 'thrd');
-INSERT INTO `TranslationOutputs` (`idTranslationOutput`, `OutputContents`) VALUES (4, 'aredx');
-
-COMMIT;
--- -----------------------------------------------------
--- Data for table `TranslationInputs`
--- -----------------------------------------------------
-
-INSERT INTO `TranslationInputs` (`idTranslationInput`, `inputContents`) VALUES (1, 'one');
-INSERT INTO `TranslationInputs` (`idTranslationInput`, `inputContents`) VALUES (2, 'two');
-INSERT INTO `TranslationInputs` (`idTranslationInput`, `inputContents`) VALUES (3, 'three');
-INSERT INTO `TranslationInputs` (`idTranslationInput`, `inputContents`) VALUES (4, 'red');
-
--- -----------------------------------------------------
--- Data for table `LanguageRules`
--- -----------------------------------------------------
-
-INSERT INTO `LanguageRules` (`idLanguageRule`, `ruleName`, `definition`, `variableList`) VALUES (1, 'reverse word', 'reverse sorts the text input', '');
-INSERT INTO `LanguageRules` (`idLanguageRule`, `ruleName`, `definition`, `variableList`) VALUES (2, 'Random Vowel', 'Insert random English vowel into $1', '2');
-INSERT INTO `LanguageRules` (`idLanguageRule`, `ruleName`, `definition`, `variableList`) VALUES (3, 'delete last 2 and add e','delete last $1 if length of word > $2 add $3 at the end', '2,3,d');
-INSERT INTO `LanguageRules` (`idLanguageRule`, `ruleName`, `definition`, `variableList`) VALUES (4, 'add a at beginning and x at end', 'add $1 at the beginning of a word and adds $2 at the end', 'a, x');
-INSERT INTO `LanguageRules` (`idLanguageRule`, `ruleName`, `definition`, `variableList`) VALUES (5, 'change the letter b to the letters vh', 'Select letter $1, changes to $2, except at the end of the word', 'b, vh');
-
-COMMIT;
-
 
 -- -----------------------------------------------------
 -- Data for table `Countries_has_Languages`
@@ -413,19 +287,6 @@ INSERT INTO `Countries_has_Languages` (`idCountry`, `idLanguage`) VALUES (5, 5);
 
 COMMIT;
 
-
--- -----------------------------------------------------
--- Data for table `Languages_has_TranslationOutputs`
--- -----------------------------------------------------
-
-INSERT INTO `Languages_has_TranslationOutputs` (`idLanguage`, `idTranslationOutput`, `idTranslationInput`) VALUES (2, 1, 1);
-INSERT INTO `Languages_has_TranslationOutputs` (`idLanguage`, `idTranslationOutput`, `idTranslationInput`) VALUES (3, 2, 2);
-INSERT INTO `Languages_has_TranslationOutputs` (`idLanguage`, `idTranslationOutput`, `idTranslationInput`) VALUES (4, 3, 3);
-INSERT INTO `Languages_has_TranslationOutputs` (`idLanguage`, `idTranslationOutput`, `idTranslationInput`) VALUES (5, 4, 4);
-
-COMMIT;
-
-
 -- -----------------------------------------------------
 -- Data for table `Characters_has_Languages`
 -- -----------------------------------------------------
@@ -435,18 +296,6 @@ INSERT INTO `Characters_has_Languages` (`idCharacter`, `idLanguage`) VALUES (3, 
 INSERT INTO `Characters_has_Languages` (`idCharacter`, `idLanguage`) VALUES (4, 4);
 INSERT INTO `Characters_has_Languages` (`idCharacter`, `idLanguage`) VALUES (5, 5);
 
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `Languages_has_LanguageRules`
--- -----------------------------------------------------
-
-INSERT INTO `Languages_has_LanguageRules` (`idLanguage`, `idLanguageRule`) VALUES (2, 1);
-INSERT INTO `Languages_has_LanguageRules` (`idLanguage`, `idLanguageRule`) VALUES (3, 2);
-INSERT INTO `Languages_has_LanguageRules` (`idLanguage`, `idLanguageRule`) VALUES (4, 3);
-INSERT INTO `Languages_has_LanguageRules` (`idLanguage`, `idLanguageRule`) VALUES (5, 4);
 
 COMMIT;
 
