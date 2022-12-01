@@ -4,7 +4,7 @@ import Select from "react-select";
 import { ReturnedData } from "../axios/crud.js";
 
 
-const headers = ["idItem", "idCharacter", "Add Item", "Delete Item"];
+const headers = ["idItem", "idCharacter", "Edit Item Assignment", "Delete Item from Inventory"];
 
 const fetchCHITableData = async (item_params, append, purpose, id, headers=null) => {
 

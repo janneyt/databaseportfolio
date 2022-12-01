@@ -52,8 +52,16 @@ function EditItemToCharacter() {
     prepareFormData(dataRef, submitData, true);
     submitData.current.values[submitData.current.columns.indexOf("idCharacter")] = character_id.toString();
     const append = `idCharacter = ${character_id.toString()} and idItem = ${item_id.toString()}`
-    updateData("Characters_has_Items", submitData, append);
-    navigate("/CharactersHaveItems");
+    setIsLoading(true);
+    Promise.allSettled([
+      updateData("Characters_has_Items", submitData, append)
+    ])
+      .then((values) => {
+        console.log(values);
+        navigate("/CharactersHaveItems");
+      })
+      .catch((error) => console.log(error));
+    
   };
   return (
     <div className="content">
