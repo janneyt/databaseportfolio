@@ -23,6 +23,7 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
 
   let fetchedData = await ReturnedData("READ", parameters, headers);
 
+
   // Debug returned data
   console.log("fetchedData", fetchedData)
 
@@ -94,7 +95,7 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
     );
 
     fetchedData[index1].push(
-      <Link to="/deleteItemFromCharacter" state={{ id: id }}>
+      <Link to="/deleteItemFromCharacter" state={{ character : character_name, character_id : character_id, item_id : item_id }}>
         <Button>Delete Item From Character</Button>
       </Link>
     );
