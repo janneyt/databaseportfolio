@@ -9,7 +9,7 @@ import Button from '../../components/Button';
 // Import React requirements
 import { Link, useNavigate } from 'react-router-dom';
 
-import { DataNext } from '../../axios/crud.js';
+import { DataNext } from '../../axios/DataNext.js';
 import { useEffect, useState } from 'react';
 
 
