@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { ReturnedData } from "../axios/crud.js";
 
-const fetchCHITableData = async (item_params, append, purpose, id, headers=null) => {
-
+const fetchCHITableData = async (
+  item_params,
+  append,
+  purpose,
+  id,
+  headers = null
+) => {
   const list_param = JSON.stringify(item_params);
   const append_str = JSON.stringify(append);
   // First grab the items/ character pairs that are available
@@ -21,81 +26,94 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
   let fetchedData = await ReturnedData("READ", parameters, headers);
 
   // Debug returned data
-  console.log("fetchedData", fetchedData, headers)
+  console.log("fetchedData", fetchedData, headers);
+  const character_ids = [];
+  const item_ids = [];
+  for (const [item, character] of fetchedData) {
+    if (!item || !character) {
+      fetchedData.slice(item, 1);
+      continue;
+    }
+    if (item < 1 || character < 1) {
+      fetchedData.slice(item, 1);
+      continue;
+    }
+    item_ids.push(item);
+    character_ids.push(character);
+  }
+  console.log("ITEM IDS", item_ids);
+  console.log("CHARACTER IDs", character_ids);
 
-  for (let index1 = 0; index1 < fetchedData.length; index1++) {
-    // Weed out undefined or missing data
-    if(!fetchedData[index1][0] || !fetchedData[index1][1]){
-      fetchedData.slice(index1,1)
-      continue
+  // fetchedData[index1][1] is for characters
+  let append_str1 = '"WHERE idCharacter in (';
+  append_str1 = append_str1.concat(
+    character_ids
+  );
+  append_str1 = append_str1.concat(')"');
+  let character_param = JSON.stringify(
+    '{"columns":["characterName","idCharacter"]' +
+      ', "table":"Characters", "append":' +
+      append_str1 +
+      "}"
+  );
+
+  // Debug character_param
+  console.log("character_param", character_param)
+
+  // fetchedData[index1][0] is for items
+  let append_str2 = '"WHERE idItem in (' 
+  append_str2 = append_str2.concat(
+    item_ids
+  )
+
+  append_str2 = append_str2.concat(')"')
+  let item_param = JSON.stringify(
+    '{"columns":["itemName","idItem"]' +
+      ', "table":"Items", "append":' +
+      append_str2 +
+      "}"
+  );
+
+  // Debug item_param
+  console.log("item_param", item_param)
+
+  let fetchedData2 = await ReturnedData("READINTERSECT", character_param, ["characterName","idCharacter"]);  
+  let fetchedData3 = await ReturnedData("READINTERSECT", item_param, ["itemName","idItem"]);
+
+  // Iterate again over fetchedData to associate ids with the selected values from the database
+  for(let data of fetchedData){
+    let character = data[1]
+    let item = data[0]
+    let index = fetchedData.indexOf(data)
+    let fixed = []
+    let character_name = '';
+    for(let [name, id] of fetchedData3){
+      if(id === item){
+        fixed.push(name)
+      }
+    }
+    for(let [name, id] of fetchedData2){
+      if(id === character){
+        fixed.push(name)
+      }
     }
 
-    // IDs less than 1 are invalid
-    if(fetchedData[index1][0] < 1 || fetchedData[index1][1] < 1){
-      fetchedData.slice(index1,1)
-      continue
-    }
-
-    // fetchedData[index1][1] is for characters
-    let append_str1 =
-      '"WHERE idCharacter = ' 
-    append_str1 = append_str1.concat(fetchedData[index1][1]
-        ? fetchedData[index1][1].toString()
-        : "-1");
-    append_str1 = append_str1.concat('"')
-    let character_param = JSON.stringify(
-      '{"columns":["characterName"]' +
-        ', "table":"Characters", "append":' +
-        append_str1 +
-        "}"
-    );
-
-    // Debug character_param
-    console.log("character_param", character_param)
-
-    // fetchedData[index1][0] is for items
-    let append_str2 = '"WHERE idItem = ' 
-    append_str2 = append_str2.concat(fetchedData[index1][0]
-        ? fetchedData[index1][0].toString()
-        : "-1")
-
-    append_str2 = append_str2.concat('"')
-    let item_param = JSON.stringify(
-      '{"columns":["itemName"]' +
-        ', "table":"Items", "append":' +
-        append_str2 +
-        "}"
-    );
-
-    // Debug item_param
-    console.log("item_param", item_param)
-
-    let fetchedData2 = await ReturnedData("READINTERSECT", character_param, ["characterName"]);
-
-    
-    let fetchedData3 = await ReturnedData("READINTERSECT", item_param, ["itemName"]);
-
-    const character_id = fetchedData[index1][1]
-    const item_id = fetchedData[index1][0]
-    fetchedData[index1][1] = fetchedData2[0][0];
-    fetchedData[index1][0] = fetchedData3[0][0];
-    const item_name = fetchedData[index1][0]
-    const character_name = fetchedData[index1][1]
-    // Add the buttons for the display list, anything inside the push
-    // will get added to one cell in the table
-    fetchedData[index1].push(
-      <Link to="/editItemToCharacter" state={{ character : character_name, character_id : character_id, item_id : item_id }}>
+    // Add edit and delete buttons
+    fixed.push(
+      <Link to="/editItemToCharacter" state={{ character : character_name, character_id : character, item_id : item }}>
         <Button>Edit Item to Character</Button>
       </Link>
     );
-
-    fetchedData[index1].push(
-      <Link to="/deleteItemFromCharacter" state={{ character : character_name, character_id : character_id, item_id : item_id }}>
+    fixed.push(
+      <Link to="/deleteItemFromCharacter" state={{ character : character_name, character_id : character, item_id : item }}>
         <Button>Delete Item From Character</Button>
       </Link>
     );
-    
+    fetchedData.splice(index, 1, fixed)
+
+    console.log("fetchedData inside for loops", fetchedData)
   }
+  console.log("FETCHEDDATA FIXED", fetchedData)
 
   if (purpose && purpose.toLowerCase() === "edit") {
     let find = 0;
@@ -147,20 +165,20 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
 };
 
 const createAddFormContents = (names) => {
-  const options = []
-  for(const name of names){
-    options.push({ value: name[0].toString(), label: name[1] })
+  const options = [];
+  for (const name of names) {
+    options.push({ value: name[0].toString(), label: name[1] });
   }
-  return options
-}
+  return options;
+};
 
 const createEditFormContents = (names) => {
-  const options = []
-  for(const name of names){
-    options.push({ value: name[0].toString(), label: name[1] })
+  const options = [];
+  for (const name of names) {
+    options.push({ value: name[0].toString(), label: name[1] });
   }
-  return options
-}
+  return options;
+};
 
 const addFormContents = [
   {
@@ -175,7 +193,6 @@ const addFormContents = [
     label: "What item are you giving this character?",
     options: "placeholder",
   },
-
 ];
 
 const editFormContents = [
@@ -185,7 +202,6 @@ const editFormContents = [
     label: "What item are you giving this character?",
     options: "placeholder",
   },
-
 ];
 
 const nullableItems = [{ value: "null", label: "Null" }];
@@ -206,5 +222,5 @@ export {
   deleteFormContents,
   fetchCHITableData,
   createAddFormContents,
-  createEditFormContents
+  createEditFormContents,
 };
