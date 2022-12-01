@@ -34,7 +34,7 @@ import {
 // Assign a string to each fetchFunction
 // Used in DataNext to select the right fetch func
 const fetchFunctionDict = {
-    "items": fetchItemTableData,
+    "items": async (...rest) => await fetchItemTableData(...rest),
     "characters": fetchCharacterTableData,
     "languagerules": fetchLanguageRuleTableData,
     "games": fetchGameTableData,
@@ -101,15 +101,10 @@ const DataNext = async (page, id = null, append = null, purpose = null, offset =
         append,
         purpose,
         id,
+        headers,
     )
 
     console.log("POST RESULTS", dataResults);
-
-    // JS returns undefined if you attempt to access a dict with unknown key
-    if (dataResults == undefined) {
-        throw new Error("A fetch function for the given page name doesn't exist.");
-    }
-
     return dataResults;
 };
 

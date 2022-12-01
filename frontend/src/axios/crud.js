@@ -321,7 +321,7 @@ const deleteData = async (table, id, filter) => {
   }
 };
 
-const readData = async (specifics, tables) => {
+const readData = async (specifics, tables, offset=2) => {
   console.log("SPECIFICS", specifics);
 
   // When loading many tables, the headers have to change
@@ -337,7 +337,6 @@ const readData = async (specifics, tables) => {
   try {
     await fillData(specifics).then((response) => {
       data = response;
-      return response;
     });
 
 
@@ -346,12 +345,20 @@ const readData = async (specifics, tables) => {
     if (tables) {
       old_headers = headers;
       headers = tables;
-    } 
+    }
+    
+    // Map the array of dicts to an array of arrays
+    const filledData = data.map((obj) => {
+      let item_array = [];
+      // For every row in data
+      for (let i = 0; i < headers.length - offset; i++) {
+        item_array.push(obj[headers[i]]);
+      }
+      return item_array;
+    });
 
-
-    // Another placeholder
-    const filledData = [[]];
-
+    return filledData;
+    
     // I iterated over the length of the data returned from the server
     // Note: we don't want to stringify this, but it is a JSON object
     // Thus, we have to cram the object into an array for use in React
@@ -390,6 +397,7 @@ const readData = async (specifics, tables) => {
     headers = old_headers;
 
 
+    console.log("Filled Data",filledData);
     return filledData;
   } catch (error) {
     /**
@@ -481,12 +489,12 @@ const ReturnedData = async (action, specifics, tables) => {
   // There's probably a more elegant way to do this but I don't want to break it
 
   if (action.toUpperCase() === "READ") {
-    return await readData(specifics);
+    return await readData(specifics, tables);
   } else if (action.toUpperCase() === "UPDATE") {
     return updateData(specifics);
   } else if (action.toUpperCase() === "READINTERSECT") {
     // We have to change the headers as the intersection tables need to read from two different tables
-    return await readData(specifics, tables);
+    return await readData(specifics, tables, 0);
   }
 };
 

@@ -6,7 +6,7 @@ import { ReturnedData } from "../axios/crud.js";
 
 const headers = ["idItem", "idCharacter", "Add Item", "Delete Item"];
 
-const fetchCHITableData = async (item_params, append, purpose, id, tables) => {
+const fetchCHITableData = async (item_params, append, purpose, id, headers=null) => {
 
   const list_param = JSON.stringify(item_params);
   const append_str = JSON.stringify(append);
@@ -21,7 +21,7 @@ const fetchCHITableData = async (item_params, append, purpose, id, tables) => {
       : '{"columns":' + list_param + ', "table":"Characters_has_Items"}'
   );
 
-  let fetchedData = await ReturnedData("READ", parameters);
+  let fetchedData = await ReturnedData("READ", parameters, headers);
 
 
   // Debug returned data
