@@ -17,32 +17,6 @@ const client = axios.create({
 
 const foreignKeys = ["Games"];
 
-const countryHeaders = [
-  "Name",
-  "Size in Km",
-  "Population",
-  "Game",
-  "Edit",
-  "Delete",
-  "Languages",
-];
-const playerHeaders = ["playerName", "Edit", "Delete"];
-const gameHeaders = [
-  "gameName",
-  "idCountry",
-  "idPlayer",
-  "idLanguage",
-  "Edit",
-  "Delete",
-];
-const headers = [
-  "idItem",
-  "itemName",
-  "itemDescription",
-  "Edit",
-  "Delete",
-];
-
 const fetchItemTableData = async (item_params, append, purpose, id, headers=null) => {
   const list_param = JSON.stringify(item_params);
   const append_str = JSON.stringify(append);
@@ -125,47 +99,47 @@ const fetchItemTableData = async (item_params, append, purpose, id, headers=null
   return fetchedData;
 };
 
-const pullForeignKeys = (page) => {
-  const header = page === "Games" ? gameHeaders : playerHeaders;
-  let options = [];
-  const data =
-    header === gameHeaders
-      ? header.slice(0, gameHeaders.length - 5)
-      : header.slice(0, playerHeaders.length - 2);
-  const specifics = {
-    table: page === "Games" ? "Games" : "Players",
-    columns: data,
-  };
+// const pullForeignKeys = (page) => {
+//   const header = page === "Games" ? gameHeaders : playerHeaders;
+//   let options = [];
+//   const data =
+//     header === gameHeaders
+//       ? header.slice(0, gameHeaders.length - 5)
+//       : header.slice(0, playerHeaders.length - 2);
+//   const specifics = {
+//     table: page === "Games" ? "Games" : "Players",
+//     columns: data,
+//   };
 
-  client
-    .post("/select_data", specifics, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((response) => {
-      let additional = {};
-      for (const item of response.data) {
-        additional = {
-          value: item.gameName
-            ? item.gameName
-            : item.characterName
-            ? item.characterName
-            : item.playerName,
-          label: item.gameName
-            ? item.gameName
-            : item.characterName
-            ? item.characterName
-            : item.playerName,
-        };
-        options.push(additional);
-      }
+//   client
+//     .post("/select_data", specifics, {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     })
+//     .then((response) => {
+//       let additional = {};
+//       for (const item of response.data) {
+//         additional = {
+//           value: item.gameName
+//             ? item.gameName
+//             : item.characterName
+//             ? item.characterName
+//             : item.playerName,
+//           label: item.gameName
+//             ? item.gameName
+//             : item.characterName
+//             ? item.characterName
+//             : item.playerName,
+//         };
+//         options.push(additional);
+//       }
 
-    })
-    .catch((error) => console.log(error));
+//     })
+//     .catch((error) => console.log(error));
 
-  return options;
-};
+//   return options;
+// };
 
 // As in the original setup
 const addFormContents = [
@@ -203,7 +177,6 @@ const editFormContents = [
 const deleteFormContents = [{ type: "hidden", name: "${idItem}" }];
 
 export {
-  headers,
   fetchItemTableData,
   addFormContents,
   editFormContents,

@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { ReturnedData } from "../axios/crud.js";
 
-
-const headers = ["idItem", "idCharacter", "Edit Item Assignment", "Delete Item from Inventory"];
-
 const fetchCHITableData = async (item_params, append, purpose, id, headers=null) => {
 
   const list_param = JSON.stringify(item_params);
@@ -23,9 +20,8 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
 
   let fetchedData = await ReturnedData("READ", parameters, headers);
 
-
   // Debug returned data
-  console.log("fetchedData", fetchedData)
+  console.log("fetchedData", fetchedData, headers)
 
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Weed out undefined or missing data
@@ -56,7 +52,6 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
 
     // Debug character_param
     console.log("character_param", character_param)
-
 
     // fetchedData[index1][0] is for items
     let append_str2 = '"WHERE idItem = ' 
@@ -137,7 +132,6 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
   } else if (purpose && purpose.toLowerCase() === "delete") {
     const deleteFormContents = [
       // TODO: dynamically generate fetchedData's indices, instead of hardcoding
-
       {
         type: "text",
         name: fetchedData[0][1],
@@ -147,38 +141,10 @@ const fetchCHITableData = async (item_params, append, purpose, id, headers=null)
     ];
 
     fetchedData = deleteFormContents;
-
     return deleteFormContents;
   }
-
   return fetchedData;
 };
-
-const bilboItems = [
-  { value: "sting", label: "sting" },
-  { value: "mithrilarmor", label: "Mithril Armor" },
-  { value: "theonering", label: "The One Ring" },
-];
-
-// Currently reusing the same Select, this is temporary anyway.
-const tableData = [
-  ["Bilbo Baggins", <Select options={bilboItems} />],
-  ["Frodo Baggins", <Select options={bilboItems} />],
-  ["Meriadoc Brandybuck", <Select options={bilboItems} />],
-];
-
-for (let index = 0; index < tableData.length; index++) {
-  tableData[index].push(
-    <Link to="/addItemToCharacter">
-      <Button>Add Item</Button>
-    </Link>
-  );
-  tableData[index].push(
-    <Link to="/deleteItemFromCharacter">
-      <Button>Delete Item</Button>
-    </Link>
-  );
-}
 
 const createAddFormContents = (names) => {
   const options = []
@@ -235,8 +201,6 @@ const deleteFormContents = [
 ];
 
 export {
-  headers,
-  tableData,
   addFormContents,
   editFormContents,
   deleteFormContents,

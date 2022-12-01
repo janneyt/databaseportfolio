@@ -2,15 +2,7 @@ import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { ReturnedData } from "../axios/crud.js";
 
-const headers = ["idPlayer", "playerName", "Edit", "Delete"];
-
-const tableData = [
-    ["JRR Tolkien"],
-    ["George Martin"],
-    ["Matthew Mercer"]
-];
-
-const fetchPlayerTableData = async (item_params, append, purpose, id) => {
+const fetchPlayerTableData = async (item_params, append, purpose, id, headers=null) => {
     const list_param = JSON.stringify(item_params);
     const append_str = JSON.stringify(append);
   
@@ -24,7 +16,7 @@ const fetchPlayerTableData = async (item_params, append, purpose, id) => {
         : '{"columns":' + list_param + ', "table":"Players"}'
     );
   
-    let fetchedData = await ReturnedData("READ", parameters);
+    let fetchedData = await ReturnedData("READ", parameters, headers);
     for (let index1 = 0; index1 < fetchedData.length; index1++) {
       // Add the buttons for the display list, anything inside the push
       // will get added to one cell in the table
@@ -106,4 +98,4 @@ const deleteFormContents = [
 ];
 
 
-export {headers, tableData, addFormContents,editFormContents, deleteFormContents, fetchPlayerTableData};
+export {addFormContents,editFormContents, deleteFormContents, fetchPlayerTableData};

@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import { ReturnedData } from "../axios/crud.js";
 
-const headers = ["idLanguage", "idCountry", "Add Language", "Delete Language"];
-
 const fetchCoHLTableData = async (language_params, append, purpose, id, headers=null) => {
 
     const list_param = JSON.stringify(language_params);
@@ -164,4 +162,4 @@ const deleteFormContents = [
 ];
 
 
-export {headers, tableData, addFormContents, deleteFormContents, fetchCoHLTableData};
+export {tableData, addFormContents, deleteFormContents, fetchCoHLTableData};

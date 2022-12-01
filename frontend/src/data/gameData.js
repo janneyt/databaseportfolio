@@ -7,81 +7,56 @@ const client = axios.create({
   baseURL: "http://localhost:60645",
 });
 
-const headers = [
-  "gameName",
-  "Edit",
-  "Delete",
-];
-const playerHeaders = ["playerName", "Edit", "Delete"];
-const gameHeaders = [
-  "idGame",
-  "gameName",
-  "idCountry",
-  "idPlayer",
-  "idLanguage",
-  "Edit",
-  "Delete",
-];
-const countryHeaders = [
-  "countryName",
-  "sizeInKm",
-  "population",
-  "Game",
-  "Edit",
-  "Delete",
-  "Languages",
-];
-
 let options = [];
-const pullForeignKeys = (page, id) => {
-  const header =
-    page === "Games"
-      ? gameHeaders
-      : page === "Players"
-      ? playerHeaders
-      : countryHeaders;
-  const data =
-    header === gameHeaders
-      ? header.slice(0, gameHeaders.length - 5)
-      : header === playerHeaders
-      ? header.slice(0, playerHeaders.length - 2)
-      : header.slice(0, countryHeaders.length - 4);
-  const specifics = {
-    table:
-      page === "Games" ? "Games" : page === "Players" ? "Players" : "Countries",
-    columns: data,
-    filter: " idGame = " + id.toString(),
-  };
-  return client
-    .post("/select_data", specifics, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((response) => {
-      for (const item of response.data) {
-        let additional = {};
-        additional = {
-          value: item.gameName
-            ? item.gameName
-            : item.playerName
-            ? item.playerName
-            : item.countryName,
+// const pullForeignKeys = (page, id) => {
+//   const header =
+//     page === "Games"
+//       ? gameHeaders
+//       : page === "Players"
+//       ? playerHeaders
+//       : countryHeaders;
+//   const data =
+//     header === gameHeaders
+//       ? header.slice(0, gameHeaders.length - 5)
+//       : header === playerHeaders
+//       ? header.slice(0, playerHeaders.length - 2)
+//       : header.slice(0, countryHeaders.length - 4);
+//   const specifics = {
+//     table:
+//       page === "Games" ? "Games" : page === "Players" ? "Players" : "Countries",
+//     columns: data,
+//     filter: " idGame = " + id.toString(),
+//   };
+//   return client
+//     .post("/select_data", specifics, {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     })
+//     .then((response) => {
+//       for (const item of response.data) {
+//         let additional = {};
+//         additional = {
+//           value: item.gameName
+//             ? item.gameName
+//             : item.playerName
+//             ? item.playerName
+//             : item.countryName,
 
-          label: item.gameName
-            ? item.gameName
-            : item.playerName
-            ? item.playerName
-            : item.countryName,
-        };
-        options.push(additional);
-      }
-      console.log("options before", options);
-      return response;
-    })
-    .catch((error) => console.log(error));
+//           label: item.gameName
+//             ? item.gameName
+//             : item.playerName
+//             ? item.playerName
+//             : item.countryName,
+//         };
+//         options.push(additional);
+//       }
+//       console.log("options before", options);
+//       return response;
+//     })
+//     .catch((error) => console.log(error));
 
-};
+// };
 
 const fetchGameTableData = async (item_params, append, purpose, id, headers=null) => {
   const list_param = JSON.stringify(item_params);
@@ -224,7 +199,6 @@ const editFormContents = [
 const deleteFormContents = [{ type: "hidden", name: "${idGame}" }];
 
 export {
-  headers,
   tableData,
   addFormContents,
   editFormContents,

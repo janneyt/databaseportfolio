@@ -2,8 +2,6 @@ import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { ReturnedData } from "../axios/crud.js";
 
-const headers = ["idLanguage", "languageName", "languageDescription", "Edit", "Delete"];
-
 const fetchLanguageTableData = async (item_params, append, purpose, id, headers=null) => {
     const list_param = JSON.stringify(item_params);
     const append_str = JSON.stringify(append);
@@ -124,4 +122,4 @@ const deleteFormContents = [
 ];
 
 
-export {headers, tableData, addFormContents,editFormContents, deleteFormContents, fetchLanguageTableData};
+export {tableData, addFormContents,editFormContents, deleteFormContents, fetchLanguageTableData};

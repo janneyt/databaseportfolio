@@ -20,7 +20,7 @@ const CharacterHeaders = [
 ];
 
 const CharacterLanguageHeaders = [
-    "idItem",
+    "idLanguage",
     "idCharacter",
     "Add Item",
     "Delete Item",

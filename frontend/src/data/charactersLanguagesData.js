@@ -3,13 +3,6 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { ReturnedData } from "../axios/crud.js";
 
-const headers = [
-  "idLanguage",
-  "idCharacter",
-  "Add Language",
-  "Delete Language",
-];
-
 const fetchCHLTableData = async (Language_params, append, purpose, id, headers=null) => {
   const list_param = JSON.stringify(Language_params);
   const append_str = JSON.stringify(append);
@@ -148,25 +141,6 @@ const bilboLanguages = [
   { value: "null", label: "Null" },
 ];
 
-// Currently reusing the same Select, this is temporary anyway.
-const tableData = [
-  ["Bilbo Baggins", <Select options={bilboLanguages} />],
-  ["Frodo Baggins", <Select options={bilboLanguages} />],
-  ["Meriadoc Brandybuck", <Select options={bilboLanguages} />],
-];
-
-for (let index = 0; index < tableData.length; index++) {
-  tableData[index].push(
-    <Link to="/addLanguageToCharacter">
-      <Button>Add Language</Button>
-    </Link>
-  );
-  tableData[index].push(
-    <Link to="/deleteLanguageFromCharacter">
-      <Button>Delete Language</Button>
-    </Link>
-  );
-}
 
 const addFormContents = [
   {
@@ -193,8 +167,6 @@ const createAddFormContents = (names) => {
 const deleteFormContents = [{ type: "hidden", name: "${idLanguage}" }];
 
 export {
-  headers,
-  tableData,
   addFormContents,
   deleteFormContents,
   fetchCHLTableData,

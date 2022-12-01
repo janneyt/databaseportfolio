@@ -67,78 +67,16 @@ const fetchCharacterTableData = async (item_params, append, purpose, id, headers
             { type: "text", name: fetchedData[0][1], value: fetchedData[0][1], disabled:true }
             
         ];
-
         fetchedData = deleteFormContents
-
         return deleteFormContents
     }
-
     return fetchedData
-
 };
-
-// const pullForeignKeys = (page) => {
-//     const header = page === "Players" ? playerHeaders : countryHeaders;
-//     let options = [];
-//     const data = header === playerHeaders ? header.slice(0, playerHeaders.length - 4) : header.slice(0, countryHeaders.length - 5);
-//     const specifics = {
-//       table: page === "Players" ? "Players" : "Countries",
-//       columns: data,
-//     };
-//     console.log("specifics", specifics);
-//     client
-//       .post("/select_data", specifics, {
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       })
-//       .then((response) => {
-//         console.log("printing response", response.data);
-//         let additional = {};
-//         for (const item of response.data) {
-//           additional = {
-//             value: item.playerName ? item.playerName : (item.countryName ? item.countryName : item.countryName),
-//             label: item.playerName ? item.playerName : (item.countryName ? item.countryName : item.countryName),
-//           };
-//           options.push(additional);
-//         }
-//         console.log("options in promise", options);
-//       })
-//       .catch((error) => console.log(error));
-//     console.log("options", options);
-//     return options;
-//   };
 
 const addFormContents = [
     {type:"text", name:"charactername", label:"Name your character:"},
     {type:"text", name:"characterdescription", label:"Please describe your character"},
-    
-    // {
-    //     type: "select",
-    //     name: "idcountry",
-    //     label: "Country Name",
-    //     options: pullForeignKeys("Countries"),
-    // },
-    // {
-    //     type: "select",
-    //     name: "idplayer",
-    //     label: "Player Name",
-    //     options: pullForeignKeys("Players"),
-    // },
 ];
-
-const tableData = [
-    ["Bilbo Baggins", "A reluctant hero who prefers to eat and sleep over adventuring, until adventuring takes his soul", "The Shire", "JRR Tolkien", "Fun first game!"],
-    ["Another Character", "Just a lazy drunk", "Not the Shire", "JRR Tolkien", "Fun first game!"],
-    ["Another Character", "Just a lazy drunk", "Not the Shire", "JRR Tolkien", "Fun first game!"]
-];
-
-for (let index=0; index < tableData.length; index++) {
-    tableData[index].push(<Link to="/editCharacter"><Button>Edit Character</Button></Link>);
-    tableData[index].push(<Link to="/deleteCharacter"><Button>DeleteCharacter</Button></Link>);
-}
-
-
 
 const editFormContents = [
     {type:"text", name:"charactername", label:"Name your character:", value: "${characterName}"},
@@ -150,4 +88,4 @@ const deleteFormContents = [
 ];
 
 
-export {tableData, addFormContents,editFormContents, deleteFormContents, fetchCharacterTableData};
+export {addFormContents,editFormContents, deleteFormContents, fetchCharacterTableData};
