@@ -43,7 +43,7 @@ const headers = [
   "Delete",
 ];
 
-const fetchItemTableData = async (item_params, append, purpose, id) => {
+const fetchItemTableData = async (item_params, append, purpose, id, headers=null) => {
   const list_param = JSON.stringify(item_params);
   const append_str = JSON.stringify(append);
 
@@ -57,7 +57,7 @@ const fetchItemTableData = async (item_params, append, purpose, id) => {
       : '{"columns":' + list_param + ', "table":"Items"}'
   );
 
-  let fetchedData = await ReturnedData("READ", parameters);
+  let fetchedData = await ReturnedData("READ", parameters, headers);
 
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Add the buttons for the display list, anything inside the push
