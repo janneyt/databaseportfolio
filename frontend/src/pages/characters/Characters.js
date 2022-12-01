@@ -2,7 +2,7 @@
 import TableView from '../../components/TableView/TableView';
 
 import ShowIfLoaded from '../../components/ShowIfLoaded';
-import { CharacterHeaders } from '../../data/charactersData';
+import { CharacterHeaders } from '../../data/headers'
 
 import Button from '../../components/Button';
 
