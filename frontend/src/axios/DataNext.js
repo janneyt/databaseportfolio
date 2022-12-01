@@ -78,7 +78,7 @@ const headerDict = {
 *  purpose: The use for your data (i.e. "READ", "EDIT", "DELETE", "UPDATE")
 *
 */
-const DataNext = async (page, id = null, append = null, purpose = "READ", offset = 2) => {
+const DataNext = async (page, append = null, purpose = "READ", id = null, offset = 2) => {
     if (!page) {
         throw new Error("Please provide a page name for your data transfer.");
     }
