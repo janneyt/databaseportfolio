@@ -2,7 +2,7 @@
 import TableView from '../../components/TableView/TableView';
 
 import ShowIfLoaded from '../../components/ShowIfLoaded';
-import { headers } from '../../data/playerData';
+import { PlayerHeaders } from '../../data/headers'
 
 import Button from '../../components/Button';
 
@@ -30,7 +30,7 @@ function Players() {
             <div id="content">
                 <h1>Players</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
-                    <TableView headers={headers} listData={post} />
+                    <TableView headers={PlayerHeaders} listData={post} />
                     <Link to="/addItem"><Button>Add Item</Button></Link>
                     <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>

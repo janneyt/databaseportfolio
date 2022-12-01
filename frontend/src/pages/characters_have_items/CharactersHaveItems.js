@@ -1,5 +1,5 @@
 import TableView from "../../components/TableView/TableView";
-import { headers, fetchCHITableData } from "../../data/charactersItemsData";
+import { CharacterItemsHeaders } from '../../data/headers'
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
@@ -31,7 +31,7 @@ function CharactersHaveItems() {
       <div id="content">
         <h1>Characters Have Items</h1>
         <ShowIfLoaded isLoading={isLoading}>
-          <TableView headers={headers} listData={post} />
+          <TableView headers={CharacterItemsHeaders} listData={post} />
           <Link to="/addItemToCharacter">
             <Button>Add Item to Character</Button>
           </Link>

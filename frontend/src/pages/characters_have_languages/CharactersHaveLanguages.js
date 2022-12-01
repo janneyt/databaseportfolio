@@ -1,5 +1,5 @@
 import TableView from "../../components/TableView/TableView";
-import { headers, tableData } from "../../data/charactersLanguagesData";
+import { CharacterLanguageHeaders } from '../../data/headers'
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -31,7 +31,7 @@ function CharactersHaveLanguages() {
       <div id="content">
         <h1>Characters Have Languages</h1>
         <ShowIfLoaded isLoading={isLoading}>
-          <TableView headers={headers} listData={post} />
+          <TableView headers={CharacterLanguageHeaders} listData={post} />
           <Link to="/addLanguageToCharacter">
             <Button>Add Language to Character</Button>
           </Link>

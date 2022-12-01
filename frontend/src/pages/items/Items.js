@@ -2,7 +2,7 @@
 import TableView from '../../components/TableView/TableView';
 
 import ShowIfLoaded from '../../components/ShowIfLoaded';
-import { headers } from '../../data/itemData';
+import { ItemHeaders } from '../../data/headers'
 
 import Button from '../../components/Button';
 
@@ -32,7 +32,7 @@ function Items() {
             <div id="content">
                 <h1>Items</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
-                    <TableView headers={headers} listData={post} />
+                    <TableView headers={ItemHeaders} listData={post} />
                     <Link to="/addItem"><Button>Add Item</Button></Link>
                     <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>

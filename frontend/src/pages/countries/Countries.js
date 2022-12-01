@@ -1,5 +1,5 @@
 import TableView from "../../components/TableView/TableView";
-import { headers } from "../../data/countryData";
+import { CharacterHeaders } from '../../data/headers'
 import Button from "../../components/Button";
 import { useNavigate, Link } from "react-router-dom";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
@@ -23,7 +23,7 @@ function Countries() {
       <div id="content">
         <h1>Countries</h1>
         <ShowIfLoaded isLoading={isLoading}>
-          <TableView headers={headers} listData={post} />
+          <TableView headers={CharacterHeaders} listData={post} />
           <Link to="/addCountry">
             <Button>Add Country</Button>
           </Link>

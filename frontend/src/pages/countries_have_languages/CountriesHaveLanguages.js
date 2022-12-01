@@ -1,5 +1,5 @@
 import TableView from '../../components/TableView/TableView';
-import {headers, fetchCoHLData} from '../../data/countriesLanguagesData';
+import { CountryLanguageHeaders } from '../../data/headers'
 import Button from '../../components/Button';
 import { Link, useNavigate } from "react-router-dom";
 
@@ -26,7 +26,7 @@ function CountriesHaveLanguages() {
         <div id="content">
           <h1>Countries Have Languages</h1>
           <ShowIfLoaded isLoading={isLoading}>
-            <TableView headers={headers} listData={post} />
+            <TableView headers={CountryLanguageHeaders} listData={post} />
             <Link to="/addLanguageToCountry">
               <Button>Add Language to Country</Button>
             </Link>

@@ -1,5 +1,5 @@
 import TableView from '../../components/TableView/TableView';
-import {headers } from '../../data/languageData';
+import { LanguageHeaders } from '../../data/headers'
 import Button from '../../components/Button';
 import { useNavigate, Link } from 'react-router-dom';
 import ShowIfLoaded from "../../components/ShowIfLoaded";
@@ -25,7 +25,7 @@ function Languages() {
       <div id="content">
         <h1>Languages</h1>
         <ShowIfLoaded isLoading={isLoading}>
-          <TableView headers={headers} listData={post} />
+          <TableView headers={LanguageHeaders} listData={post} />
           <Link to="/addLanguage">
             <Button>Add Language</Button>
           </Link>
