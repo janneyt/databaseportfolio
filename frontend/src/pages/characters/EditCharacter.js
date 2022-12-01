@@ -30,7 +30,7 @@ function EditCharacters() {
 
     useEffect(() => {        
         console.log("LOCATION", location)
-        DataNext("Characters", id.current, getDataAppend, "edit").then(
+        DataNext("Characters", getDataAppend, "edit", id.current).then(
             (response) => {
                 setPost(response); 
                 return response}
