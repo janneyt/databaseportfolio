@@ -31,12 +31,24 @@ function DeleteCharacters() {
     location.state && location.state.character
       ? location.state.character
       : null;
+  const item_id =
+    location.state && location.state.item_id ? location.state.item_id : -1;
   useEffect(() => {
     setIsLoading(false);
-  })
-  const prepareDeleteData = () => {
-
-  }
+  });
+  const prepareDeleteData = (e) => {
+    e.preventDefault();
+    prepareFormData(dataRef, submitData, true);
+    const append = `idCharacter = ${character_id.toString()} and idItem = ${item_id.toString()}`;
+    Promise.allSettled([
+      deleteData("Characters_has_Items", submitData.current, append),
+    ])
+      .then((values) => {
+        console.log(values);
+        navigate("/CharactersHaveItems");
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="content">
       <ShowIfLoaded isLoading={isLoading}>

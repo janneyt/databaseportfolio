@@ -39,6 +39,7 @@ function AddItemToCharacter() {
 
   useEffect(() => {
     const items = DataNext("Items").then((response) => {
+      if(response[0] )
       setItems(response);
       addFormContents[1].options = createAddFormContents(response);
       //setAddForm(addFormContents)
