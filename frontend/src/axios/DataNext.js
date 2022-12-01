@@ -34,7 +34,7 @@ import {
 // Assign a string to each fetchFunction
 // Used in DataNext to select the right fetch func
 const fetchFunctionDict = {
-    "items": async (...rest) => await fetchItemTableData(...rest),
+    "items": fetchItemTableData,
     "characters": fetchCharacterTableData,
     "languagerules": fetchLanguageRuleTableData,
     "games": fetchGameTableData,
@@ -78,13 +78,14 @@ const headerDict = {
 *  purpose: The use for your data (i.e. "READ", "EDIT", "DELETE", "UPDATE")
 *
 */
-const DataNext = async (page, id = null, append = null, purpose = null, offset = 2) => {
+const DataNext = async (page, id = null, append = null, purpose = "READ", offset = 2) => {
     if (!page) {
         throw new Error("Please provide a page name for your data transfer.");
     }
 
     // Get the right header according to the page parameter passed
     const headers = headerDict[page.toLowerCase()];
+    console.log("DATANEXT HEADERS", headers);
 
     // Ensure that a header definition in the dictionary is found
     if (headers == undefined) {
