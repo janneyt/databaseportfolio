@@ -7,31 +7,6 @@ const client = axios.create({
     baseURL: "http://localhost:60645",
   });
 
-const playerHeaders = [
-    "playerName",
-    "idGame",
-    "idPlayer",
-    "Edit",
-    "Delete",
-  ];
-
-const countryHeaders = [
-    "countryName",
-    "sizeInKm",
-    "population",
-    "idGame",
-    "Edit",
-    "Delete",
-];
-  
-const headers = [
-    "idCharacter",
-    "characterName",
-    "characterDescription",
-    "Edit",
-    "Delete"
-];
-
 const fetchCharacterTableData = async (item_params, append, purpose, id, headers=null) => {
 
     const list_param = JSON.stringify(item_params)
@@ -102,37 +77,37 @@ const fetchCharacterTableData = async (item_params, append, purpose, id, headers
 
 };
 
-const pullForeignKeys = (page) => {
-    const header = page === "Players" ? playerHeaders : countryHeaders;
-    let options = [];
-    const data = header === playerHeaders ? header.slice(0, playerHeaders.length - 4) : header.slice(0, countryHeaders.length - 5);
-    const specifics = {
-      table: page === "Players" ? "Players" : "Countries",
-      columns: data,
-    };
-    console.log("specifics", specifics);
-    client
-      .post("/select_data", specifics, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        console.log("printing response", response.data);
-        let additional = {};
-        for (const item of response.data) {
-          additional = {
-            value: item.playerName ? item.playerName : (item.countryName ? item.countryName : item.countryName),
-            label: item.playerName ? item.playerName : (item.countryName ? item.countryName : item.countryName),
-          };
-          options.push(additional);
-        }
-        console.log("options in promise", options);
-      })
-      .catch((error) => console.log(error));
-    console.log("options", options);
-    return options;
-  };
+// const pullForeignKeys = (page) => {
+//     const header = page === "Players" ? playerHeaders : countryHeaders;
+//     let options = [];
+//     const data = header === playerHeaders ? header.slice(0, playerHeaders.length - 4) : header.slice(0, countryHeaders.length - 5);
+//     const specifics = {
+//       table: page === "Players" ? "Players" : "Countries",
+//       columns: data,
+//     };
+//     console.log("specifics", specifics);
+//     client
+//       .post("/select_data", specifics, {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       })
+//       .then((response) => {
+//         console.log("printing response", response.data);
+//         let additional = {};
+//         for (const item of response.data) {
+//           additional = {
+//             value: item.playerName ? item.playerName : (item.countryName ? item.countryName : item.countryName),
+//             label: item.playerName ? item.playerName : (item.countryName ? item.countryName : item.countryName),
+//           };
+//           options.push(additional);
+//         }
+//         console.log("options in promise", options);
+//       })
+//       .catch((error) => console.log(error));
+//     console.log("options", options);
+//     return options;
+//   };
 
 const addFormContents = [
     {type:"text", name:"charactername", label:"Name your character:"},
@@ -175,4 +150,4 @@ const deleteFormContents = [
 ];
 
 
-export {headers as CharacterHeaders, tableData, addFormContents,editFormContents, deleteFormContents, fetchCharacterTableData};
+export {tableData, addFormContents,editFormContents, deleteFormContents, fetchCharacterTableData};
