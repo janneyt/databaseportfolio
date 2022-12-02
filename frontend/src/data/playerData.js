@@ -47,18 +47,6 @@ const fetchPlayerTableData = async (item_params, append, purpose, id, headers=nu
           label: "Name Your Player:",
           value: fetchedData[find][1],
         },
-        // {
-        //   type: "text",
-        //   name: "itemdescription",
-        //   label: "Describe Your Item",
-        //   value: fetchedData[find][2],
-        // },
-        // {
-        //   type: "text",
-        //   name: "gamename",
-        //   label: "Game Name",
-        //   value: fetchedData[find][3],
-        // },
       ];
   
       fetchedData = editFormContents;

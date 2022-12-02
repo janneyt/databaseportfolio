@@ -16,8 +16,9 @@ function AddPlayer() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Players", submitData.current);
-        navigate("/players")
+        Promise.allSettled([insertData("Players", submitData.current)]).then(
+            () => navigate("/players")
+        )
     }; 
 
     return (

@@ -33,8 +33,10 @@ function EditPlayer() {
     const onSubmit = (e) => {
         e.preventDefault();
         prepareEditData(dataRef, submitData);
-        updateData("Players", submitData, updateFilter, id.current).catch((error) => error);
-        navigate("/players");
+        Promise.allSettled([updateData("Players", submitData, updateFilter, id.current)]).then(
+            () =>         navigate("/players")
+        )
+
     }
 
     return (

@@ -31,7 +31,7 @@ function Players() {
                 <h1>Players</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
                     <TableView headers={PlayerHeaders} listData={post} />
-                    <Link to="/addItem"><Button>Add Item</Button></Link>
+                    <Link to="/addPlayer"><Button>Add Player</Button></Link>
                     <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>
             </div>
