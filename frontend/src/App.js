@@ -48,6 +48,7 @@ import EditLanguageToCharacter from './pages/characters_have_languages/EditLangu
 import AddLanguageToCountry from './pages/countries_have_languages/AddLanguageToCountry';
 import CountriesHaveLanguages from './pages/countries_have_languages/CountriesHaveLanguages';
 import DeleteLanguageFromCountry from './pages/countries_have_languages/DeleteLanguageFromCountry';
+import EditLanguageToCountry from './pages/countries_have_languages/EditLanguageToCountry';
 
 function App() {
   return (
@@ -99,6 +100,7 @@ function App() {
         <Route path="/addLanguageToCountry" element={<AddLanguageToCountry />} />
         <Route path="/deleteLanguageFromCountry" element={<DeleteLanguageFromCountry />} />
         <Route path="/countriesHaveLanguages" element={<CountriesHaveLanguages />} />
+        <Route path="/editLanguageToCountry" element={<EditLanguageToCountry />} />
       </Routes>
     </Router>
   );

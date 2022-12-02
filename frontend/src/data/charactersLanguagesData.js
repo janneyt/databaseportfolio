@@ -82,6 +82,7 @@ const fetchCHLTableData = async (
     for (let [name, id] of fetchedData3) {
       if (id === language) {
         fixed.push(name);
+        character_name = name;
       }
     }
     for (let [name, id] of fetchedData2) {

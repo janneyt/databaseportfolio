@@ -95,6 +95,7 @@ const fetchCHITableData = async (
     for(let [name, id] of fetchedData3){
       if(id === item){
         fixed.push(name)
+        character_name = name;
       }
     }
     for(let [name, id] of fetchedData2){

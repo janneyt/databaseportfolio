@@ -12,7 +12,7 @@ const fetchCoHLTableData = async (
 ) => {
   const list_param = JSON.stringify(language_params);
   const append_str = JSON.stringify(append);
-  // First grab the Languages/ character pairs that are available
+  // First grab the Languages/ country pairs that are available
   let parameters = JSON.stringify(
     append
       ? '{"columns":' +
@@ -87,6 +87,7 @@ const fetchCoHLTableData = async (
     }
     for (let [name, id] of fetchedData2) {
       if (id === country) {
+        country_name = name;
         fixed.push(name);
       }
     }
@@ -101,7 +102,7 @@ const fetchCoHLTableData = async (
           language_id: language,
         }}
       >
-        <Button>Edit Language to Character Relationship</Button>
+        <Button>Edit Language to Country Relationship</Button>
       </Link>
     );
     fixed.push(
@@ -113,7 +114,7 @@ const fetchCoHLTableData = async (
           language_id: language,
         }}
       >
-        <Button>Delete Language From Character</Button>
+        <Button>Delete Language From Country</Button>
       </Link>
     );
     fetchedData.splice(index, 1, fixed);
@@ -168,6 +169,7 @@ const deleteFormContents = [
 export {
   addFormContents,
   deleteFormContents,
+  editFormContents,
   fetchCoHLTableData,
   createAddFormContents,
   createEditFormContents,
