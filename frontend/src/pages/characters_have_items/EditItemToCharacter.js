@@ -1,6 +1,6 @@
 import Form from "../../components/Forms/Form";
 // Axios
-import { insertData, updateData } from "../../axios/crud.js";
+import { updateData } from "../../axios/crud.js";
 
 // React
 import { useEffect, useState, useRef } from "react";
@@ -11,13 +11,13 @@ import { prepareFormData } from "../../functions/submitFunctions.js";
 
 // Data
 import {
-  editFormContents,
-  createEditFormContents,
+  editFormContents
 } from "../../data/charactersItemsData";
 
 import { DataNext } from '../../axios/DataNext.js';
 
 import ShowIfLoaded from "../../components/ShowIfLoaded";
+import { createFormContents }  from "../../functions/submitFunctions.js";
 
 function EditItemToCharacter() {
   const location = useLocation();
@@ -25,6 +25,7 @@ function EditItemToCharacter() {
   const dataRef = useRef({});
   const submitData = useRef({ columns: [], values: [] });
   const [items, setItems] = useState([]);
+  const createEditFormContents = (names) => createFormContents(names);
   const [isLoading, setIsLoading] = useState(true);
   const [EditForm, setEditForm] = useState(editFormContents);
   const character_id = location.state && location.state.character_id ? location.state.character_id : -1

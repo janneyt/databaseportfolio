@@ -108,6 +108,13 @@ const DataNext = async (page, append = null, purpose = "READ", id = null, offset
     )
 
     console.log("POST RESULTS", dataResults);
+    if(!dataResults) {
+        const dataResults = [];
+        for(const data of headers){
+            dataResults.push(["No data returned"])
+        }
+        return dataResults;
+    };
     return dataResults;
 };
 

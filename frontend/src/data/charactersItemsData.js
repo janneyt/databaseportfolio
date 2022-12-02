@@ -1,7 +1,6 @@
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import { ReturnedData } from "../axios/crud.js";
-import { createFormContents }  from "../functions/submitFunctions.js";
 
 const fetchCHITableData = async (
   item_params,
@@ -24,7 +23,9 @@ const fetchCHITableData = async (
   );
 
   let fetchedData = await ReturnedData("READ", parameters, headers);
+  console.log("Done fetching")
   if(fetchedData.length < 1){
+    console.log("inside length less than 1")
     const empty = [[]];
     for(const slot of headers){
       empty[0].push("No data to be displayed, please add item-character relationship")
@@ -119,14 +120,9 @@ const fetchCHITableData = async (
 
   }
 
-
+  return fetchedData;
   
 };
-
-const createAddFormContents = (names) => createFormContents(names);
-
-const createEditFormContents = (names) => createFormContents (names);
-  
 
 const addFormContents = [
   {
@@ -169,6 +165,4 @@ export {
   editFormContents,
   deleteFormContents,
   fetchCHITableData,
-  createAddFormContents,
-  createEditFormContents
 };

@@ -15,8 +15,8 @@ function CharactersHaveItems() {
   useEffect(() => {
     // Set a timer to make sure the promises all complete
     DataNext("Characters_has_Items").then((response) => {
-      setPost(response);
-      if (response [0] && response[0].length > 0 && response[0] !== []) {
+      if(response) setPost(response);
+      if (response[0] && response[0].length > 0 && response[0] !== []) {
         setIsLoading(false);
       } 
       return response;

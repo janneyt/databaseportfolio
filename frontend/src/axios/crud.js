@@ -163,56 +163,12 @@ const readData = async (specifics, tables, offset=2) => {
     console.log("FILLED DATA", filledData);
     return filledData;
     
-    // I iterated over the length of the data returned from the server
-    // Note: we don't want to stringify this, but it is a  JSON object
-    // Thus, we have to cram the object into an array for use in React
-    // I'm going to iterate over the values of the returned data and save
-    // it into the placeholder array
-    // for (let index = 0; index < data.length; index++) {
-    //   // NOTE ON INDEXING: data is of form [{}] so data has length > 1 but
-    //   // it's not necessarily true that all keys for all data members exist
-    //   // We can't make filledData indexing related to data indexing or vice versa
-
-    //   // There's a finite number of unique keys, so although we don't want
-    //   // the keys, we iterate over them to find the values
-    //   keys = Object.keys(data[index]);
-
-    //   // filledData does not necessarily have an existing member at *index*
-    //   filledData[index] = [];
-    //   // This is where I iterate over the keys and place the values in filledData
-    //   for (let element = 0; element < keys.length; element++) {
-
-
-    //     // Put the filled Data in the right spot in the header
-    //     for (
-    //       let header_element = 0;
-    //       header_element < headers.length;
-    //       header_element++
-    //     ) {
-    //       if (keys[element] === headers[header_element]) {
-    //         filledData[index][header_element] = data[index][keys[element]];
-    //       }
-    //     }
-    //   }
-    //   const id = filledData[index][0];
-    // }
-
-    // // Debug the headers switching back to their original state
-    // headers = old_headers;
-
-
-    // console.log("Filled Data",filledData);
-    // return filledData;
+    
   } catch (error) {
-    /**
-     * Vitally important: this catch statement actually returns the values that
-     * allows the Items page to shaw a blank screen instead of erroring
-     */
-    // If there's a bad axios call, fill with empty values
+    
     const filledData = [["1", "error", "database", "not connected"]];
 
-    // filledData[0] is required because filledData is a 2d array and we have to add
-    // to the first element of the array
+    
     filledData[0].push(
       <Link to="/editItem" state={{ id: 0 }}>
         <Button>Edit Item</Button>
