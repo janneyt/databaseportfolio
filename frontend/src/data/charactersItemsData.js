@@ -111,9 +111,8 @@ const fetchCHITableData = async (
     );
     fetchedData.splice(index, 1, fixed)
 
-    console.log("fetchedData inside for loops", fetchedData)
   }
-  console.log("FETCHEDDATA FIXED", fetchedData)
+
 
   if (purpose && purpose.toLowerCase() === "edit") {
     let find = 0;
