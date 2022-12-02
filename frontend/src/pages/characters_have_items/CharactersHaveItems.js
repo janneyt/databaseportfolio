@@ -7,7 +7,7 @@ import { DataNext } from '../../axios/DataNext.js';
 import { useEffect, useState } from "react";
 
 function CharactersHaveItems() {
-  const [post, setPost] = useState();
+  const [post, setPost] = useState([{}]);
   const [isLoading, setIsLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -16,9 +16,9 @@ function CharactersHaveItems() {
     // Set a timer to make sure the promises all complete
     DataNext("Characters_has_Items").then((response) => {
       setPost(response);
-      if (response[0].length > 0 && response[0] !== []) {
+      if (response [0] && response[0].length > 0 && response[0] !== []) {
         setIsLoading(false);
-      }
+      } 
       return response;
     });
 

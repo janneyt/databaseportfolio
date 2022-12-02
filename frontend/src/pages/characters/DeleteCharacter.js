@@ -30,7 +30,7 @@ function DeleteCharacters() {
 
   const deleteForm = (e) => {
     e.preventDefault();
-    console.log("DATAREF", dataRef);
+
     setIsLoading(true);
     Promise.allSettled([
       deleteData("Characters", id, updateFilter).catch((error) => error)
@@ -40,7 +40,7 @@ function DeleteCharacters() {
   return (
     <>
       <div className="content">
-        <h1>Delete Item Page</h1>
+        <h1>Delete Character Page</h1>
         <ShowIfLoaded isLoading={isLoading}>
           <Form
             submitText="Delete"

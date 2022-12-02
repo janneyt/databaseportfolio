@@ -1,5 +1,5 @@
-import Button from "../components/Button";
-import { Link } from "react-router-dom";
+import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 import { ReturnedData } from "../axios/crud.js";
 import { createFormContents }  from "../functions/submitFunctions.js";
 
@@ -118,64 +118,8 @@ const fetchCHLTableData = async (
     fetchedData.splice(index, 1, fixed);
   }
 
-  if (purpose && purpose.toLowerCase() === "edit") {
-    let find = 0;
-    for (let indexing = 0; indexing < fetchedData.length; indexing++) {
-      if (fetchedData[indexing][0] === id) {
-        find = indexing;
-      }
-    }
-    const editFormContents = [
-      // TODO: dynamically generate fetchedData's indices, instead of hardcoding
-      {
-        type: "text",
-        name: "Languagename",
-        label: "Name Your Language:",
-        value: fetchedData[find][1],
-      },
-      {
-        type: "text",
-        name: "Languagedescription",
-        label: "Describe Your Language",
-        value: fetchedData[find][2],
-      },
-      {
-        type: "text",
-        name: "gamename",
-        label: "Game Name",
-        value: fetchedData[find][3],
-      },
-    ];
-
-    fetchedData = editFormContents;
-
-    return editFormContents;
-  } else if (purpose && purpose.toLowerCase() === "delete") {
-    const deleteFormContents = [
-      // TODO: dynamically generate fetchedData's indices, instead of hardcoding
-
-      {
-        type: "text",
-        name: fetchedData[0][1],
-        value: fetchedData[0][1],
-        disabled: true,
-      },
-    ];
-
-    fetchedData = deleteFormContents;
-
-    return deleteFormContents;
-  }
-
   return fetchedData;
 };
-
-const bilboLanguages = [
-  { value: "elvish", label: "Elvish" },
-  { value: 1, label: "Westron" },
-  { value: 2, label: "Sylvan Elvish" },
-  { value: "null", label: "Null" },
-];
 
 // 
 const createAddFormContents = (names) => createFormContents(names);
