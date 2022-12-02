@@ -1,7 +1,7 @@
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
-import Select from "react-select";
 import { ReturnedData } from "../axios/crud.js";
+import { createFormContents }  from "../functions/submitFunctions.js";
 
 const fetchCHITableData = async (
   item_params,
@@ -41,8 +41,7 @@ const fetchCHITableData = async (
     item_ids.push(item);
     character_ids.push(character);
   }
-  console.log("ITEM IDS", item_ids);
-  console.log("CHARACTER IDs", character_ids);
+
 
   // fetchedData[index1][1] is for characters
   let append_str1 = '"WHERE idCharacter in (';
@@ -163,21 +162,10 @@ const fetchCHITableData = async (
   return fetchedData;
 };
 
-const createAddFormContents = (names) => {
-  const options = [];
-  for (const name of names) {
-    options.push({ value: name[0].toString(), label: name[1] });
-  }
-  return options;
-};
+const createAddFormContents = (names) => createFormContents(names);
 
-const createEditFormContents = (names) => {
-  const options = [];
-  for (const name of names) {
-    options.push({ value: name[0].toString(), label: name[1] });
-  }
-  return options;
-};
+const createEditFormContents = (names) => createFormContents (names);
+  
 
 const addFormContents = [
   {
@@ -221,5 +209,5 @@ export {
   deleteFormContents,
   fetchCHITableData,
   createAddFormContents,
-  createEditFormContents,
+  createEditFormContents
 };

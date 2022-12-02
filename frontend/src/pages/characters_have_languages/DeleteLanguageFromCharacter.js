@@ -1,15 +1,63 @@
-import Form from '../../components/Forms/Form';
-import { deleteFormContents } from '../../data/charactersLanguagesData';
+import Form from "../../components/Forms/Form";
+import { deleteFormContents } from "../../data/charactersItemsData";
+// Axios
+import { deleteData } from "../../axios/crud.js";
+
+// React
+import { useEffect, useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
+// Functions
+import { prepareFormData } from "../../functions/submitFunctions.js";
+
+import ShowIfLoaded from "../../components/ShowIfLoaded";
 
 function DeleteLanguageFromCharacter() {
-    return (
-        <div className="content">
-            <h1>Delete Languages from Character</h1>
-            <p>{"${Character name and language will be shown here.}"}</p>
-            <Form submitText="Delete" inputState={deleteFormContents} />
-            <p>{"${idLanguage in hidden field for delete purposes.}"}</p>
-        </div>
-    )
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dataRef = useRef({});
+  const submitData = useRef({ columns: [], values: [] });
+  const [isLoading, setIsLoading] = useState(true);
+  const character_id =
+    location.state && location.state.character_id
+      ? location.state.character_id
+      : -1;
+  const character =
+    location.state && location.state.character
+      ? location.state.character
+      : null;
+  const language_id =
+    location.state && location.state.language_id ? location.state.language_id : -1;
+  useEffect(() => {
+    setIsLoading(false);
+  });
+  const prepareDeleteData = (e) => {
+    e.preventDefault();
+    prepareFormData(dataRef, submitData, true);
+    const append = `idCharacter = ${character_id.toString()} and idLanguage = ${language_id.toString()}`;
+    Promise.allSettled([
+      deleteData("Characters_has_Languages", submitData.current, append),
+    ])
+      .then((values) => {
+        console.log(values);
+        navigate("/CharactersHaveLanguages");
+      })
+      .catch((error) => console.log(error));
+  };
+  return (
+    <div className="content">
+      <ShowIfLoaded isLoading={isLoading}>
+        <h1>Delete Language from Character</h1>
+        <h3>Character: {character}</h3>
+        <Form
+          submitText="Save"
+          inputState={deleteFormContents}
+          onSubmit={prepareDeleteData}
+          refDict={dataRef}
+        />
+      </ShowIfLoaded>
+    </div>
+  );
 }
 
 export default DeleteLanguageFromCharacter;

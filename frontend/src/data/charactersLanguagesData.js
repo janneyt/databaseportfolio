@@ -1,9 +1,15 @@
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
-import Select from "react-select";
 import { ReturnedData } from "../axios/crud.js";
+import { createFormContents }  from "../functions/submitFunctions.js";
 
-const fetchCHLTableData = async (Language_params, append, purpose, id, headers=null) => {
+const fetchCHLTableData = async (
+  Language_params,
+  append,
+  purpose,
+  id,
+  headers = null
+) => {
   const list_param = JSON.stringify(Language_params);
   const append_str = JSON.stringify(append);
   // First grab the Languages/ character pairs that are available
@@ -19,69 +25,99 @@ const fetchCHLTableData = async (Language_params, append, purpose, id, headers=n
 
   let fetchedData = await ReturnedData("READ", parameters, headers);
 
-  // Debug data returned
-  console.log("fetchedData", fetchedData);
-  // Set a timeout due to database backup
-  for (let index1 = 0; index1 < fetchedData.length; index1++) {
-    // Get the character ids based on the ids returned from the earlier query
-    if (!fetchedData[index1][0] || !fetchedData[index1][1]) {
-      fetchedData.slice(index1, 1);
-      console.log("sliced fetchedData", fetchedData);
+  const character_ids = [];
+  const language_ids = [];
+  for (const [language, character] of fetchedData) {
+    if (!language || !character) {
+      fetchedData.slice(language, 1);
       continue;
     }
-    let append_str1 = '"WHERE idCharacter = ';
-    append_str1 = append_str1.concat(
-      fetchedData[index1][0] ? fetchedData[index1][0].toString() : "-1"
-    );
-    append_str1 = append_str1.concat('"');
-    let character_param = JSON.stringify(
-      '{"columns":["characterName"]' +
-        ', "table":"Characters", "append":' +
-        append_str1 +
-        "}"
-    );
+    if (language < 1 || character < 1) {
+      fetchedData.slice(language, 1);
+      continue;
+    }
+    language_ids.push(language);
+    character_ids.push(character);
+  }
 
-    let append_str2 = '"WHERE idLanguage = ';
-    append_str2 = append_str2.concat(
-      fetchedData[index1][1] ? fetchedData[index1][1].toString() : "-1"
-    );
+  // Debug data returned
 
-    append_str2 = append_str2.concat('"');
-    let language_param = JSON.stringify(
-      '{"columns":["languageName"]' +
-        ', "table":"Languages", "append":' +
-        append_str2 +
-        "}"
-    );
+  let append_str1 = '"WHERE idCharacter in (';
+  append_str1 = append_str1.concat(character_ids);
+  append_str1 = append_str1.concat(')"');
+  let character_param = JSON.stringify(
+    '{"columns":["characterName","idCharacter"]' +
+      ', "table":"Characters", "append":' +
+      append_str1 +
+      "}"
+  );
 
-    let fetchedData2 = await ReturnedData("READINTERSECT", character_param, [
-      "characterName",
-    ]);
-    let fetchedData3 = await ReturnedData("READINTERSECT", language_param, [
-      "languageName",
-    ]);
-    const character_id = fetchedData[index1][1];
-    fetchedData[index1][1] = fetchedData2[0][0];
-    fetchedData[index1][0] = fetchedData3[0][0];
-    const language_name = fetchedData[index1][0];
-    const character_name = fetchedData[index1][1];
-    // Add the buttons for the display list, anything inside the push
-    // will get added to one cell in the table
-    fetchedData[index1].push(
+  let append_str2 = '"WHERE idLanguage in (';
+  append_str2 = append_str2.concat(language_ids);
+
+  append_str2 = append_str2.concat(')"');
+  let language_param = JSON.stringify(
+    '{"columns":["languageName", "idLanguage"]' +
+      ', "table":"Languages", "append":' +
+      append_str2 +
+      "}"
+  );
+
+  let fetchedData2 = await ReturnedData("READINTERSECT", character_param, [
+    "characterName",
+    "idCharacter",
+  ]);
+  let fetchedData3 = await ReturnedData("READINTERSECT", language_param, [
+    "languageName",
+    "idLanguage",
+  ]);
+
+  // Iterate again over fetchedData to associate ids with the selected values from the database
+  for (let data of fetchedData) {
+    let character = data[1];
+    let language = data[0];
+    let index = fetchedData.indexOf(data);
+    let fixed = [];
+    let character_name = "";
+    for (let [name, id] of fetchedData3) {
+      if (id === language) {
+        fixed.push(name);
+      }
+    }
+    for (let [name, id] of fetchedData2) {
+      if (id === character) {
+        fixed.push(name);
+      }
+    }
+
+    // Add edit and delete buttons
+    fixed.push(
       <Link
-        to="/addLanguageToCharacter"
-        state={{ character: character_name, id: character_id }}
+        to="/editLanguageToCharacter"
+        state={{
+          character: character_name,
+          character_id: character,
+          language_id: language,
+        }}
       >
-        <Button>Add Language to Character</Button>
+        <Button>Edit Language to Character Relationship</Button>
       </Link>
     );
-
-    fetchedData[index1].push(
-      <Link to="/deleteLanguageFromCharacter" state={{ id: id }}>
+    fixed.push(
+      <Link
+        to="/deleteLanguageFromCharacter"
+        state={{
+          character: character_name,
+          character_id: character,
+          language_id: language,
+        }}
+      >
         <Button>Delete Language From Character</Button>
       </Link>
     );
+    fetchedData.splice(index, 1, fixed);
   }
+
   if (purpose && purpose.toLowerCase() === "edit") {
     let find = 0;
     for (let indexing = 0; indexing < fetchedData.length; indexing++) {
@@ -141,34 +177,54 @@ const bilboLanguages = [
   { value: "null", label: "Null" },
 ];
 
+// 
+const createAddFormContents = (names) => createFormContents(names);
+
+const createEditFormContents = (names) => createFormContents (names);
 
 const addFormContents = [
   {
-    type: "hidden",
+    type: "select",
     name: "idCharacter",
-    value: 7
+    label: "What character are you assigning an item?",
+    options: "placeholder",
   },
   {
     type: "select",
     name: "idLanguage",
     label: "What language should this character know?",
-    options: bilboLanguages,
+    options: "placeholder",
   },
 ];
-const createAddFormContents = (names) => {
-  console.log(names);
-  const options = []
-  for(const name of names){
-    options.push({ value: name[1], label: name[1] })
-  }
-  return options
-}
 
-const deleteFormContents = [{ type: "hidden", name: "${idLanguage}" }];
+const editFormContents = [
+  {
+    type: "select",
+    name: "idLanguage",
+    label: "What language are you giving this character?",
+    options: "placeholder",
+  },
+];
+
+const nullableItems = [{ value: "null", label: "Null" }];
+
+const deleteFormContents = [
+  { type: "hidden", name: "${idItem}" },
+  {
+    type: "select",
+    label:
+      "Deleting from this table makes a null entry in the characters_have_items tabke",
+    options: nullableItems,
+  },
+];
+
+
 
 export {
   addFormContents,
+  editFormContents,
   deleteFormContents,
   fetchCHLTableData,
-  createAddFormContents
+  createAddFormContents,
+  createEditFormContents
 };

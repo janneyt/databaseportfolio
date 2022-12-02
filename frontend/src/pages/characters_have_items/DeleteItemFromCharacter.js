@@ -19,10 +19,7 @@ function DeleteCharacters() {
   const navigate = useNavigate();
   const dataRef = useRef({});
   const submitData = useRef({ columns: [], values: [] });
-  const [items, setItems] = useState([]);
-  const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [addForm, setAddForm] = useState(deleteFormContents);
   const character_id =
     location.state && location.state.character_id
       ? location.state.character_id

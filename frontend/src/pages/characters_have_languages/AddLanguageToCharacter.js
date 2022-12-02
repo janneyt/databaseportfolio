@@ -8,8 +8,9 @@ import { useState, useEffect, useRef } from "react";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 
 function AddLanguageToCharacter() {
+
+  const [characters, setCharacters] = useState([]);
   const location = useLocation();
-  const [post, setPost] = useState([{}]);
   const navigate = useNavigate();
   const dataRef = useRef({});
   const [items, setItems] = useState([]);
@@ -21,29 +22,46 @@ function AddLanguageToCharacter() {
       : null;
   const character_id = location.state && location.state.id ? location.state.id : -1
   const submitData = useRef({ columns: [], values: [] });
-  const prepareAddData = (e) => {
-    e.preventDefault();
-    console.log("dataRef", dataRef)
-    prepareFormData(dataRef, submitData, true);
-    submitData.current.values[submitData.current.columns.indexOf("idCharacter")] = character_id.toString();
-    console.log("submitData", submitData)
-    insertData("Characters_has_Languages", submitData.current);
-    navigate("/charactersHaveLanguages");
-  };
-
 
   useEffect(() => {
-    DataNext("Languages").then((response) => {
+    const items = DataNext("Languages").then((response) => {
+      if(response[0] )
       setItems(response);
-      addFormContents[0].options = createAddFormContents(response);
-      setAddForm(addFormContents);
-      console.log(addForm);
-      if (response[0] !== []) {
-        setIsLoading(false);
-      }
+      addFormContents[1].options = createAddFormContents(response);
+      //setAddForm(addFormContents)
       return response;
     });
-  }, [setAddForm]);
+    const characters = DataNext("Characters").then((response) => {
+      if(response[0] )
+      setCharacters(response);
+      addFormContents[0].options = createAddFormContents(response);
+      //setAddForm(addFormContents)
+      return response;
+    });
+    Promise.allSettled([characters, items])
+      .then((values) => {
+
+        // Race condition bug fixed where React's multiple posts were causing undefined behavior.
+        if(values[0].value[0][0] && !values[0].value[0][0].$$typeof){
+          
+          setAddForm(addFormContents);
+          setIsLoading(false);
+        }
+
+        return values;
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const prepareAddData = (e) => {
+    e.preventDefault();
+    prepareFormData(dataRef, submitData, true);
+    Promise.allSettled([insertData("Characters_has_Languages", submitData.current)]).then((values) =>{
+      navigate("/charactersHaveLanguages");
+  }).catch((error) => console.log(error));
+    
+  };
+  
   return (
     <div className="content">
       <ShowIfLoaded isLoading={isLoading}>

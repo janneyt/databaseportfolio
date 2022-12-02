@@ -37,4 +37,14 @@ const prepareGameFormData = (dataRef, submitData) => {
   }
 };
 
-export { prepareFormData, prepareGameFormData, prepareEditData };
+const createFormContents = (names) => {
+  const options = [];
+  for (const name of names) {
+    options.push({ value: name[0].toString(), label: name[1] });
+  }
+  return options;
+};
+
+
+
+export { prepareFormData, prepareGameFormData, prepareEditData, createFormContents };

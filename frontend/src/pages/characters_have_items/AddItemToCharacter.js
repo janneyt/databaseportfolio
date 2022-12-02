@@ -1,6 +1,6 @@
 import Form from "../../components/Forms/Form";
 // Axios
-import { insertData, updateData } from "../../axios/crud.js";
+import { insertData } from "../../axios/crud.js";
 
 // React
 import { useEffect, useState, useRef } from "react";

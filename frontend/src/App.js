@@ -43,6 +43,7 @@ import DeleteItemFromCharacter from './pages/characters_have_items/DeleteItemFro
 import AddLanguageToCharacter from './pages/characters_have_languages/AddLanguageToCharacter';
 import CharactersHaveLanguages from './pages/characters_have_languages/CharactersHaveLanguages';
 import DeleteLanguageFromCharacter from './pages/characters_have_languages/DeleteLanguageFromCharacter';
+import EditLanguageToCharacter from './pages/characters_have_languages/EditLanguageToCharacter';
 
 import AddLanguageToCountry from './pages/countries_have_languages/AddLanguageToCountry';
 import CountriesHaveLanguages from './pages/countries_have_languages/CountriesHaveLanguages';
@@ -93,6 +94,7 @@ function App() {
         <Route path="/addLanguageToCharacter" element={<AddLanguageToCharacter />} />
         <Route path="/deleteLanguageFromCharacter" element={<DeleteLanguageFromCharacter />} />
         <Route path="/charactersHaveLanguages" element={<CharactersHaveLanguages />} /> 
+        <Route path="/editLanguageToCharacter" element={<EditLanguageToCharacter />} />
 
         <Route path="/addLanguageToCountry" element={<AddLanguageToCountry />} />
         <Route path="/deleteLanguageFromCountry" element={<DeleteLanguageFromCountry />} />

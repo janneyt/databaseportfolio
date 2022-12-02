@@ -14,7 +14,6 @@ function CharactersHaveItems() {
 
   useEffect(() => {
     // Set a timer to make sure the promises all complete
-    const timer = setTimeout(() => console.log('Initial timeout!'), 1000);
     DataNext("Characters_has_Items").then((response) => {
       setPost(response);
       if (response[0].length > 0 && response[0] !== []) {
@@ -23,7 +22,6 @@ function CharactersHaveItems() {
       return response;
     });
 
-    return () => clearTimeout(timer);
   }, []);
 
   return (

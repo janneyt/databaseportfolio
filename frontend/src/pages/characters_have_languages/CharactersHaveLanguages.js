@@ -16,8 +16,7 @@ function CharactersHaveLanguages() {
   useEffect(() => {
     DataNext("Characters_has_Languages").then((response) => {
       setPost(response);
-      console.log("response[0]", response[0])
-      if(response[0].length > 0){
+      if(response[0].length > 0 && response[0] !== []){
         setIsLoading(false);
       }
       
