@@ -1,7 +1,7 @@
 import Form from "../../components/Forms/Form";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 import { useEffect, useState, useRef } from "react";
-import { DataNext } from '../../axios/DataNext.js';
+import { DataNext } from "../../axios/DataNext.js";
 import { deleteData } from "../../axios/crud.js";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -10,10 +10,10 @@ function DeleteCharacters() {
   const location = useLocation();
 
   const dataRef = useRef({});
-  const id = useRef(location.state ? location.state.id:-1);
+  const id = useRef(location.state ? location.state.id : -1);
 
-  const getDataAppend = 'WHERE idCharacter = ' + id.current.toString();
-  const updateFilter = 'idCharacter = ' + id.current.toString();
+  const getDataAppend = "WHERE idCharacter = " + id.current.toString();
+  const updateFilter = "idCharacter = " + id.current.toString();
 
   const [post, setPost] = useState([{}]);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,10 +30,11 @@ function DeleteCharacters() {
 
   const deleteForm = (e) => {
     e.preventDefault();
-    console.log("DATAREF", dataRef)
+    console.log("DATAREF", dataRef);
     setIsLoading(true);
-    deleteData("Characters", id, updateFilter).catch((error) => error);
-    navigate("/characters");
+    Promise.allSettled([
+      deleteData("Characters", id, updateFilter).catch((error) => error)
+    ]).then(() => navigate("/characters"));
   };
 
   return (

@@ -22,8 +22,9 @@ function AddCharacter() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Characters", submitData.current);
-        navigate("/characters")
+        Promise.allSettled([insertData("Characters", submitData.current)]).then(
+            () => navigate("/characters")
+        )
     };
 
     return (

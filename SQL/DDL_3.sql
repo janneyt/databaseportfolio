@@ -84,24 +84,13 @@ CREATE TABLE IF NOT EXISTS `Characters` (
   `idGame` INT NOT NULL,
   `idCountry` INT NULL,
   PRIMARY KEY (`idCharacter`),
-  INDEX `fk_Characters_Players_idx` (`idPlayer` ASC) VISIBLE,
-  INDEX `fk_Characters_Games1_idx` (`idGame` ASC) VISIBLE,
-  INDEX `fk_Characters_Countries1_idx` (`idCountry` ASC) VISIBLE,
-  CONSTRAINT `fk_Characters_Players`
-    FOREIGN KEY (`idPlayer`)
-    REFERENCES `Players` (`idPlayer`)
-    ON DELETE SET NULL
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Characters_Games1`
+  INDEX `fk_Languages_Games1_idx` (`idGame` ASC) VISIBLE,
+  CONSTRAINT `fk_Languages_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_Characters_Countries1`
-    FOREIGN KEY (`idCountry`)
-    REFERENCES `Countries` (`idCountry`)
-    ON DELETE SET NULL
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
+  )
 ENGINE = InnoDB;
 
 

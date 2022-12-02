@@ -41,8 +41,9 @@ function EditCharacters() {
     const onSubmit = (e) => {
         e.preventDefault();
         prepareEditData(dataRef, submitData);
-        updateData("Characters", submitData, updateFilter, id.current).catch((error) => error);
-        navigate("/characters");
+        Promise.allSettled([updateData("Characters", submitData, updateFilter, id.current).catch((error) => error)]).then(
+            () => navigate("/characters")
+        )
     }
     
     return (
