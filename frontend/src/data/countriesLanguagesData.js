@@ -119,16 +119,8 @@ const fetchCoHLTableData = async (
     );
     fetchedData.splice(index, 1, fixed);
   }
-
-  
-
   return fetchedData;
 };
-
-// // 
-const createAddFormContents = (names) => createFormContents(names);
-
-const createEditFormContents = (names) => createFormContents (names);
 
 const addFormContents = [
   {
@@ -171,6 +163,4 @@ export {
   deleteFormContents,
   editFormContents,
   fetchCoHLTableData,
-  createAddFormContents,
-  createEditFormContents,
 };

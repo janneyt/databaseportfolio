@@ -1,7 +1,6 @@
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import { ReturnedData } from "../axios/crud.js";
-import { createFormContents }  from "../functions/submitFunctions.js";
 
 const fetchCHLTableData = async (
   Language_params,
@@ -121,12 +120,6 @@ const fetchCHLTableData = async (
 
   return fetchedData;
 };
-
-// 
-const createAddFormContents = (names) => createFormContents(names);
-
-const createEditFormContents = (names) => createFormContents (names);
-
 const addFormContents = [
   {
     type: "select",
@@ -170,6 +163,4 @@ export {
   editFormContents,
   deleteFormContents,
   fetchCHLTableData,
-  createAddFormContents,
-  createEditFormContents
 };

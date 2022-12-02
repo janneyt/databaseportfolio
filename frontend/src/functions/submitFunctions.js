@@ -1,5 +1,4 @@
 const prepareFormData = (dataRef, submitData, gameNotRequired) => {
-  console.log("prepareFormData dataRef", dataRef.current);
   for (const item in dataRef.current) {
     if(typeof dataRef.current[item] === "string"){
       submitData.current["columns"].push(item);

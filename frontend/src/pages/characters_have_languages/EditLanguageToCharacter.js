@@ -15,9 +15,10 @@ import {
   createEditFormContents,
 } from "../../data/charactersLanguagesData";
 
-import { DataNext } from '../../axios/DataNext.js';
+import { DataNext } from "../../axios/DataNext.js";
 
 import ShowIfLoaded from "../../components/ShowIfLoaded";
+import { createFormContents }  from "../../functions/submitFunctions.js";
 
 function EditLanguageToCharacter() {
   const location = useLocation();
@@ -27,9 +28,16 @@ function EditLanguageToCharacter() {
   const [languages, setLanguages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [EditForm, setEditForm] = useState(editFormContents);
-  const character_id = location.state && location.state.character_id ? location.state.character_id : -1
-  console.log("LocATION", location)
-  const language_id = location.state && location.state.language_id ? location.state.language_id : -1
+  const character_id =
+    location.state && location.state.character_id
+      ? location.state.character_id
+      : -1;
+
+  const createEditFormContents = (names) => createFormContents(names);
+  const language_id =
+    location.state && location.state.language_id
+      ? location.state.language_id
+      : -1;
   const character =
     location.state && location.state.character
       ? location.state.character
@@ -50,27 +58,25 @@ function EditLanguageToCharacter() {
   const prepareAddData = (e) => {
     e.preventDefault();
     prepareFormData(dataRef, submitData, true);
-    submitData.current.values[submitData.current.columns.indexOf("idCharacter")] = character_id.toString();
-    const append = `idCharacter = ${character_id.toString()} and idLanguage = ${language_id.toString()}`
+    submitData.current.values[
+      submitData.current.columns.indexOf("idCharacter")
+    ] = character_id.toString();
+    const append = `idCharacter = ${character_id.toString()} and idLanguage = ${language_id.toString()}`;
     setIsLoading(true);
     Promise.allSettled([
-      updateData("Characters_has_Languages", submitData, append)
+      updateData("Characters_has_Languages", submitData, append),
     ])
       .then((values) => {
         console.log(values);
         navigate("/CharactersHaveLanguages");
       })
       .catch((error) => console.log(error));
-    
   };
   return (
     <div className="content">
       <ShowIfLoaded isLoading={isLoading}>
         <h1>Add Language to Character</h1>
-        <h3>
-          Character:{" "}
-          {character}
-        </h3>
+        <h3>Character: {character}</h3>
         <Form
           submitText="Save"
           inputState={EditForm}

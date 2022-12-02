@@ -1,11 +1,15 @@
 import Form from "../../components/Forms/Form";
-import { addFormContents, createAddFormContents } from "../../data/countriesLanguagesData";
+import {
+  addFormContents,
+  createAddFormContents,
+} from "../../data/countriesLanguagesData";
 import { useLocation, useNavigate } from "react-router-dom";
 import { prepareFormData } from "../../functions/submitFunctions.js";
 import { DataNext } from "../../axios/DataNext.js";
 import { insertData } from "../../axios/crud.js";
 import { useState, useEffect, useRef } from "react";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
+import { createFormContents } from "../../functions/submitFunctions.js";
 
 function AddLanguageToCountry() {
   const location = useLocation();
@@ -17,6 +21,8 @@ function AddLanguageToCountry() {
     location.state && location.state.country ? location.state.country : null;
 
   const submitData = useRef({ columns: [], values: [] });
+  // //
+  const createAddFormContents = (names) => createFormContents(names);
 
   useEffect(() => {
     const items = DataNext("Languages").then((response) => {
@@ -55,10 +61,7 @@ function AddLanguageToCountry() {
     <div className="content">
       <ShowIfLoaded isLoading={isLoading}>
         <h1>Add Language to Country</h1>
-        <h3>
-          Country:{" "}
-          {country}
-        </h3>
+        <h3>Country: {country}</h3>
         <Form
           submitText="Save"
           inputState={addForm}

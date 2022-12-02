@@ -15,7 +15,8 @@ import {
   createEditFormContents,
 } from "../../data/countriesLanguagesData";
 
-import { DataNext } from '../../axios/DataNext.js';
+import { DataNext } from "../../axios/DataNext.js";
+import { createFormContents } from "../../functions/submitFunctions.js";
 
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 
@@ -27,13 +28,19 @@ function EditLanguageToCountry() {
   const [languages, setLanguages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [EditForm, setEditForm] = useState(editFormContents);
-  const country_id = location.state && location.state.country_id ? location.state.country_id : -1
-  console.log("LocATION", location)
-  const language_id = location.state && location.state.language_id ? location.state.language_id : -1
+  const country_id =
+    location.state && location.state.country_id
+      ? location.state.country_id
+      : -1;
+  console.log("LocATION", location);
+  const language_id =
+    location.state && location.state.language_id
+      ? location.state.language_id
+      : -1;
   const country =
-    location.state && location.state.country
-      ? location.state.country
-      : null;
+    location.state && location.state.country ? location.state.country : null;
+
+  const createEditFormContents = (names) => createFormContents(names);
 
   useEffect(() => {
     DataNext("Languages").then((response) => {
@@ -50,27 +57,24 @@ function EditLanguageToCountry() {
   const prepareAddData = (e) => {
     e.preventDefault();
     prepareFormData(dataRef, submitData, true);
-    submitData.current.values[submitData.current.columns.indexOf("idCountry")] = country_id.toString();
-    const append = `idCountry = ${country_id.toString()} and idLanguage = ${language_id.toString()}`
+    submitData.current.values[submitData.current.columns.indexOf("idCountry")] =
+      country_id.toString();
+    const append = `idCountry = ${country_id.toString()} and idLanguage = ${language_id.toString()}`;
     setIsLoading(true);
     Promise.allSettled([
-      updateData("Countries_has_Languages", submitData, append)
+      updateData("Countries_has_Languages", submitData, append),
     ])
       .then((values) => {
         console.log(values);
         navigate("/CountriesHaveLanguages");
       })
       .catch((error) => console.log(error));
-    
   };
   return (
     <div className="content">
       <ShowIfLoaded isLoading={isLoading}>
         <h1>Add Language to Country</h1>
-        <h3>
-          Country:{" "}
-          {country}
-        </h3>
+        <h3>Country: {country}</h3>
         <Form
           submitText="Save"
           inputState={EditForm}
