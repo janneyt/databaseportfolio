@@ -15,8 +15,10 @@ function AddCountry() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Countries", submitData.current);
-        navigate("/countries")
+        Promise.allSettled([insertData("Countries", submitData.current)]).then(
+            () => navigate("/countries")
+        ).catch((error) => console.log(error))
+        
     }; 
 
     return (

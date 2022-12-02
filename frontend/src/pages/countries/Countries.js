@@ -1,5 +1,5 @@
 import TableView from "../../components/TableView/TableView";
-import { CharacterHeaders } from '../../data/headers'
+import { CountryHeaders } from '../../data/headers'
 import Button from "../../components/Button";
 import { useNavigate, Link } from "react-router-dom";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
@@ -10,10 +10,18 @@ function Countries() {
   const navigate = useNavigate();
   const [post, setPost] = useState([[]]);
   const [isLoading, setIsLoading] = useState(true);
+  const countryHeader = ["Country Name", "Size of Country in Kilometers","Population", "Edit","Delete"]
 
   useEffect(() => {
     DataNext("Countries").then((response) => {
-      setPost(response);
+
+      // Optional setup to not show IDs
+      const prettifiedCountries = [];
+      for(const country of response){
+        country.splice(0,1)
+        prettifiedCountries.push(country);
+      }
+      setPost(prettifiedCountries);
       setIsLoading(false);
     });
   }, []);
@@ -23,7 +31,7 @@ function Countries() {
       <div id="content">
         <h1>Countries</h1>
         <ShowIfLoaded isLoading={isLoading}>
-          <TableView headers={CharacterHeaders} listData={post} />
+          <TableView headers={countryHeader} listData={post} />
           <Link to="/addCountry">
             <Button>Add Country</Button>
           </Link>

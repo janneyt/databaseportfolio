@@ -34,8 +34,9 @@ function EditCountry() {
     const onSubmit = (e) => {
         e.preventDefault();
         prepareEditData(dataRef, submitData);
-        updateData("Countries", submitData, updateFilter, id.current).catch((error) => error);
-        navigate("/countries");
+        Promise.allSettled([updateData("Countries", submitData, updateFilter, id.current)]).then(
+            () => navigate("/countries")
+        ).catch((error) => console.log(error));
     }
 
     return (

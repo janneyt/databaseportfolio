@@ -80,7 +80,6 @@ def update_data():
 
     try:
         queries = database.create_update_queries(data['table'], data['columns'], data['values'], data['filter'], append)
-        print("queries", queries)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
@@ -106,7 +105,6 @@ def insert_data():
     # Only pass to the add_insert if the proper tables are present
     try:
         queries = database.create_insert_queries(data["table"], data["columns"], data["values"], append)
-        print("SELECT QUERIES", queries)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
