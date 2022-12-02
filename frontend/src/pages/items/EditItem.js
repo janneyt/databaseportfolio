@@ -34,8 +34,9 @@ function EditItems() {
     const onSubmit = (e) => {
         e.preventDefault();
         prepareEditData(dataRef, submitData);
-        updateData("Items", submitData, updateFilter, id.current).catch((error) => error);
-        navigate("/items");
+        Promise.allSettled([updateData("Items", submitData, updateFilter, id.current)]).then(
+            () => navigate("/items")
+        )
     }
 
     return (

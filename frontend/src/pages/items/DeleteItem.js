@@ -33,10 +33,9 @@ function DeleteItem() {
     e.preventDefault();
 
     setIsLoading(true);
-    deleteData("Items", id, filter)
-      .then(() => {setIsLoading(false)})
-      .catch((error) => error);
-    navigate("/items");
+    Promise.allSettled([deleteData("Items", id, filter)]).then(
+      () => navigate("/items")
+    )
   };
 
   return (

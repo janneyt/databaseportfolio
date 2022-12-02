@@ -22,7 +22,7 @@ function EditLanguage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {        
-        console.log("LOCATION", location)
+        
         DataNext("Languages", getDataAppend, "edit", id.current).then(
             (response) => {
                 setPost(response); 
@@ -34,8 +34,9 @@ function EditLanguage() {
     const onSubmit = (e) => {
         e.preventDefault();
         prepareEditData(dataRef, submitData);
-        updateData("Languages", submitData, updateFilter, id.current).catch((error) => error);
-        navigate("/languages");
+        Promise.allSettled([updateData("Languages", submitData, updateFilter, id.current)]).then(
+            () => navigate("/languages")
+        ).catch((error) => error);
     }
     return (
         <div className="content">

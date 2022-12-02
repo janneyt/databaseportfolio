@@ -16,8 +16,9 @@ function AddGame() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareGameFormData(dataRef, submitData);
-        insertData("Games", submitData.current);
-        navigate("/games")
+        Promise.allSettled([insertData("Games", submitData.current)]).then(
+            () => navigate("/games")
+        ).catch((error) => console.log(error))
     }; 
 
     return (

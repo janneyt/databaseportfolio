@@ -16,11 +16,10 @@ function AddItem() {
 
     const prepareAddData = (e) => {
         e.preventDefault();
-        console.log("items dataRef", dataRef)
         prepareFormData(dataRef, submitData);
-        console.log("items submitData", submitData.current)
-        insertData("Items", submitData.current);
-        navigate("/items")
+        Promise.allSettled([insertData("Items", submitData.current)]).then(
+            () => navigate("/items")
+        )
     }; 
 
     useEffect(() => {

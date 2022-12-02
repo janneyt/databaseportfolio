@@ -14,10 +14,12 @@ function AddLanguage() {
 
     const prepareAddData = (e) => {
         e.preventDefault();
-        console.log("DATAREF", dataRef);
         prepareFormData(dataRef, submitData);
-        insertData("Languages", submitData.current);
-        navigate("/languages")
+        Promise.allSettled([insertData("Languages", submitData.current)]).then(
+            () => navigate("/languages")
+        ).catch(
+            (error) => console.log(error)
+        )
     }; 
 
     return (

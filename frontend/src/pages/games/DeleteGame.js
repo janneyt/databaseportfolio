@@ -33,12 +33,9 @@ function DeleteGame() {
     e.preventDefault();
 
     setIsLoading(true);
-    deleteData("Games", id, filter)
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((error) => error);
-    navigate("/games");
+    Promise.allSettled([deleteData("Games", id, filter)]).then(
+      () => navigate("/games")
+    ).catch((error) => console.log(error))
   };
 
   return (
