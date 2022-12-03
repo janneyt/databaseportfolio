@@ -19,26 +19,15 @@ let data = [[]];
 
 let headers = [];
 
-/**
- * Unfortunately, implementing CRUD required a rewrite of the Items page. The steps are as follows:
- * The old tableData variable has to be global to resolve the promises
- *
- * Created a new async function (Items cannot be async or React gets mad) that calls
- * the axios method inside itemData.js
- *
- * Use a .then method and set the response equal to a new variable
- * Assign that variable to the global tableData variable
- * Return the new variable
- *
- * For some reason, all three of these steps must be followed to resolve the Promise
- * and also store the value higher up
- *
- * Call the new async function
- *
- * Still TODO: Write a funciton that creates the currently hardcoded string of requested data
- */
-
-
+/*
+* Function: insertData
+* Used to send an INSERT JSON request to the POST of the backend.
+* Params:
+*        table: The database table target for insert
+*   submitData: A dictionary with all values to submit as part of request
+*               In this case contains the columns and values arrays to pass.
+*       append: A string to append to the SQL query in the backend.
+*/
 const insertData = async (table, submitData, append = "") => {
   try {
     const specifics = {
@@ -59,7 +48,18 @@ const insertData = async (table, submitData, append = "") => {
   } catch {}
 };
 
-const updateData = async (page, updates, append, id) => {
+/*
+* Function: updateData
+* Used to send a request via POST to backend to update a set
+* of data.
+* 
+* Params:
+*        table: The database table target for insert
+*      updates: A dictionary with all values to submit as part of request
+*               In this case contains the columns and values arrays to pass.
+*       append: A string to append to the SQL query in the backend.
+*/
+const updateData = async (table, updates, append) => {
   if (!page) {
     throw new Error("Page could not be determined.");
   }
@@ -67,7 +67,7 @@ const updateData = async (page, updates, append, id) => {
     // Debug log
     console.log("UPDATES", updates);
     const specifics = JSON.stringify({
-        table: page,
+        table: table,
         columns: updates.current["columns"],
         values: updates.current["values"],
         filter: append});
@@ -87,21 +87,31 @@ const updateData = async (page, updates, append, id) => {
   } catch {}
 };
 
+/*
+* Function: deleteData
+* Use to send a request to backend to DELETE an entry from a table.
+* 
+* Params:
+*        table: The database table target for insert
+*           id: The id in the database of the item to be deleted
+*       filter: String at end of SQL that indicates what data to select.
+*/
 const deleteData = async (table, id, filter) => {
+
+  // debug
   console.log("id", id);
   console.log("filter", filter);
 
   // This is needed to make sure deleteData is working with the right headers
   const update_header = Array.from(headers);
-  const indexer = update_header.indexOf("Edit");
 
+  const indexer = update_header.indexOf("Edit");
   update_header.splice(indexer, 1);
 
   const indexer1 = update_header.indexOf("Delete");
-
   update_header.splice(indexer1, 1);
 
-  // Why pass id? Because I want to make a check here that the id is valid, i.e. greater than -1.
+  // Pass id to make sure it is valid.
   try {
     if (!table || !id || id === -1) {
       throw new Error(
@@ -148,8 +158,10 @@ const readData = async (specifics, tables, offset=2) => {
       headers = tables;
     }
     
+    // Debug
     console.log("DATA", data);
     console.log("HEADERS", headers);
+
     // Map the array of dicts to an array of arrays
     const filledData = data.map((obj) => {
       let item_array = [];
