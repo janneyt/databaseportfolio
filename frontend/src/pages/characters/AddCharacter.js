@@ -2,7 +2,7 @@
 import { insertData } from '../../axios/crud.js';
 
 // React
-import { useEffect, useState, useRef } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Components

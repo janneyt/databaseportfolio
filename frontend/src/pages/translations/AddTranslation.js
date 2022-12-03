@@ -1,7 +1,7 @@
 import Form from '../../components/Forms/Form';
 import { addFormContents } from '../../data/translationData';
 
-import { useEffect, useState, useRef } from 'react';
+import { useRef } from 'react';
 import { prepareFormData } from '../../functions/submitFunctions.js';
 import { insertData } from '../../axios/crud.js';
 import { useNavigate } from 'react-router-dom';
