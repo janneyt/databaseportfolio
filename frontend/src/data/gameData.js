@@ -1,62 +1,12 @@
 import Button from "../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import { ReturnedData } from "../axios/crud.js";
+import { switchGame } from "../functions/buttonFunctions/switchGame";
 import axios from "axios";
 
 const client = axios.create({
   baseURL: "http://localhost:60645",
 });
-
-let options = [];
-// const pullForeignKeys = (page, id) => {
-//   const header =
-//     page === "Games"
-//       ? gameHeaders
-//       : page === "Players"
-//       ? playerHeaders
-//       : countryHeaders;
-//   const data =
-//     header === gameHeaders
-//       ? header.slice(0, gameHeaders.length - 5)
-//       : header === playerHeaders
-//       ? header.slice(0, playerHeaders.length - 2)
-//       : header.slice(0, countryHeaders.length - 4);
-//   const specifics = {
-//     table:
-//       page === "Games" ? "Games" : page === "Players" ? "Players" : "Countries",
-//     columns: data,
-//     filter: " idGame = " + id.toString(),
-//   };
-//   return client
-//     .post("/select_data", specifics, {
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     })
-//     .then((response) => {
-//       for (const item of response.data) {
-//         let additional = {};
-//         additional = {
-//           value: item.gameName
-//             ? item.gameName
-//             : item.playerName
-//             ? item.playerName
-//             : item.countryName,
-
-//           label: item.gameName
-//             ? item.gameName
-//             : item.playerName
-//             ? item.playerName
-//             : item.countryName,
-//         };
-//         options.push(additional);
-//       }
-//       console.log("options before", options);
-//       return response;
-//     })
-//     .catch((error) => console.log(error));
-
-// };
 
 const fetchGameTableData = async (item_params, append, purpose, id, headers=null) => {
   const list_param = JSON.stringify(item_params);
@@ -72,7 +22,7 @@ const fetchGameTableData = async (item_params, append, purpose, id, headers=null
       : '{"columns":' + list_param + ', "table":"Games"}'
   );
 
-  let fetchedData = await ReturnedData("READ", parameters, headers);
+  let fetchedData = await ReturnedData("READ", parameters, headers, 3);
   console.log("fetched data", fetchedData);
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Add the buttons for the display list, anything inside the push
@@ -83,6 +33,11 @@ const fetchGameTableData = async (item_params, append, purpose, id, headers=null
     //fetchedData[index1].push(<p>Add languages fk here</p>);
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table
+    fetchedData[index1].push(
+      <Link to="/" >
+        <Button onClick={switchGame} value={fetchedData[index1][0]}>Set Active</Button>
+      </Link>
+    );
     fetchedData[index1].push(
       <Link to="/editGame" state={{ id: fetchedData[index1][0]  }}>
         <Button>Edit Game</Button>
