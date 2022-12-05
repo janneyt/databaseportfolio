@@ -18,7 +18,7 @@ function Games() {
 
 
     useEffect(() => {
-        DataNext("Games").then((response) => {
+        DataNext("Games", null, null, null, 3).then((response) => {
             console.log(response);
             setPost(response);
             setIsLoading(false);
