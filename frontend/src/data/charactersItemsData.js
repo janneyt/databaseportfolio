@@ -2,6 +2,7 @@ import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import { ReturnedData } from "../axios/crud.js";
 
+
 const fetchCHITableData = async (
   item_params,
   append,
@@ -148,6 +149,14 @@ const editFormContents = [
   },
 ];
 
+const searchFormContents = [
+  {
+    type: "text",
+    name: "idItem",
+    label: "Search by item name or character name"
+  }
+]
+
 const nullableItems = [{ value: "null", label: "Null" }];
 
 const deleteFormContents = [
@@ -164,5 +173,6 @@ export {
   addFormContents,
   editFormContents,
   deleteFormContents,
+  searchFormContents,
   fetchCHITableData,
 };

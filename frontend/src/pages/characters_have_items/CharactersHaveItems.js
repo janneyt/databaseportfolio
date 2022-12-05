@@ -5,6 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 import { DataNext } from '../../axios/DataNext.js';
 import { useEffect, useState } from "react";
+import SearchBar from "../../components/SearchBar.js";
+
+// Data
+import {
+  searchFormContents
+} from "../../data/charactersItemsData";
 
 function CharactersHaveItems() {
   const [post, setPost] = useState([{}]);
@@ -29,6 +35,16 @@ function CharactersHaveItems() {
       <div id="content">
         <h1>Characters Have Items</h1>
         <ShowIfLoaded isLoading={isLoading}>
+          Don't see what you want? Search by item or Character
+          <SearchBar searchFormContents={searchFormContents} 
+            page={"Characters_has_Items"}
+            joinedPage1={"Characters"}
+            joinedPage2={"Items"}
+            joinedValue1={"Character"}
+            joinedValue2={"Item"}
+            nameValue1={"characterName"}
+            nameValue2={"itemName"}
+            headers={CharacterItemsHeaders}/>
           <TableView headers={CharacterItemsHeaders} listData={post} />
           <Link to="/addItemToCharacter">
             <Button>Add Item to Character</Button>

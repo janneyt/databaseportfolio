@@ -102,7 +102,7 @@ const DataNext = async (page, append = null, purpose = "READ", id = null, offset
     if (!page) {
         throw new Error("Please provide a page name for your data transfer.");
     }
-
+    console.log("In DATANEXT", page, append);
     // Get the right header according to the page parameter passed
     const headers = headerDict[page.toLowerCase()];
     console.log("DATANEXT HEADERS", headers);

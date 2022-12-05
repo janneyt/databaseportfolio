@@ -18,15 +18,9 @@ const Form = ({ submitText="Submit", inputState, onSubmit, refDict={}}) => {
     
     // Why two nearly identical handleFormChange functions? Because ReactSelect passes e.target automatically
     const handleFormChangeSelects = (index, objvalue, objname) => {
-        console.log("obj incoming", objvalue, objname)
         refDict.current[objname.name] = objvalue.value;
-        console.log("objname", objname)
-        console.log("objvalue", objvalue)
-        console.log("refDict", refDict.current)
         let input = [...inputFields];
         input[index].value = objvalue.value;
-        console.log("input[index].value in handleFormChangeSelects", input[index])
-        
         setInputFields(input);
     }
 

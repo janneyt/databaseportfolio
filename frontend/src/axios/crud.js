@@ -163,14 +163,14 @@ const readData = async (specifics, tables, offset=2) => {
     console.log("HEADERS", headers);
 
     // Map the array of dicts to an array of arrays
-    const filledData = data.map((obj) => {
+    const filledData = Array.isArray(data) ? data.map((obj) => {
       let item_array = [];
       // For every row in data
       for (let i = 0; i < headers.length - offset; i++) {
         item_array.push(obj[headers[i]]);
       }
       return item_array;
-    });
+    }) : ["No Results"];
 
     console.log("FILLED DATA", filledData);
     return filledData;
@@ -211,6 +211,7 @@ const fillData = async (specifics) => {
    */
 
   try {
+    console.log("SPECIFICS IN FILL DATA", specifics)
     const response = await client.post("/select_data", specifics, {
       headers: {
         "Content-Type": "application/json",
