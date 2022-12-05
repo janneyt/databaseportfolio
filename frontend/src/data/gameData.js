@@ -106,21 +106,9 @@ const fetchGameTableData = async (item_params, append, purpose, id, headers=null
       // TODO: dynamically generate fetchedData's indices, instead of hardcoding
       {
         type: "text",
-        name: "itemname",
-        label: "Name Your Item:",
-        value: fetchedData[find][1],
-      },
-      {
-        type: "text",
-        name: "itemdescription",
-        label: "Describe Your Item",
-        value: fetchedData[find][2],
-      },
-      {
-        type: "text",
         name: "gamename",
         label: "Game Name",
-        value: fetchedData[find][3],
+        value: fetchedData[find][1],
       },
     ];
 
@@ -187,21 +175,12 @@ const addFormContents = [
   { type: "text", name: "gamename", label: "Name Your Game:" },
 ];
 
-const editFormContents = [
-  {
-    type: "text",
-    name: "gamename",
-    label: "Name Your Game:",
-    value: "${gameName}",
-  },
-];
 
 const deleteFormContents = [{ type: "hidden", name: "${idGame}" }];
 
 export {
   tableData,
   addFormContents,
-  editFormContents,
   deleteFormContents,
   fetchGameTableData,
 };
