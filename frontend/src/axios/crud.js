@@ -226,7 +226,7 @@ const fillData = async (specifics) => {
   }
 };
 
-const ReturnedData = async (action, specifics, tables) => {
+const ReturnedData = async (action, specifics, tables, offset=2) => {
   /*
         Takes the action and specifics data members and creates axios posts.
 
@@ -261,7 +261,7 @@ const ReturnedData = async (action, specifics, tables) => {
   // There's probably a more elegant way to do this but I don't want to break it
 
   if (action.toUpperCase() === "READ") {
-    return await readData(specifics, tables);
+    return await readData(specifics, tables, offset);
   } else if (action.toUpperCase() === "UPDATE") {
     return updateData(specifics);
   } else if (action.toUpperCase() === "READINTERSECT") {
