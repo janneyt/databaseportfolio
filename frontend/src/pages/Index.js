@@ -3,17 +3,7 @@ import Button from '../components/Button';
 
 function Index() {
     return(
-        <div id="contents">
-            <nav>
-                <Link to="/characters"><Button>Characters</Button></Link>
-                <Link to="/countries"><Button>Countries</Button></Link>
-                <Link to="/games"><Button>Games</Button></Link>
-                <Link to="/items"><Button>Items</Button></Link>
-                <Link to="/languages"><Button>Languages</Button></Link>
-                <Link to="/players"><Button>Players</Button></Link>
-                {/* <Link to="/translations"><Button>Translations</Button></Link> */}
-            </nav>
-            
+        <div id="contents">            
             <h1>Welcome</h1>
             <p>The following pages are our intersection tables. We had a bug that gave us issues implementing the regular non-intersection tables. So these are still a WIP.
             </p>

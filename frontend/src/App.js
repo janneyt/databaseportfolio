@@ -50,59 +50,78 @@ import CountriesHaveLanguages from './pages/countries_have_languages/CountriesHa
 import DeleteLanguageFromCountry from './pages/countries_have_languages/DeleteLanguageFromCountry';
 import EditLanguageToCountry from './pages/countries_have_languages/EditLanguageToCountry';
 
+import Header from './components/Header';
+import Footer from './components/Footer';
+import {Link} from 'react-router-dom';
+import Button from './components/Button';
+
 function App() {
   return (
-    <Router>
-      <Routes>
-      
-        <Route path="/" element={<Index />} />
+    <>
+      <Router>
+        <Header>
+          <nav>
+              <Link to="/characters"><Button>Characters</Button></Link>
+              <Link to="/countries"><Button>Countries</Button></Link>
+              <Link to="/games"><Button>Games</Button></Link>
+              <Link to="/items"><Button>Items</Button></Link>
+              <Link to="/languages"><Button>Languages</Button></Link>
+              <Link to="/players"><Button>Players</Button></Link>
+              {/* <Link to="/translations"><Button>Translations</Button></Link> */}
+          </nav>
+        </Header>
+        <Routes>
+        
+          <Route path="/" element={<Index />} />
 
-        <Route path="/addCharacter" element={<AddCharacter />} />
-        <Route path="/editCharacter" element={<EditCharacter />} />
-        <Route path="/deleteCharacter" element={<DeleteCharacter />} />
-        <Route path="/characters" element={<Characters />} />
+          <Route path="/addCharacter" element={<AddCharacter />} />
+          <Route path="/editCharacter" element={<EditCharacter />} />
+          <Route path="/deleteCharacter" element={<DeleteCharacter />} />
+          <Route path="/characters" element={<Characters />} />
 
-        <Route path="/addCountry" element={<AddCountry />} />
-        <Route path="/editCountry" element={<EditCountry />} />
-        <Route path="/deleteCountry" element={<DeleteCountry />} />
-        <Route path="/countries" element={<Countries />} />
+          <Route path="/addCountry" element={<AddCountry />} />
+          <Route path="/editCountry" element={<EditCountry />} />
+          <Route path="/deleteCountry" element={<DeleteCountry />} />
+          <Route path="/countries" element={<Countries />} />
 
-        <Route path="/addGame" element={<AddGame />} />
-        <Route path="/editGame" element={<EditGame />} />
-        <Route path="/deleteGame" element={<DeleteGame />} />
-        <Route path="/games" element={<Games />} />
+          <Route path="/addGame" element={<AddGame />} />
+          <Route path="/editGame" element={<EditGame />} />
+          <Route path="/deleteGame" element={<DeleteGame />} />
+          <Route path="/games" element={<Games />} />
 
-        <Route path="/addItem" element={<AddItem />} />
-        <Route path="/editItem" element={<EditItem />} />
-        <Route path="/deleteItem" element={<DeleteItem />} />
-        <Route path="/items" element={<Items />} />
+          <Route path="/addItem" element={<AddItem />} />
+          <Route path="/editItem" element={<EditItem />} />
+          <Route path="/deleteItem" element={<DeleteItem />} />
+          <Route path="/items" element={<Items />} />
 
-        <Route path="/addLanguage" element={<AddLanguage />} />
-        <Route path="/editLanguage" element={<EditLanguage />} />
-        <Route path="/deleteLanguage" element={<DeleteLanguage />} />
-        <Route path="/languages" element={<Languages />} />
+          <Route path="/addLanguage" element={<AddLanguage />} />
+          <Route path="/editLanguage" element={<EditLanguage />} />
+          <Route path="/deleteLanguage" element={<DeleteLanguage />} />
+          <Route path="/languages" element={<Languages />} />
 
-        <Route path="/addPlayer" element={<AddPlayer />} />
-        <Route path="/editPlayer" element={<EditPlayer />} />
-        <Route path="/deletePlayer" element={<DeletePlayer />} />
-        <Route path="/players" element={<Players />} />
+          <Route path="/addPlayer" element={<AddPlayer />} />
+          <Route path="/editPlayer" element={<EditPlayer />} />
+          <Route path="/deletePlayer" element={<DeletePlayer />} />
+          <Route path="/players" element={<Players />} />
 
-        <Route path="/addItemToCharacter" element={<AddItemToCharacter />} />
-        <Route path="/editItemToCharacter" element={<EditItemToCharacter />} />
-        <Route path="/deleteItemFromCharacter" element={<DeleteItemFromCharacter />} />
-        <Route path="/charactersHaveItems" element={<CharactersHaveItems />} />
+          <Route path="/addItemToCharacter" element={<AddItemToCharacter />} />
+          <Route path="/editItemToCharacter" element={<EditItemToCharacter />} />
+          <Route path="/deleteItemFromCharacter" element={<DeleteItemFromCharacter />} />
+          <Route path="/charactersHaveItems" element={<CharactersHaveItems />} />
 
-        <Route path="/addLanguageToCharacter" element={<AddLanguageToCharacter />} />
-        <Route path="/deleteLanguageFromCharacter" element={<DeleteLanguageFromCharacter />} />
-        <Route path="/charactersHaveLanguages" element={<CharactersHaveLanguages />} /> 
-        <Route path="/editLanguageToCharacter" element={<EditLanguageToCharacter />} />
+          <Route path="/addLanguageToCharacter" element={<AddLanguageToCharacter />} />
+          <Route path="/deleteLanguageFromCharacter" element={<DeleteLanguageFromCharacter />} />
+          <Route path="/charactersHaveLanguages" element={<CharactersHaveLanguages />} /> 
+          <Route path="/editLanguageToCharacter" element={<EditLanguageToCharacter />} />
 
-        <Route path="/addLanguageToCountry" element={<AddLanguageToCountry />} />
-        <Route path="/deleteLanguageFromCountry" element={<DeleteLanguageFromCountry />} />
-        <Route path="/countriesHaveLanguages" element={<CountriesHaveLanguages />} />
-        <Route path="/editLanguageToCountry" element={<EditLanguageToCountry />} />
-      </Routes>
-    </Router>
+          <Route path="/addLanguageToCountry" element={<AddLanguageToCountry />} />
+          <Route path="/deleteLanguageFromCountry" element={<DeleteLanguageFromCountry />} />
+          <Route path="/countriesHaveLanguages" element={<CountriesHaveLanguages />} />
+          <Route path="/editLanguageToCountry" element={<EditLanguageToCountry />} />
+        </Routes>
+        <Footer></Footer>
+      </Router>
+    </>
   );
 }
 
