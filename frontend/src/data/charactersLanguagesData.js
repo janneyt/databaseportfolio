@@ -156,9 +156,18 @@ const deleteFormContents = [
   },
 ];
 
+const searchFormContents = [
+  {
+    type: "text",
+    name: "idItem",
+    label: "Search by language name or character name"
+  }
+]
+
 
 
 export {
+  searchFormContents,
   addFormContents,
   editFormContents,
   deleteFormContents,

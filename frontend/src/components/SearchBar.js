@@ -15,7 +15,6 @@ import TableView from "./TableView/TableView";
 const SearchBar = (props) => {
   const dataRef = useRef({});
   const submitData = useRef({ columns: [], values: [] });
-  console.log("SEARCHFORM", props.searchFormContents);
   const [searchForm, setSearchForm] = useState(props.searchFormContents);
   const [searchItems, setSearchItems] = useState([]);
 

@@ -6,6 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import ShowIfLoaded from "../../components/ShowIfLoaded";
 import { DataNext } from '../../axios/DataNext.js';
 import { useEffect, useState } from "react";
+import SearchBar from "../../components/SearchBar.js";
+
+// Data
+import {
+  searchFormContents
+} from "../../data/charactersLanguagesData";
 
 function CharactersHaveLanguages() {
   const [post, setPost] = useState();
@@ -29,6 +35,16 @@ function CharactersHaveLanguages() {
     <>
       <div id="content">
         <h1>Characters Have Languages</h1>
+        Don't see what you want? Search for languages or characters to see the relationships
+        <SearchBar searchFormContents={searchFormContents} 
+            page={"Characters_has_Languages"}
+            joinedPage1={"Characters"}
+            joinedPage2={"Languages"}
+            joinedValue1={"Character"}
+            joinedValue2={"Language"}
+            nameValue1={"characterName"}
+            nameValue2={"languageName"}
+            headers={CharacterLanguageHeaders}/>
         <ShowIfLoaded isLoading={isLoading}>
           <TableView headers={CharacterLanguageHeaders} listData={post} />
           <Link to="/addLanguageToCharacter">

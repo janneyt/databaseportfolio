@@ -34,8 +34,7 @@ function CharactersHaveItems() {
     <>
       <div id="content">
         <h1>Characters Have Items</h1>
-        <ShowIfLoaded isLoading={isLoading}>
-          Don't see what you want? Search by item or Character
+        Don't see what you want? Search by item or character to see the relationships
           <SearchBar searchFormContents={searchFormContents} 
             page={"Characters_has_Items"}
             joinedPage1={"Characters"}
@@ -45,6 +44,8 @@ function CharactersHaveItems() {
             nameValue1={"characterName"}
             nameValue2={"itemName"}
             headers={CharacterItemsHeaders}/>
+        <ShowIfLoaded isLoading={isLoading}>
+          
           <TableView headers={CharacterItemsHeaders} listData={post} />
           <Link to="/addItemToCharacter">
             <Button>Add Item to Character</Button>
