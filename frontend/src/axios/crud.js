@@ -60,7 +60,7 @@ const insertData = async (table, submitData, append = "") => {
 *       append: A string to append to the SQL query in the backend.
 */
 const updateData = async (table, updates, append) => {
-  if (!page) {
+  if (!table) {
     throw new Error("Page could not be determined.");
   }
   try {
