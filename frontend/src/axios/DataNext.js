@@ -30,6 +30,8 @@ import {
     LLRHeaders,
     TranslationHeaders} from '../data/headers';
 
+import { getCurrentGame } from "../functions/gameFunctions";
+
 // Assign a string to each fetchFunction
 // Used in DataNext to select the right fetch func
 const fetchFunctionDict = {
@@ -57,12 +59,28 @@ const headerDict = {
     "players": PlayerHeaders,
     "countries": CountryHeaders,
     "languages": LanguageHeaders,
-    "translationoutputs": TranslationHeaders,
     "characters_has_items": CharacterItemsHeaders,
     "characters_has_languages": CharacterLanguageHeaders,
     "countries_has_languages": CountryLanguageHeaders,
-    "langaugeslanguagerules": LLRHeaders,
 }
+
+// Used when filtering for content of a table
+// within a specified game
+const filterGame = {
+    "items": true,
+    "characters": true,
+    "languagerules": true,
+    "games": true,
+    "players": true,
+    "countries": true,
+    "languages": true,
+    "characters_has_items": false,
+    "characters_has_languages": false,
+    "countries_has_languages": false,
+}
+
+// Settings for games
+const gameSettings = {'current': getCurrentGame()};
 
 /*
 * Function: DataNext
@@ -97,6 +115,18 @@ const DataNext = async (page, append = null, purpose = "READ", id = null, offset
     // Prepare the headers by slicing the buttons off the given headers
     // array
     const requestedHeaders = headers.slice(0, headers.length - offset);
+
+    // Get an updated current game
+    gameSettings.current = getCurrentGame();
+
+    // Append a game filter feature
+    if (gameSettings.current > 0 && filterGame[page.toLowerCase()]) {
+        if (append) {
+            append = append + ' AND idgame = ' + gameSettings.current;
+        } else {
+            append = 'WHERE idgame = ' + gameSettings.current;
+        };
+    }
 
     // Get the data with function assigned to the given "page" key
     const dataResults = await fetchFunctionDict[page.toLowerCase()](
