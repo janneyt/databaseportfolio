@@ -43,6 +43,7 @@ const CountryLanguageHeaders = [
 ];
 
 const GameHeaders = [
+    "idGame",
     "gameName",
     "Edit",
     "Delete",
