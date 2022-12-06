@@ -10,7 +10,7 @@ import Button from "../components/Button";
 
 // Create an axios client to use for all requests
 const client = axios.create({
-  baseURL: "http://localhost:60645",
+  baseURL: "http://flip3.engr.oregonstate.edu:60645",
 });
 
 let keys = [null];
