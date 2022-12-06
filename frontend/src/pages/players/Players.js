@@ -20,7 +20,6 @@ function Players() {
 
     useEffect(() => {
         DataNext("Players").then((response) => {
-            console.log(response);
             setPost(response);
             setIsLoading(false);
         });

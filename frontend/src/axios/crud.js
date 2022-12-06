@@ -65,7 +65,6 @@ const updateData = async (table, updates, append) => {
   }
   try {
     // Debug log
-    console.log("UPDATES", updates);
     const specifics = JSON.stringify({
         table: table,
         columns: updates.current["columns"],
@@ -73,7 +72,6 @@ const updateData = async (table, updates, append) => {
         filter: append});
     
 
-    console.log("SPECIFICS for edit", specifics);
     return client
       .post("/update_data", specifics, {
         headers: {
@@ -97,10 +95,6 @@ const updateData = async (table, updates, append) => {
 *       filter: String at end of SQL that indicates what data to select.
 */
 const deleteData = async (table, id, filter) => {
-
-  // debug
-  console.log("id", id);
-  console.log("filter", filter);
 
   // This is needed to make sure deleteData is working with the right headers
   const update_header = Array.from(headers);
@@ -133,12 +127,6 @@ const deleteData = async (table, id, filter) => {
 };
 
 const readData = async (specifics, tables, offset=2) => {
-  console.log("SPECIFICS", specifics);
-
-  // When loading many tables, the headers have to change
-  // Debug headers
-  console.log("headers at start of Read Data", headers);
-  
 
   let old_headers = headers;
   if (tables) {
@@ -157,10 +145,7 @@ const readData = async (specifics, tables, offset=2) => {
       old_headers = headers;
       headers = tables;
     }
-    
-    // Debug
-    console.log("DATA", data);
-    console.log("HEADERS", headers);
+
 
     // Map the array of dicts to an array of arrays
     const filledData = Array.isArray(data) ? data.map((obj) => {
@@ -172,7 +157,6 @@ const readData = async (specifics, tables, offset=2) => {
       return item_array;
     }) : ["No Results"];
 
-    console.log("FILLED DATA", filledData);
     return filledData;
     
     
@@ -191,8 +175,6 @@ const readData = async (specifics, tables, offset=2) => {
         <Button>DeleteItem</Button>
       </Link>
     );
-
-    console.log(error);
     return filledData;
   }
 };
@@ -211,7 +193,6 @@ const fillData = async (specifics) => {
    */
 
   try {
-    console.log("SPECIFICS IN FILL DATA", specifics)
     const response = await client.post("/select_data", specifics, {
       headers: {
         "Content-Type": "application/json",

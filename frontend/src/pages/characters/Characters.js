@@ -42,7 +42,6 @@ function Characters() {
     useEffect(() => {
         
         DataNext("Characters").then((response) => {
-            console.log(response);
             setPost(response);
             setIsLoading(false);
             return response;

@@ -119,7 +119,7 @@ const DataNext = async (page, append = null, purpose = "READ", id = null, offset
     gameSettings.current = getCurrentGame();
 
     // Append a game filter feature
-    if (gameSettings.current > 0 && filterGame[page.toLowerCase()]) {
+    if (gameSettings.current > 0 && filterGame[page.toLowerCase()] && page.toLowerCase() !== "games") {
         if (append) {
             append = append + ' AND idgame = ' + gameSettings.current;
         } else {
