@@ -59,7 +59,6 @@ const SearchBar = (props) => {
               `WHERE id${props.joinedValue2} in (${ids})`
             ),
           ]).then((final_values) => {
-            console.log("final_values", final_values);
             setSearchItems(final_values[0].value);
             setIsLoading(false);
           });
