@@ -41,8 +41,7 @@ function EditItemToCharacter() {
 
 //{value: null, label: null}
 
-      editFormContents[0].options = [{value: null, label: "null"}]
-      editFormContents[0].options.push(...createEditFormContents(response));
+      editFormContents[0].options = createEditFormContents(response);
       console.log("editFormContents", editFormContents[0].options)
       setEditForm(editFormContents);
       if (response[0] !== []) {
