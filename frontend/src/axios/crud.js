@@ -105,6 +105,9 @@ const deleteData = async (table, id, filter) => {
   const indexer1 = update_header.indexOf("Delete");
   update_header.splice(indexer1, 1);
 
+  const indexer2 = update_header.indexOf("Activate");
+  update_header.splice(indexer2, 1);
+
   // Pass id to make sure it is valid.
   try {
     if (!table || !id || id === -1) {

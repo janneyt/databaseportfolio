@@ -22,7 +22,7 @@ function EditGame() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {        
-        DataNext("Games", getDataAppend, "edit", id.current).then(
+        DataNext("Games", getDataAppend, "edit", id.current, 3).then(
             (response) => {
                 setPost(response);
                 return response}

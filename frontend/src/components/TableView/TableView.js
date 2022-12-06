@@ -16,7 +16,7 @@ const TableView = ({headers, listData}) => {
 
     return (
         <>
-            <p class="small">No data? Make sure you activate the right game:
+            <p className="small">No data? Make sure you activate the right game:
             <Button onClick={() => {navigate("/games")}} className='nav-button-small'>Games</Button></p>
             <table>
                 <thead>

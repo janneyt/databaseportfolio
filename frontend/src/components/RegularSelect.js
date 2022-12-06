@@ -1,7 +1,6 @@
 import Select from 'react-select';
 
 const RegularSelect = ({inputObj}) => {
-    console.log(inputObj);
     return (
         <div className="select">
             <label htmlFor={inputObj.name}>{inputObj.label}</label>
