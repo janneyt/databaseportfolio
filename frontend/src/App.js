@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Nav from './components/Nav';
 
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
@@ -60,15 +61,7 @@ function App() {
     <>
       <Router>
         <Header>
-          <nav>
-              <Link to="/characters"><Button>Characters</Button></Link>
-              <Link to="/countries"><Button>Countries</Button></Link>
-              <Link to="/games"><Button>Games</Button></Link>
-              <Link to="/items"><Button>Items</Button></Link>
-              <Link to="/languages"><Button>Languages</Button></Link>
-              <Link to="/players"><Button>Players</Button></Link>
-              {/* <Link to="/translations"><Button>Translations</Button></Link> */}
-          </nav>
+         <Nav></Nav>
         </Header>
         <Routes>
         
