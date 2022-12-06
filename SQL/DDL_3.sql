@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS `Characters` (
   `idGame` INT NOT NULL,
   `idCountry` INT NULL,
   PRIMARY KEY (`idCharacter`),
-  INDEX `fk_Languages_Games1_idx` (`idGame` ASC) VISIBLE,
-  CONSTRAINT `fk_Languages_Games1`
+  INDEX `fk_Characters_Games1_idx` (`idGame` ASC) VISIBLE,
+  CONSTRAINT `fk_Characters_Games1`
     FOREIGN KEY (`idGame`)
     REFERENCES `Games` (`idGame`)
     ON DELETE CASCADE
