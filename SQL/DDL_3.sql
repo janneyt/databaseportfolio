@@ -90,7 +90,6 @@ CREATE TABLE IF NOT EXISTS `Characters` (
     REFERENCES `Games` (`idGame`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-  )
 ENGINE = InnoDB;
 
 
@@ -119,8 +118,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Countries_has_Languages` ;
 
 CREATE TABLE IF NOT EXISTS `Countries_has_Languages` (
-  `idCountry` INT NOT NULL,
-  `idLanguage` INT NOT NULL,
+  `idCountry` INT NULL,
+  `idLanguage` INT NULL,
   INDEX `fk_Countries_has_Languages_Languages1_idx` (`idLanguage` ASC) VISIBLE,
   INDEX `fk_Countries_has_Languages_Countries1_idx` (`idCountry` ASC) VISIBLE,
   PRIMARY KEY (`idCountry`, `idLanguage`),
@@ -142,8 +141,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Characters_has_Languages` ;
 
 CREATE TABLE IF NOT EXISTS `Characters_has_Languages` (
-  `idCharacter` INT NOT NULL,
-  `idLanguage` INT NOT NULL,
+  `idCharacter` INT NULL,
+  `idLanguage` INT NULL,
   INDEX `fk_Characters_has_Languages_Languages1_idx` (`idLanguage` ASC) VISIBLE,
   INDEX `fk_Characters_has_Languages_Characters1_idx` (`idCharacter` ASC) VISIBLE,
   PRIMARY KEY (`idCharacter`, `idLanguage`),
@@ -166,8 +165,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `Characters_has_Items` ;
 
 CREATE TABLE IF NOT EXISTS `Characters_has_Items` (
-  `idCharacter` INT NOT NULL,
-  `idItem` INT NOT NULL,
+  `idCharacter` INT NULL,
+  `idItem` INT NULL,
   PRIMARY KEY (`idCharacter`, `idItem`),
   INDEX `fk_Characters_has_Items_Items1_idx` (`idItem` ASC) VISIBLE,
   INDEX `fk_Characters_has_Items_Characters1_idx` (`idCharacter` ASC) VISIBLE,
