@@ -13,9 +13,9 @@ app = Flask(__name__)
 CORS(app)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_janneyt'
-app.config['MYSQL_PASSWORD'] = '5008'
-app.config['MYSQL_DB'] = 'cs340_janneyt'
+app.config['MYSQL_USER'] = 'cs340_person'
+app.config['MYSQL_PASSWORD'] = 'Nothing to see here'
+app.config['MYSQL_DB'] = 'cs340_person'
 
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
