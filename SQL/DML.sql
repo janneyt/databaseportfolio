@@ -478,6 +478,8 @@ select (
 ), chr.idCountry from Countries as chr
 where chr.idCountry = '${passed variable}';
 
+-- Search
+
 select idItem, itemName from Items where itemName like `${passed from webpage}`
 select idCountry, countryName from Countries where countryName like `${passed from webpage}`
 
