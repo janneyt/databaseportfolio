@@ -675,13 +675,7 @@ COMMIT;
 -- SQL for search feature
 
 
-SELECT gameName from Games where gameName like '{Search term entered here}'
-
-UNION ALL
--- SQL for searching by players
-
-SELECT playerName from Games 
-join Players on Games.idGame = Players.idGame
-where playerName like '{Search term entered here}';
+SELECT idItem, itemName from Items where idItem LIKE "${passed from html page}"
+SELECT idCharacter, characterNameName from Characters where idCharacter LIKE "${passed from html page}"
 COMMIT;
 
