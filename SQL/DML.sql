@@ -28,7 +28,7 @@ COMMIT;
 -- Create Character sql
 
 
-INSERT INTO Characters (characterName, characterDescription, idPlayer, idGame, idCountry) VALUES ('${This will be a name}','${This will be a description}',1,1, 1);
+INSERT INTO Characters (characterName, characterDescription, idGame) VALUES ('${This will be a name}','${This will be a description}',1);
 
 COMMIT;
 
@@ -169,7 +169,7 @@ COMMIT;
 -- Create item sql
 
 
-INSERT INTO Items (itemName, itemDescription, idGame, idCountry) VALUES ('${This will be a name}','${This will be description}', 1, 1);
+INSERT INTO Items (itemName, itemDescription, idGame) VALUES ('${This will be a name}','${This will be description}', 1);
 
 COMMIT;
 
@@ -198,7 +198,6 @@ COMMIT;
 
 -- Retrieve one specific player by id
 
-
 SELECT idPlayer, playerName from Players
 WHERE idPlayer = '${HTML page will send over id to be retrieved}';
 
@@ -217,102 +216,6 @@ COMMIT;
 
 
 INSERT INTO Players (playerName, idGame) VALUES ('${This will be a name}', 1);
-
-COMMIT;
-
--- Update player sql
-
-
-UPDATE Players
-SET playerName = '${new name}'
-WHERE idPlayer = '${id from html page}';
-COMMIT;
-
--- Delete Player by id SQL
-
-
-DELETE from Players where idPlayer = '${id passed from html page}';
-COMMIT;
-
--- Translations SQLs --
-
--- Display all translations
-
-
-SELECT idTranslationInput, 
-       inputContents, 
-       (select lht.idTranslationOutput
-            from Languages_has_TranslationOutputs as lht
-            where ti.idTranslationInput = lht.idTranslationInput),
-        (select outputContents 
-            from TranslationOutputs as tout
-            join Languages_has_TranslationOutputs as lht
-            on lht.idTranslationOutput = tout.idTranslationOutput
-            where lht.idTranslationInput = ti.idTranslationInput)
-        from TranslationInputs as ti;
-
-COMMIT;
-
--- Retrieve one specific translation by id
-
-
-SELECT idTranslationInput, 
-       inputContents, 
-       (select lht.idTranslationOutput
-            from Languages_has_TranslationOutputs as lht
-            where ti.idTranslationInput = lht.idTranslationInput),
-        (select outputContents 
-            from TranslationOutputs as tout
-            join Languages_has_TranslationOutputs as lht
-            on lht.idTranslationOutput = tout.idTranslationOutput
-            where lht.idTranslationInput = ti.idTranslationInput)
-        from TranslationInputs as ti
-WHERE inputContents = '${HTML page will send over id to be retrieved}';
-
-
-COMMIT;
-
-
-
--- Create translation sql
-
-
-INSERT INTO TranslationInputs (inputContents) VALUES ('${This will be an English word}');
-INSERT into TranslationOutputs (outputContents) VALUES ('${This will be a translated word}');
-
-COMMIT;
-
--- Update Translation output or intput not possible as translation is deterministic
-
-
--- Delete Player by id SQL
-
-
-DELETE from TranslationOutputs where idTranslationOutput = '${id passed from html page}';
-COMMIT;
-
--- Players SQLs --
-
--- Display all players
-
-
-SELECT idPlayer, playerName from Players;
-
-COMMIT;
-
--- Retrieve one specific item by id
-
-
-SELECT idPlayer, playerName from Players
-WHERE idPlayer = '${HTML page will send over id to be retrieved}';
-
-COMMIT;
-
--- Retrieve one specific item by name
-
-
-SELECT idPlayer, playerName from Players 
-WHERE playerName = '${game Name passed from html page}';
 
 COMMIT;
 
@@ -511,7 +414,6 @@ COMMIT;
 -- Retrieve one specific language by id
 
 
-
 SELECT lang.languageName, chr.countryName from Countries_has_Languages as chr_lang
 join Languages as lang 
 on chr_lang.idLanguage = lang.idLanguage
@@ -576,112 +478,8 @@ select (
 ), chr.idCountry from Countries as chr
 where chr.idCountry = '${passed variable}';
 
-COMMIT;
+select idItem, itemName from Items where itemName like `${passed from webpage}`
+select idCountry, countryName from Countries where countryName like `${passed from webpage}`
 
--- LanguageRules have languages SQLs --
-
--- Display all language-Language_Rule relationships
-
-
-SELECT lang.languageName, lrn.ruleName from Languages_has_LanguageRules as lrn_lang
-join Languages as lang 
-on lrn_lang.idLanguage = lang.idLanguage
-join LanguageRules as lrn 
-on lrn.idLanguageRule = lrn_lang.idLanguageRule; 
-
-COMMIT;
-
--- Retrieve one specific language by id
-
-
-SELECT lang.languageName, lrn.ruleName from Languages_has_LanguageRules as lrn_lang
-join Languages as lang 
-on lrn_lang.idLanguage = lang.idLanguage
-join LanguageRules as lrn 
-on lrn.idLanguageRule = lrn_lang.idLanguageRule
-where lang.idLanguage = '${Passed id}'; 
-
-COMMIT;
-
--- Retrieve one specific Language_Rule by id
-
-
-SELECT lang.languageName, lrn.ruleName from Languages_has_LanguageRules as lrn_lang
-join Languages as lang
-on lrn_lang.idLanguage = lang.idLanguage
-join LanguageRules as lrn 
-on lrn.idLanguageRule = lrn_lang.idLanguageRule
-where lrn.idLanguageRule = '${Passed id}'; 
-
-COMMIT;
-
--- Create Language_Rule-item relationship sql
-
-
-INSERT INTO Languages_has_LanguageRules (idLanguage, idLanguageRule)
-select (
-    select idLanguage from Languages where idLanguage = '${passed variable}'
-), lrn.idLanguageRule from LanguageRules as lrn
-where lrn.idLanguageRule = '${passed variable}';
-
-COMMIT;
-
--- Language Rules SQLs --
-
--- Display all LanguageRules
-
-
-SELECT idLanguageRule, ruleName from LanguageRules;
-
-COMMIT;
-
--- Retrieve one specific item by id
-
-
-SELECT idLanguageRule, ruleName from LanguageRules
-WHERE idLanguageRule = '${HTML page will send over id to be retrieved}';
-
-COMMIT;
-
--- Retrieve one specific item by name
-
-
-SELECT idLanguageRule, ruleName from LanguageRules 
-WHERE ruleName = '${game Name passed from html page}';
-
-COMMIT;
-
--- Create LanguageRules sql
-
-
-INSERT INTO LanguageRules (ruleName, definition) VALUES ('${This will be a name}','description of rule');
-
-COMMIT;
-
--- Update LanguageRules sql
-
-
-UPDATE LanguageRules
-SET ruleName = '${new name}'
-WHERE idLanguageRule = '${id from html page}';
-COMMIT;
-
--- Delete LanguageRules by id SQL
-
-
-DELETE from LanguageRules where idLanguageRule = '${id passed from html page}';
-COMMIT;
-
--- SQL for search feature
-
-
-SELECT gameName from Games where gameName like '{Search term entered here}'
-
-UNION ALL
--- SQL for searching by players
-
-SELECT playerName from Games 
-join Players on Games.idGame = Players.idGame
-where playerName like '{Search term entered here}';
 COMMIT;
 

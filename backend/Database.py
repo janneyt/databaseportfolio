@@ -1,4 +1,3 @@
-from Data import Data
 from flask_mysqldb import MySQL
 
 class Database:
@@ -7,9 +6,7 @@ class Database:
         """Initialize variables, need to give a MySQL
         object with app data given as the sql_object."""
         self._mysql = sql_object
-        self._queries = queries
-        self._results = Data()
-        self._debug = True
+        self._debug = False
 
     def debug(self, reason: str, msg: str):
         """Method that prints a message to the command line
@@ -36,66 +33,37 @@ class Database:
 
         return input
 
-    def add_query(self, query: str, data = {}):
-        """Adds a manual query to the list of queries
-        to execute. More complicated queries may need
-        to use this method. The insert data can be used
-        to pass values and protect against injection attacks."""
-        self._queries.append((query, data))
-        self.debug("Added Query", query)
-
-    def remove_query(self, index: int):
-        """Removes the query at a given index from
-        the list of queries."""
-        self.debug("remove query", self._queries[index])
-        self._queries.pop(index)
-
-    def delete_queries(self):
-        """Deletes all queries from Database object."""
-        self._queries = []
-        self.debug("delete queries", f"Current queries: {self._queries}")
-
-    def get_queries(self):
-        """Returns the list of current queries."""
-        return self._queries
-
-    def get_results(self):
-        """Returns the results for the last list of queries
-        that were run. Returns a Data Object."""
-        return self._results
-
-    def get_json(self):
-        """Returns the results in JSON format."""
-        return self._results.convert_to_json()
-
-    def execute(self):
+    def execute(self, queries):
         """Executes the list of queries given to the Database Class."""
-        # Attempt connection to mysql server
+
         try:
+           # Attempt connection to mysql server
             con = self._mysql.connection
             cursor = con.cursor()
         except Exception as error:
             self.debug("connection failure", str(error))
             raise error  # Pass error up to app.py
 
-        for query_tuple in self._queries:
+        # The query_tuple contains query, data
+        # Data is passed as {} where columns and values
+        # are keys and values respectively
+        for query_tuple in queries:
             query, data = query_tuple
-            if data != {}:
-                cursor.execute(query, data)
-            else:
-                cursor.execute(query)
+            cursor.execute(query, data)
 
+        # Get results before commit and close of connection
+        results = cursor.fetchall()
+
+        # Commit changes and close connection
         con.commit()
+        return results
 
-        self._results.set_data(cursor.fetchall())
-        self._queries = []  # Clear executed queries
-        return self.get_results()
-
-    def add_select(self, table: str, columns: list, append=''):
+    def create_select(self, table: str, columns: list, append=''):
         """Adds a query to the list of queries with the given
         columns, table, and optional append (for things like WHERE)
         in case they are needed."""
-        
+        queries = []
+
         # Ensure proper table case
         table = self.update_case(table)
 
@@ -104,59 +72,66 @@ class Database:
 
         # Append query
         query = f'SELECT {columns_str} FROM {table}{append}'
-        print("query:",query)
-        self.add_query(query)
+        queries.append((query, {}))
 
-    def add_insert(self, table: str, columns: list, values: list, append=''):
+        return queries
+        
+        
+    def create_insert_queries(self, table: str, columns: list, values: list, append=''):
         """Adds an insert query to the current list of queries given
         a table, columns, and values to insert. The append parameter
         given will be added on to the end of the query."""
+        queries = []
 
         # Ensure proper table case
         table = self.update_case(table)
 
+        # Prepare dictionary of columns:values for
+        # insertion
         insert_dict = {}
         for index in range(len(columns)):
             insert_dict[columns[index]] = values[index]
 
-        self.debug("Prepare insert dict", insert_dict)
-
+        # Prepares columns for VALUES () string in SQL
         prepare_values = []
         for column in columns:
             prepare_values.append(f"%({column})s")
 
 
-        # Convert list values into strings
+        # Convert column, values list to strings
+        # For insertion into SQL
         columns_str = ','.join(columns)
         values_str = ','.join(prepare_values)
 
-        # Build Insert query
+        # Build and append to queries
         query = f'INSERT INTO {table} ({columns_str}) VALUES ({values_str}){append}'
+        queries.append((query, insert_dict))
 
-        self.add_query(query, insert_dict)
-
-        # Build append search to get only the item
-        # added back from the SQL table
-        
-        append = ''  # Reset append value
+        # Build SELECT statement for return        
+        append = ''
         for index in range(len(columns)):
             if index == 0:
                 append += f' WHERE {columns[index]} = \"{values[index]}\"'
             else:
                 append += f' AND {columns[index]} = \"{values[index]}\"'
 
-        self.add_select(table, columns, append)
+        # Build and append to queries
+        select_queries = self.create_select(table, columns, append)
+        queries.append(select_queries[0])
+
+        return queries
 
 
-
-    def add_update(self, table: str, columns: list, values: list, filter='', append=''):
+    def create_update_queries(self, table: str, columns: list, values: list, filter='', append=''):
         """Adds an UPDATE query to the current list of queries given
         a table, a string of set_pairs to update, a filter, and an optional
         append string."""
+        queries = []
 
         # Ensure proper table case
         table = self.update_case(table)
 
+        # Build pair list array join column and value data (i.e column=value)
         pair_list = []
         for index in range(len(columns)):
             pair_list.append('='.join((columns[index], f'\"{values[index]}\"')))
@@ -164,25 +139,27 @@ class Database:
         # Convert list values into strings
         set_pairs_str = ', '.join(pair_list)
 
-        query = f'UPDATE {table} SET {set_pairs_str}WHERE {filter}{append}'
+        # Create and append update query
+        query = f'UPDATE {table} SET {set_pairs_str} WHERE {filter}{append}'
+        queries.append((query, {}))
 
-        self.add_query(query)
 
-        # BUILD SELECT to RETURN data UPDATED
-        # -----------------------------------
-
+        # Build and append SELECT for return data
         append = f' WHERE {filter}'
+        query = self.create_select(table, columns, append)
+        queries.append(query[0])
 
-        # Add select to queries
-        self.add_select(table, columns, append)
+        return queries
 
-    def add_delete(self, table, filter):
+    def create_delete(self, table, filter):
         """Adds a DELETE query to the current list of queries given
         a table and a filter."""
+        queries = []
 
         # Ensure proper table case
         table = self.update_case(table)
 
         query = f'DELETE FROM {table} WHERE {filter}'
+        queries.append((query, {}))
 
-        self.add_query(query)
+        return queries

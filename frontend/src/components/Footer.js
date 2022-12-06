@@ -3,8 +3,8 @@ import Button from './Button';
 const Footer = () => {
     return (
         <footer>
-            <p>Lost? Just go back to the Index page.</p>
-            <a href="/"><Button>Back to Index</Button></a>
+            <p className='small'>Lost? Just go back to the Home Page:</p>
+            <a href="/"><Button className='nav-button'>Home</Button></a>
         </footer>
     );
 };

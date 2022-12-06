@@ -4,6 +4,7 @@
 
 body {
   margin: 1em;
+  max-width: 1200px;
 }
 
 footer {
@@ -25,6 +26,11 @@ table {
 th, td {
   border: 1px solid black;
   padding: 5px;
+}
+
+.small {
+  font-size: 15px;
+  font-style: italic;
 }
 
 /* Spinner animation. From https://loading.io/css/ or https://github.com/loadingio/css-spinner/
@@ -60,4 +66,18 @@ th, td {
   100% {
     transform: rotate(1800deg);
   }
+}
+
+#navigation {
+
+}
+.nav-button {
+  background-color: darkgrey;
+  padding: 1em;
+  border: black 1px solid;
+  margin: auto;
+}
+
+.nav-button:hover {
+  background-color: lightgrey;
 }

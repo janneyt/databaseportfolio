@@ -5,16 +5,17 @@ from Database import Database
 import os
 from flask_cors import CORS
 
+from flask import jsonify
+
 
 # Configuration
 app = Flask(__name__)
 CORS(app)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-
-app.config['MYSQL_USER'] = 'cs340_janneyt'
-app.config['MYSQL_PASSWORD'] = '5008'
-app.config['MYSQL_DB'] = 'cs340_janneyt'
+app.config['MYSQL_USER'] = 'cs340_person'
+app.config['MYSQL_PASSWORD'] = 'Nothing to see here'
+app.config['MYSQL_DB'] = 'cs340_person'
 
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -32,39 +33,36 @@ def select_data():
     except:
         append = ''
 
-
-    # Only pass to the add_select if the proper tables are present
+    # Only build queries if expected dictionary keys are found
     try:
-        database.add_select(data["table"], data["columns"], append)
+        queries = database.create_select(data["table"], data["columns"], append)
     except KeyError as key:
-        database.debug("KeyError:", f'Key: {key} not found.')
+        database.debug("KeyError: ", f'{key} not found.')
         return str(f'KeyError: {key} not found.'), 405
 
-    # Attempt to execute queries given to database
+    # Attempts to execute queries to database
     try:
-        database.execute()
+        results = database.execute(queries)
     except Exception as error:
-        database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
 
-    return database.get_json()
+    return jsonify(results)
 
 @app.route('/delete_data', methods=['POST'])
 def delete_data():
     data = request.get_json()
 
     try:
-        database.add_delete(data["table"], data["filters"])
+        queries = database.create_delete(data["table"], data["filters"])
     except KeyError as key:
         database.debug("KeyError", f'Key: {key} not found.')
         return str(f'Key: {key} not found.'), 405
 
     # Attempt to execute queries given to database
     try:
-        database.execute()
+        results = database.execute(queries)
     except Exception as error:
-        database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute",str(error))
         return str(error), 405
 
@@ -73,6 +71,7 @@ def delete_data():
 @app.route('/update_data', methods=['POST'])
 def update_data():
     data = request.get_json()
+
     # Ensure an append is passed to the add_select method
     try:
         append = f" {data['append']}"
@@ -80,19 +79,19 @@ def update_data():
         append = ''
 
     try:
-        database.add_update(data['table'], data['columns'], data['values'], data['filter'], append)
+        queries = database.create_update_queries(data['table'], data['columns'], data['values'], data['filter'], append)
+        print("QUERIES IN UPDATE", queries)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
  
     # Attempt to execute queries given to database
     try:
-        database.execute()
+        result = database.execute(queries)
     except Exception as error:
-        database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
-    return database.get_json()
+    return jsonify(result)
 
 @app.route('/insert_data', methods=['POST'])
 def insert_data():
@@ -106,20 +105,19 @@ def insert_data():
 
     # Only pass to the add_insert if the proper tables are present
     try:
-        database.add_insert(data["table"], data["columns"], data["values"], append)
+        queries = database.create_insert_queries(data["table"], data["columns"], data["values"], append)
     except KeyError as key:
         database.debug("KeyError:", f'Key: {key} not found.')
         return str(f'KeyError: {key} not found.'), 405
 
     # Attempt to execute queries given to database
     try:
-        database.execute()
+        results = database.execute(queries)
     except Exception as error:
-        database.delete_queries()  # Ensure failures don't add future queries
         database.debug("failed execute", str(error))
         return str(error), 405
 
-    return database.get_json()
+    return jsonify(results)
 
 
 

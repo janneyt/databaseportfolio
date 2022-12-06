@@ -1,7 +1,7 @@
 import Form from '../../components/Forms/Form';
 import { addFormContents } from '../../data/playerData';
 
-import { useEffect, useState, useRef } from 'react';
+import { useRef } from 'react';
 import { prepareFormData } from '../../functions/submitFunctions.js';
 import { insertData } from '../../axios/crud.js';
 import { useNavigate } from 'react-router-dom';
@@ -16,8 +16,9 @@ function AddPlayer() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Players", submitData.current);
-        navigate("/players")
+        Promise.allSettled([insertData("Players", submitData.current)]).then(
+            () => navigate("/players")
+        )
     }; 
 
     return (

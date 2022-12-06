@@ -1,7 +1,7 @@
 import Form from '../../components/Forms/Form';
 import { addFormContents } from '../../data/countryData';
 
-import { useEffect, useState, useRef } from 'react';
+import { useRef } from 'react';
 import { prepareFormData } from '../../functions/submitFunctions.js';
 import { insertData } from '../../axios/crud.js';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +15,10 @@ function AddCountry() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Countries", submitData.current);
-        navigate("/countries")
+        Promise.allSettled([insertData("Countries", submitData.current)]).then(
+            () => navigate("/countries")
+        ).catch((error) => console.log(error))
+        
     }; 
 
     return (

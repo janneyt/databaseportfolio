@@ -1,7 +1,89 @@
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
+import { ReturnedData } from "../axios/crud.js";
 
-const headers = ["Name", "Description", "Game", "Edit", "Delete"];
+const fetchLanguageTableData = async (item_params, append, purpose, id, headers=null) => {
+    const list_param = JSON.stringify(item_params);
+    const append_str = JSON.stringify(append);
+  
+    let parameters = JSON.stringify(
+      append
+        ? '{"columns":' +
+            list_param +
+            ', "table":"Languages", "append":' +
+            append_str +
+            "}"
+        : '{"columns":' + list_param + ', "table":"Languages"}'
+    );
+  
+    let fetchedData = await ReturnedData("READ", parameters, headers);
+    for (let index1 = 0; index1 < fetchedData.length; index1++) {
+      // Add the buttons for the display list, anything inside the push
+      // will get added to one cell in the table
+      fetchedData[index1].push(
+        <Link to="/editLanguage" state={{ id: fetchedData[index1][0]  }}>
+          <Button>Edit Language</Button>
+        </Link>
+      );
+      fetchedData[index1].push(
+        <Link to="/deleteLanguage" state={{ id: fetchedData[index1][0]  }}>
+          <Button>Delete Language</Button>
+        </Link>
+      );
+    }
+  
+    if (purpose && purpose.toLowerCase() === "edit") {
+      let find = 0;
+      for (let indexing = 0; indexing < fetchedData.length; indexing++) {
+        if (fetchedData[indexing][0] === id) {
+          find = indexing;
+        }
+      }
+      const editFormContents = [
+        // TODO: dynamically generate fetchedData's indices, instead of hardcoding
+        {
+          type: "text",
+          name: "languagename",
+          label: "Name Your Language:",
+          value: fetchedData[find][1],
+        },
+        {
+          type: "text",
+          name: "languagedescription",
+          label: "Describe Your Language",
+          value: fetchedData[find][2],
+        },
+        // {
+        //   type: "text",
+        //   name: "gamename",
+        //   label: "Game Name",
+        //   value: fetchedData[find][3],
+        // },
+      ];
+  
+      fetchedData = editFormContents;
+  
+      return editFormContents;
+    } else if (purpose && purpose.toLowerCase() === "delete") {
+      const deleteFormContents = [
+        // TODO: dynamically generate fetchedData's indices, instead of hardcoding
+  
+        {
+          type: "text",
+          name: fetchedData[0][1],
+          value: fetchedData[0][1],
+          disabled: true,
+        },
+      ];
+  
+      fetchedData = deleteFormContents;
+  
+      return deleteFormContents;
+    }
+  
+    return fetchedData;
+  };
+  
 
 const tableData = [
     ["English", "The language that rifles your pockets for spare vocabulary and grammar", "Fun first language!"],
@@ -24,7 +106,6 @@ const optionsLanguageRules = [
 const addFormContents = [
     {type:"text", name:"languagename", label:"Name Your Language:"},
     {type:"text", name:"languagedescription", label:"Describe Your Language:"},
-    {type:"text", name:"gamename", label:"Game Name (${Pulls game name from game id})"},
     {type:"select", name:"languagerules", label:"Language Rules Available", options:optionsLanguageRules }
 ];
 
@@ -40,4 +121,4 @@ const deleteFormContents = [
 ];
 
 
-export {headers, tableData, addFormContents,editFormContents, deleteFormContents};
+export {tableData, addFormContents,editFormContents, deleteFormContents, fetchLanguageTableData};

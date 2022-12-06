@@ -1,5 +1,3 @@
-
-
 const ShowIfLoaded = ({isLoading, children}) => {
     if (isLoading) {
         return(

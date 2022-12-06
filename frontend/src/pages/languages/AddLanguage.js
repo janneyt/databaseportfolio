@@ -1,7 +1,7 @@
 import Form from '../../components/Forms/Form';
 import { addFormContents } from '../../data/languageData';
 
-import { useEffect, useState, useRef } from 'react';
+import { useRef } from 'react';
 import { prepareFormData } from '../../functions/submitFunctions.js';
 import { insertData } from '../../axios/crud.js';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +15,11 @@ function AddLanguage() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Items", submitData.current);
-        navigate("/items")
+        Promise.allSettled([insertData("Languages", submitData.current)]).then(
+            () => navigate("/languages")
+        ).catch(
+            (error) => console.log(error)
+        )
     }; 
 
     return (

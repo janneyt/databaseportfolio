@@ -1,7 +1,10 @@
 import TableRow from './TableRow'
-import { useLocation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import Button from '../Button';
 
 const TableView = ({headers, listData}) => {
+
+    const navigate = useNavigate();
     const headerItems = headers.map((headers, index) => 
         <th key={index}>{headers}</th>
     );
@@ -12,16 +15,20 @@ const TableView = ({headers, listData}) => {
     );
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    {headerItems}
-                </tr>
-            </thead>
-            <tbody>
-                {tableItems}
-            </tbody>
-        </table>
+        <>
+            <p className="small">No data? Make sure you activate the right game:
+            <Button onClick={() => {navigate("/games")}} className='nav-button-small'>Games</Button></p>
+            <table>
+                <thead>
+                    <tr>
+                        {headerItems}
+                    </tr>
+                </thead>
+                <tbody>
+                    {tableItems}
+                </tbody>
+            </table>
+            </>
     );
 };
 

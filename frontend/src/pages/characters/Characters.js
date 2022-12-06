@@ -2,14 +2,14 @@
 import TableView from '../../components/TableView/TableView';
 
 import ShowIfLoaded from '../../components/ShowIfLoaded';
-import { CharacterHeaders } from '../../data/charactersData';
+import { CharacterHeaders } from '../../data/headers'
 
 import Button from '../../components/Button';
 
 // Import React requirements
 import { Link, useNavigate } from 'react-router-dom';
 
-import { DataNext } from '../../axios/crud.js';
+import { DataNext } from '../../axios/DataNext.js';
 import { useEffect, useState } from 'react';
 
 
@@ -40,10 +40,11 @@ function Characters() {
 
 
     useEffect(() => {
+        
         DataNext("Characters").then((response) => {
-            console.log(response);
             setPost(response);
             setIsLoading(false);
+            return response;
         });
     }, []);
 
@@ -53,7 +54,7 @@ function Characters() {
                 <h1>Characters</h1>
                 <ShowIfLoaded isLoading = {isLoading}>
                     <TableView headers={CharacterHeaders} listData={post} />
-                    <Link to="/addItem"><Button>Add Character</Button></Link>
+                    <Link to="/addCharacter"><Button>Add Character</Button></Link>
                     <Button  onClick={() => { navigate(-1) }}>Cancel</Button>
                 </ShowIfLoaded>
             </div>

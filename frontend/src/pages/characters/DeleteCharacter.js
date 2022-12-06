@@ -1,15 +1,56 @@
-import Form from '../../components/Forms/Form';
-import { deleteFormContents } from '../../data/charactersData';
+import Form from "../../components/Forms/Form";
+import ShowIfLoaded from "../../components/ShowIfLoaded";
+import { useEffect, useState, useRef } from "react";
+import { DataNext } from "../../axios/DataNext.js";
+import { deleteData } from "../../axios/crud.js";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function DeleteCharacters() {
-    return (
-        <div className="content">
-            <h1>Delete Character</h1>
-            <p>{"${Character name will be shown here.}"}</p>
-            <Form submitText="Save" inputState={deleteFormContents} />
-            <p>{"${idCharacter in hidden field for delete purposes.}"}</p>
-        </div>
-    )
-}
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const dataRef = useRef({});
+  const id = useRef(location.state ? location.state.id : -1);
+
+  const getDataAppend = "WHERE idCharacter = " + id.current.toString();
+  const updateFilter = "idCharacter = " + id.current.toString();
+
+  const [post, setPost] = useState([{}]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    DataNext("Characters", getDataAppend, "delete", id).then((response) => {
+      console.log("setting post", response);
+      setPost(response);
+
+      return response;
+    });
+    setIsLoading(false);
+  }, []);
+
+  const deleteForm = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+    Promise.allSettled([
+      deleteData("Characters", id, updateFilter).catch((error) => error)
+    ]).then(() => navigate("/characters"));
+  };
+
+  return (
+    <>
+      <div className="content">
+        <h1>Delete Character Page</h1>
+        <ShowIfLoaded isLoading={isLoading}>
+          <Form
+            submitText="Delete"
+            inputState={post}
+            onSubmit={deleteForm}
+            refDict={dataRef}
+          />
+        </ShowIfLoaded>
+      </div>
+    </>
+  );
+}
 export default DeleteCharacters;

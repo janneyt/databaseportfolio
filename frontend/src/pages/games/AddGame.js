@@ -1,8 +1,8 @@
 import Form from '../../components/Forms/Form';
 import { addFormContents } from '../../data/gameData';
 
-import { useEffect, useState, useRef } from 'react';
-import { prepareFormData } from '../../functions/submitFunctions.js';
+import { useRef } from 'react';
+import { prepareGameFormData } from '../../functions/submitFunctions.js';
 import { insertData } from '../../axios/crud.js';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,9 +15,10 @@ function AddGame() {
 
     const prepareAddData = (e) => {
         e.preventDefault();
-        prepareFormData(dataRef, submitData);
-        insertData("Games", submitData.current);
-        navigate("/games")
+        prepareGameFormData(dataRef, submitData);
+        Promise.allSettled([insertData("Games", submitData.current)]).then(
+            () => navigate("/games")
+        ).catch((error) => console.log(error))
     }; 
 
     return (

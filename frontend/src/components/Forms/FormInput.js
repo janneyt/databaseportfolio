@@ -7,8 +7,9 @@ const FormInput = ({inputObj, onChange, index, ref}) => {
                 ref={inputObj.ref}
                 type={inputObj.type || "text"} 
                 id={inputObj.name} name={inputObj.name} 
-                value={inputObj.value || ""} 
-                onChange={(e) => onChange(index, e)} />
+                value={inputObj.value || ""}
+                disabled={inputObj.disabled || false}
+                onChange={(e) => {onChange(index, e)}} />
         </div>
     );
 };

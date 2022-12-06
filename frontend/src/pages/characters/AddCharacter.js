@@ -1,10 +1,18 @@
-import Form from '../../components/Forms/Form';
-import { addFormContents } from '../../data/charactersData';
-
-import { useEffect, useState, useRef } from 'react';
-import { prepareFormData } from '../../functions/submitFunctions.js';
+// Axios
 import { insertData } from '../../axios/crud.js';
+
+// React
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// Components
+import Form from '../../components/Forms/Form';
+
+// Functions
+import { prepareFormData } from '../../functions/submitFunctions.js';
+
+// Data
+import { addFormContents } from '../../data/charactersData';
 
 function AddCharacter() {
     const navigate = useNavigate();
@@ -14,8 +22,9 @@ function AddCharacter() {
     const prepareAddData = (e) => {
         e.preventDefault();
         prepareFormData(dataRef, submitData);
-        insertData("Characters", submitData.current);
-        navigate("/characters")
+        Promise.allSettled([insertData("Characters", submitData.current)]).then(
+            () => navigate("/characters")
+        )
     };
 
     return (
