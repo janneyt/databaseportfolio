@@ -67,9 +67,9 @@ const fetchGameTableData = async (item_params, append, purpose, id, headers=null
     ];
 
     fetchedData = editFormContents;
-
     return editFormContents;
   } else if (purpose && purpose.toLowerCase() === "delete") {
+
     const deleteFormContents = [
       // TODO: dynamically generate fetchedData's indices, instead of hardcoding
 

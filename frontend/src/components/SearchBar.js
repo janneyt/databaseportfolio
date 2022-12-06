@@ -94,7 +94,11 @@ const SearchBar = (props) => {
           refDict={dataRef}
         ></Form>
         Results found:
-        <ShowIfLoaded isLoading={isLoading}><TableView headers={props.headers} listData={searchItems} /></ShowIfLoaded>
+        <ShowIfLoaded isLoading={isLoading}>
+          <h2>Search Table</h2>
+          <p>Results only show when given a search query.</p>
+          <TableView headers={props.headers} listData={searchItems} />
+        </ShowIfLoaded>
       </div>
     </>
   );

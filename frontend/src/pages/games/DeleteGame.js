@@ -12,8 +12,8 @@ function DeleteGame() {
 
   const [id, setId] = useState(location.state ? location.state.id : -1);
   // One append to display the data, one to delete
-  const [append, setAppend] = useState("WHERE gameName = " + id.toString());
-  const [filter, setFilter] = useState(" gameName = " + id.toString());
+  const [append, setAppend] = useState("WHERE idGame = " + id.toString());
+  const [filter, setFilter] = useState(" idGame = " + id.toString());
 
   const [isLoading, setIsLoading] = useState(true);
 
