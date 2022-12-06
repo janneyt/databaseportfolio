@@ -33,7 +33,6 @@ const fetchLanguageTableData = async (item_params, append, purpose, id, headers=
     }
   
     if (purpose && purpose.toLowerCase() === "edit") {
-      console.log("fetchedData", fetchedData);
       let find = 0;
       for (let indexing = 0; indexing < fetchedData.length; indexing++) {
         if (fetchedData[indexing][0] === id) {

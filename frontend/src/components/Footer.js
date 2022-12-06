@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <footer>
             <p class='small'>Lost? Just go back to the Home Page:</p>
-            <a href="/"><Button class='nav-button'>Home</Button></a>
+            <a href="/"><Button className='nav-button'>Home</Button></a>
         </footer>
     );
 };

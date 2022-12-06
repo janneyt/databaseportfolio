@@ -64,9 +64,6 @@ const fetchCHITableData = async (
       "}"
   );
 
-  // Debug character_param
-  console.log("character_param", character_param)
-
   // fetchedData[index1][0] is for items
   let append_str2 = '"WHERE idItem in (' 
   append_str2 = append_str2.concat(

@@ -29,7 +29,6 @@ function EditCharacters() {
 
 
     useEffect(() => {        
-        console.log("LOCATION", location)
         DataNext("Characters", getDataAppend, "edit", id.current).then(
             (response) => {
                 setPost(response); 

@@ -59,10 +59,6 @@ const fetchLLRTableData = async (language_params, append, purpose, id) => {
       let fetchedData2 = await ReturnedData("READINTERSECT", country_param, ["ruleName"]);
       let fetchedData3 = await ReturnedData("READINTERSECT", language_param, ["languageName"]);
 
-      // Debug language and character data
-      console.log("Language: ",fetchedData3)
-      console.log("LanguageRule: ", fetchedData2)
-
       const country_id = fetchedData[index1][1]
       fetchedData[index1][1] = fetchedData2[0][0];
       fetchedData[index1][0] = fetchedData3[0][0];

@@ -61,7 +61,6 @@ function AddItemToCharacter() {
     prepareFormData(dataRef, submitData, true);
     Promise.allSettled([insertData("Characters_has_Items", submitData.current)])
       .then((values) => {
-        console.log(values);
         navigate("/CharactersHaveItems");
       })
       .catch((error) => console.log(error));
