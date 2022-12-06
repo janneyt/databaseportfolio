@@ -102,6 +102,7 @@ const DataNext = async (page, append = null, purpose = "READ", id = null, offset
     if (!page) {
         throw new Error("Please provide a page name for your data transfer.");
     }
+    console.log("offset", offset)
 
     // Get the right header according to the page parameter passed
     const headers = headerDict[page.toLowerCase()];
@@ -114,6 +115,7 @@ const DataNext = async (page, append = null, purpose = "READ", id = null, offset
     // Prepare the headers by slicing the buttons off the given headers
     // array
     const requestedHeaders = headers.slice(0, headers.length - offset);
+    console.log("headers", requestedHeaders)
 
     // Get an updated current game
     gameSettings.current = getCurrentGame();

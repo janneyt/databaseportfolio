@@ -42,6 +42,7 @@ const SearchBar = (props) => {
             results[0].push("No results found");
           }
           setSearchItems(results);
+          setIsLoading(false)
         }
         // There were two tables. One will be empty. Use this to select a table to show all items belonging to that character
         else if (first_return.length === 0) {

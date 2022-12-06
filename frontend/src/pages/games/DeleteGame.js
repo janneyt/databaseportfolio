@@ -18,7 +18,7 @@ function DeleteGame() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    DataNext("Games",append, "delete", id).then((response) => {
+    DataNext("Games",append, "delete", id, 3).then((response) => {
         
         setPost(response);
 
