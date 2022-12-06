@@ -23,7 +23,6 @@ const fetchGameTableData = async (item_params, append, purpose, id, headers=null
   );
 
   let fetchedData = await ReturnedData("READ", parameters, headers, 3);
-  console.log("fetched data", fetchedData);
   for (let index1 = 0; index1 < fetchedData.length; index1++) {
     // Add the buttons for the display list, anything inside the push
     // will get added to one cell in the table

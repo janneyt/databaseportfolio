@@ -25,9 +25,6 @@ const fetchCoHLTableData = async (
 
   let fetchedData = await ReturnedData("READ", parameters, headers);
 
-  // Debug data returned
-  console.log("fetchedData", fetchedData);
-
   const country_ids = [];
   const language_ids = [];
   for (const [language, country] of fetchedData) {
