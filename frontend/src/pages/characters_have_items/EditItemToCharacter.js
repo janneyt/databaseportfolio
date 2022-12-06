@@ -29,7 +29,6 @@ function EditItemToCharacter() {
   const [isLoading, setIsLoading] = useState(true);
   const [EditForm, setEditForm] = useState(editFormContents);
   const character_id = location.state && location.state.character_id ? location.state.character_id : -1
-  console.log("LocATION", location)
   const item_id = location.state && location.state.item_id ? location.state.item_id : -1
   const character =
     location.state && location.state.character
@@ -39,7 +38,12 @@ function EditItemToCharacter() {
   useEffect(() => {
     DataNext("Items").then((response) => {
       setItems(response);
-      editFormContents[0].options = createEditFormContents(response);
+
+//{value: null, label: null}
+
+      editFormContents[0].options = [{value: null, label: "null"}]
+      editFormContents[0].options.push(...createEditFormContents(response));
+      console.log("editFormContents", editFormContents[0].options)
       setEditForm(editFormContents);
       if (response[0] !== []) {
         setIsLoading(false);
@@ -54,6 +58,7 @@ function EditItemToCharacter() {
     submitData.current.values[submitData.current.columns.indexOf("idCharacter")] = character_id.toString();
     const append = `idCharacter = ${character_id.toString()} and idItem = ${item_id.toString()}`
     setIsLoading(true);
+    console.log("SUBMIT DATA NULL", submitData.current)
     Promise.allSettled([
       updateData("Characters_has_Items", submitData, append)
     ])

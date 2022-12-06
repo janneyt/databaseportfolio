@@ -1,9 +1,16 @@
 const prepareFormData = (dataRef, submitData, gameNotRequired) => {
+
   for (const item in dataRef.current) {
+    console.log("item in prepareForData", item)
     if(typeof dataRef.current[item] === "string"){
       submitData.current["columns"].push(item);
       submitData.current["values"].push(dataRef.current[item]);
-    } else if (dataRef.current[item].value !== "undefined") {
+    } else if (dataRef.current[item] === null) {
+      console.log("slotted in")
+      submitData.current["columns"].push(item)
+      submitData.current["values"].push(null)
+    } 
+    else if (dataRef.current[item].value !== "undefined") {
       submitData.current["columns"].push(dataRef.current[item].name);
       submitData.current["values"].push(dataRef.current[item].value);
     }
